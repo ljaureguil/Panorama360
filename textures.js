@@ -1,0 +1,12 @@
+var pic1="https://i.ytimg.com/vi/B6EKlcW2Jp0/maxresdefault.jpg";
+var pic2="https://cdn-az.allevents.in/events5/banners/1b24a83bd2a7c621c8cf41b53f0a9250a7aca511754675d9c74ae0c8b9b16df0-rimg-w1200-h600-gmir.jpg?v=1645658560";
+var pic3="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtf3Rvj9wjWegYCQxs7ZcnaMLjAiX1Xp_SF1wTsN5PF9LoNmbL04_ZKxnRKz3AVG_UVAg&usqp=CAU";
+var pic4="https://i.ytimg.com/vi/QlQw8gswI5A/maxresdefault.jpg";
+var pic5="https://cdn.vor.us/event/470011/og/0a25fed6290844ae920a263475c2f970.image!jpeg.168828.jpg.xalos1.jpg"
+var w1='https://as2.ftcdn.net/v2/jpg/03/37/62/41/1000_F_337624179_SCcRL4gleCZGWyVNS8suSUvyEwBoI1hb.jpg'
+var w2='https://ak.picdn.net/shutterstock/videos/1068260144/thumb/1.jpg?ip=x480'
+var w3='https://c4.wallpaperflare.com/wallpaper/189/752/873/landscape-photography-of-twigs-during-golden-hour-wallpaper-preview.jpg'
+var w4='https://t3.ftcdn.net/jpg/01/81/61/50/360_F_181615003_j5vvF46SlLp3kflyknHqh0RP7nNBw5oW.jpg'
+var w5='https://l13.alamy.com/360/T3GP16/full-seamless-spherical-panorama-360-by-180-degrees-angle-view-on-the-shore-of-small-river-with-bridge-in-city-park-in-summer-day-in-equirectangular-p-T3GP16.jpg'
+var arimgs=[];
+var worlds=[];
