@@ -29,9 +29,10 @@
 <body>
   
 
-    <div id="capture"><span id="capturea">Capture</span>
+    <div id="capture"><button id="capturea">Capture</button>
   <input type=file name=filename id=file>
     <button type=button onclick='test()'>Display</button></br>
+    <select></select><select></select>
 
 
     </div> 
@@ -82,7 +83,7 @@
             container = document.createElement('div');
             document.body.appendChild(container);
 
-            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
             camera.position.set(1, 1, 1);
 
             scene = new THREE.Scene();
@@ -104,17 +105,17 @@
                     transparent: true,
                     opacity: 1 //.450
                 });
-                world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(1000, 32, 16), matworld1);
+                world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
                 scene.add(world1);
             })
-            var geometry = new THREE.BoxBufferGeometry( 150,210, 150);
+            var geometry = new THREE.BoxBufferGeometry( 50,10, 50);
             var pr1,pr2,pr3;
             textureLoader.load(pic1, function(texture) {
            pr1=crOb(texture,geometry)
-               pr1.position.x = Math.random() * 1200 - 400;
-                pr1.position.y = Math.random() * 1200 - 400;
-                pr1.position.z = Math.random() * 1200 - 400;
+               pr1.position.x = Math.random() * 800 - 400;
+                pr1.position.y = Math.random() * 800 - 400;
+                pr1.position.z = Math.random() * 800 - 400;
 
              scene.add(pr1)
 
@@ -138,53 +139,8 @@
              scene.add(pr2)
                 
             });  
-            textureLoader.load(pic1, function(texture) {
-           pr1=crOb(texture,geometry)
-               pr1.position.x = Math.random() * 1200 - 400;
-                pr1.position.y = Math.random() * 1200 - 400;
-                pr1.position.z = Math.random() * 1200 - 400;
-
-             scene.add(pr1)
-
-            });
-            textureLoader.load(pic2, function(texture) {
-           pr2=crOb(texture,geometry)
-           pr2.position.x = Math.random() * 800 - 400;
-                pr2.position.y = Math.random() * 800 - 400;
-                pr2.position.z = Math.random() * 800 - 400;
-
-             scene.add(pr2)
-                
-            });  
-
-            textureLoader.load(pic5, function(texture) {
-           pr2=crOb(texture,geometry)
-           pr2.position.x = Math.random() * 800 - 400;
-                pr2.position.y = Math.random() * 800 - 400;
-                pr2.position.z = Math.random() * 800 - 400;
-
-             scene.add(pr2)
-                
-            });  
-            textureLoader.load(pic1, function(texture) {
-           pr1=crOb(texture,geometry)
-               pr1.position.x = Math.random() * 800 - 400;
-                pr1.position.y = Math.random() * 800 - 400;
-                pr1.position.z = Math.random() * 800 - 400;
-
-             scene.add(pr1)
-
-            });
-            textureLoader.load(pic2, function(texture) {
-           pr2=crOb(texture,geometry)
-           pr2.position.x = Math.random() * 800 - 400;
-                pr2.position.y = Math.random() * 800 - 400;
-                pr2.position.z = Math.random() * 800 - 400;
-
-             scene.add(pr2)
-                
-            });  
-
+    
+         
          textureLoader.load(pic3, function(texture) {
              pr3=crOb(texture,geometry)
              pr3.position.x = Math.random() * 800 - 400;
@@ -194,25 +150,7 @@
              scene.add(pr3)
 
     		})
-            textureLoader.load(pic3, function(texture) {
-           pr2=crOb(texture,geometry)
-           pr2.position.x = Math.random() * 800 - 400;
-                pr2.position.y = Math.random() * 800 - 400;
-                pr2.position.z = Math.random() * 800 - 400;
-
-             scene.add(pr2)
-                
-            });  
-
-         textureLoader.load(pic3, function(texture) {
-             pr3=crOb(texture,geometry)
-             pr3.position.x = Math.random() * 800 - 400;
-                pr3.position.y = Math.random() * 800 - 400;
-                pr3.position.z = Math.random() * 800 - 400;
-                pr3.rotation.z = Math.random() * 2 * Math.PI;
-             scene.add(pr3)
-
-    		})
+   
             renderer = new THREE.WebGLRenderer({
                 antialias: true
             });
@@ -224,15 +162,15 @@
 
             equi = new CubemapToEquirectangular(renderer, true);
 
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
+       //     controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls = new THREE.TrackballControls( camera, renderer.domElement );
+    //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
 
-      //   controls = new TrackballControls( camera, renderer.domElement );
+controls.rotateSpeed = 1.0;
+controls.zoomSpeed = 1.2;
+controls.panSpeed = 0.8;
 
-//controls.rotateSpeed = 1.0;
-//controls.zoomSpeed = 1.2;
-//controls.panSpeed = 0.8;
-
-//controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
+controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
 
 
 
@@ -248,12 +186,24 @@
 
         }
 function crOb(texture,geom,pos){
+
     return  new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
 					map:texture    //,
                   //  color: Math.random() * 0xffffff
                 }));
 
 
+}
+function crObject(callback){
+    if(callback!=undefined){
+        var c=new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
+					map:texture    //,
+                  //  color: Math.random() * 0xffffff
+                }));
+
+    callback(c)
+
+    }
 }
 
         function onWindowResize() {
@@ -300,5 +250,8 @@ function crOb(texture,geom,pos){
     </script>
 
 </body>
+
+</html>
+
 
 </html>
