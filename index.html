@@ -27,8 +27,14 @@
 </head>
 
 <body>
+  
 
-    <div id="capture">Capture</div> 
+    <div id="capture"><span id="capturea">Capture</span>
+  <input type=file name=filename id=file>
+    <button type=button onclick='test()'>Display</button></br>
+
+
+    </div> 
    
     <script src="textures.js"></script>
     <script src="js/ImageData-polyfill.js"></script>
@@ -41,6 +47,13 @@
     <script src="js/CubemapToEquirectangular.js"></script>
   
 
+    <script>
+ 
+    </script>
+    
+     
+    
+    
 
 
 
@@ -62,8 +75,8 @@
         });
 
         var cubeCamera;
-        var sphere;
-
+        var sphere,pr2;
+       
         function init() {
 
             container = document.createElement('div');
@@ -227,7 +240,7 @@
             window.addEventListener('resize', onWindowResize, false);
             onWindowResize();
 
-            document.getElementById('capture').addEventListener('click', function(e) {
+            document.getElementById('capturea').addEventListener('click', function(e) {
 
                 equi.update(camera, scene);
 
@@ -267,6 +280,23 @@ function crOb(texture,geom,pos){
             renderer.render(scene, camera);
 
         }
+
+        function test() {
+            var file = document.getElementById('file').files[0];
+            var reader  = new FileReader();
+            reader.onload = function(e)  {
+                var image = document.createElement("img");
+                image.src = e.target.result;
+             //   document.body.appendChild(image);
+              pr2.material.map=   THREE.ImageUtils.loadTexture(image.src);
+              render()
+              
+         
+            }
+             reader.readAsDataURL(file);
+         }
+
+
     </script>
 
 </body>
