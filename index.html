@@ -31,7 +31,7 @@
 
     <div id="capture"><button id="capturea">Capture</button>
   <input type=file name=filename id=file>
-    <button type=button onclick='test()'>Display</button></br>
+    <button type=button onclick='test()'>Display</button>
     <select></select><select></select>
 
 
@@ -60,7 +60,7 @@
 
     <script>
 
-
+var pr1, pr2, pr3
         var equi;
 
         var container, stats;
@@ -76,7 +76,6 @@
         });
 
         var cubeCamera;
-        var sphere,pr2;
        
         function init() {
 
@@ -109,8 +108,8 @@
                 world1.scale.x = -1;
                 scene.add(world1);
             })
-            var geometry = new THREE.BoxBufferGeometry( 50,10, 50);
-            var pr1,pr2,pr3;
+            var geometry = new THREE.BoxBufferGeometry( 90,60, 110);
+         var d=600;
             textureLoader.load(pic1, function(texture) {
            pr1=crOb(texture,geometry)
                pr1.position.x = Math.random() * 800 - 400;
@@ -123,9 +122,9 @@
 
             textureLoader.load(pic4, function(texture) {
            pr1=crOb(texture,geometry)
-               pr1.position.x = Math.random() * 1200 - 400;
-                pr1.position.y = Math.random() * 1200 - 400;
-                pr1.position.z = Math.random() * 1200 - 400;
+               pr1.position.x = Math.random() * 800 - 400;
+                pr1.position.y = Math.random() * 800 - 400;
+                pr1.position.z = Math.random() * 800 - 400;
 
              scene.add(pr1)
 
@@ -133,8 +132,9 @@
             textureLoader.load(pic2, function(texture) {
            pr2=crOb(texture,geometry)
            pr2.position.x = Math.random() * 800 - 400;
-                pr2.position.y = Math.random() * 2000 - 400;
+                pr2.position.y = Math.random() * 8000 - 400;
                 pr2.position.z = Math.random() * 800 - 400;
+
 
              scene.add(pr2)
                 
@@ -182,7 +182,15 @@ controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
 
                 equi.update(camera, scene);
 
+           
+           
             });
+  
+        
+        
+        }
+        function updSo(){
+            vars="<option>"+"varr"+"</option"
 
         }
 function crOb(texture,geom,pos){
@@ -238,7 +246,9 @@ function crObject(callback){
                 var image = document.createElement("img");
                 image.src = e.target.result;
              //   document.body.appendChild(image);
-              pr2.material.map=   THREE.ImageUtils.loadTexture(image.src);
+            
+             pr2.material.map=   THREE.ImageUtils.loadTexture(image.src);
+             pr2.material.material.needsUpdate=true;
               render()
               
          
@@ -250,8 +260,5 @@ function crObject(callback){
     </script>
 
 </body>
-
-</html>
-
 
 </html>
