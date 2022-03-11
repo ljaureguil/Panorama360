@@ -120,20 +120,12 @@ var pr1, pr2, pr3
 
             });
 
-            textureLoader.load(pic4, function(texture) {
-           pr1=crOb(texture,geometry)
-               pr1.position.x = Math.random() * 800 - 400;
-                pr1.position.y = Math.random() * 800 - 400;
-                pr1.position.z = Math.random() * 800 - 400;
-
-             scene.add(pr1)
-
-            });
+           
             textureLoader.load(pic2, function(texture) {
            pr2=crOb(texture,geometry)
-           pr2.position.x = Math.random() * 800 - 400;
-                pr2.position.y = Math.random() * 8000 - 400;
-                pr2.position.z = Math.random() * 800 - 400;
+           pr2.position.x = Math.random() * 80 - 40;
+                pr2.position.y = Math.random() * 800 - 40;
+                pr2.position.z = Math.random() * 80 - 40;
 
 
              scene.add(pr2)
@@ -248,7 +240,7 @@ function crObject(callback){
             reader.onload = function(e)  {
                 var image = document.createElement("img");
                 image.src = e.target.result;
-             //   document.body.appendChild(image);
+                document.body.appendChild(image);
             
              pr2.material.map=THREE.ImageUtils.loadTexture(image.src);
              pr2.material.needsUpdate=true;
