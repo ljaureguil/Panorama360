@@ -14,26 +14,25 @@ var ma_=new THREE.MeshPhongMaterial({map:te_});
 
 function Box(name,w,l,h,c){
     var m=new THREE.Mesh(new THREE.BoxBufferGeometry( w,l,h),ma_);
-    m.name=name
+    m.name=name+"_Box"
     return  m;
 }
 function Sphere(name,r,sx,sy,c){ 
     var m=new THREE.Mesh(new THREE.SphereBufferGeometry(r, sx, sy), ma_);
-    m.name=name
+    m.name=name+"_Sphere";
+   
     return  m;
 }
 function Cylinder(name,r1,r2,h,s,cap,c){
     if(cap===undefined)cap=false;
-  //  alert(n+" r1,r2,h,s,cap\n\n"+r1+"\n"+r2+"\n"+h+"\n"+s+"\n"+cap+"\n")
-  // var g=new CylinderGeometry({radiusTop : Float, radiusBottom : Float, height : Float, radialSegments : Integer, heightSegments : Integer, openEnded : Boolean, thetaStart : Float, thetaLength : Float})
-    var m= new THREE.Mesh(new THREE.CylinderGeometry( r1, r2, h, s), ma_);//,starc,arc)/// new THREE.CylinderGeometry( 5, 5, 20, 32 )/
- m.name=name;
+     var m= new THREE.Mesh(new THREE.CylinderGeometry( r1, r2, h, s), ma_);//,starc,arc)/// new THREE.CylinderGeometry( 5, 5, 20, 32 )/
+ m.name=name+"_Cylinder";
 
  m.geometry.openEnded=cap;
  return  m;
 }
 function Torus(name,r,tk,rs,ts,arc,c){
     var m= new THREE.Mesh( geometry = new THREE.TorusGeometry( r, tk, rs, ts ), ma_);////new THREE.TorusGeometry( 10, 3, 16, 100 )
- m.name=name;
+ m.name=name+"_Torus";
  return  m;
 }
