@@ -33,7 +33,7 @@ function Cylinder(name,r1,r2,h,s,cap,c){
  return  m;
 }
 function Torus(name,r,tk,rs,ts,arc,c){
-    var m= new THREE.Mesh( geometry = new THREE.TorusGeometry( r, tk, rs, ts,arc ), ma_);
- m.name=n
+    var m= new THREE.Mesh( geometry = new THREE.TorusGeometry( r, tk, rs, ts ), ma_);////new THREE.TorusGeometry( 10, 3, 16, 100 )
+ m.name=name;
  return  m;
 }
