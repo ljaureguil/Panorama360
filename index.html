@@ -39,7 +39,7 @@
   
 
     <div id="capture"><button id="capturea">Capture</button>
-  <input type=file name=filename id=file>
+  <input type=file name=filename id=file oninput="test()">
     <button type=button onclick='test()'>Display</button>
  
     <select class="csels"  id="stextures" onchange="selT(this.value)">
@@ -55,7 +55,7 @@
         <option>Torus</option> 
 
     </select>
-    <select class="csels"  id="smeshes" onchange="selMesh()">
+    <select class="csels"  id="smeshes" onchange="selMesh(this.value)">
         <option>Choose Object</option>
     </select>
     </div> 
@@ -79,6 +79,7 @@
 
 var pr1, pr2, pr3
         var equi;
+        var ObSelected=null;
 
         var container, stats;
         var camera, scene, renderer;
@@ -174,7 +175,7 @@ controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
      
             for( var i=0;i<art.length;i++){
                 if(art[i].name===v){
-                      pr2.material.map=THREE.ImageUtils.loadTexture(art[i].pic);
+                      ObSelected.material.map=THREE.ImageUtils.loadTexture(art[i].pic);
                     i=art.length;
                 }
         
@@ -205,6 +206,8 @@ smeshes.innerHTML=s;
 }
 function chooseMesh(m){
         var n=prompt("Name");
+        var op=document.createElement("option");
+   op.innerHTML=n;    
   if(m==="Box"){
   
       var w=prompt("Width")*1;
@@ -214,7 +217,9 @@ function chooseMesh(m){
       m.position.x=prompt("Position X")*1;
    m.position.y=prompt("Position Y")*1;
    m.position.z=prompt("Position Z")*1
-   scene.add(m)
+   scene.add(m);
+ 
+   smeshes.appendChild(op);
 
   }
   if(m==="Sphere"){
@@ -225,6 +230,8 @@ function chooseMesh(m){
    m.position.y=prompt("Position Y")*1;
    m.position.z=prompt("Position Z")*1
    scene.add(m)
+   smeshes.appendChild(op);
+
 }
 
 if(m==="Cylinder"){
@@ -233,14 +240,28 @@ if(m==="Cylinder"){
       var h=prompt("Heigth")*1;
       var s=prompt("Segments")*1;
       var cap=prompt("Cap true or false",false);
-  //    alert("r1,r2,h,s,cap\n\n"+r1+"\n"+r2+"\n"+h+"\n"+s+"\n"+cap+"\n") 
+      alert("r1,r2,h,s,cap\n\n"+r1+"\n"+r2+"\n"+h+"\n"+s+"\n"+cap+"\n") 
     var m=Cylinder(name,r1,r2,h,s,cap);
     m.position.x=prompt("Position X")*1;
    m.position.y=prompt("Position Y")*1;
    m.position.z=prompt("Position Z")*1
    scene.add(m)
+   smeshes.appendChild(op);
+
 }
 if(m==="Torus"){
+   
+    var r=prompt("Radius")*1;
+    var rs=prompt("segments")*1;
+    var tk=prompt("Thicknes")*1;
+    var ts=prompt("Transversal Segments")*1;
+    var m=Torus(n,r,rs,tk,ts);
+    m.position.x=prompt("Position X")*1;
+   m.position.y=prompt("Position Y")*1;
+   m.position.z=prompt("Position Z")*1
+
+    smeshes.appendChild(op);
+    scene.add(m)
 
 }
 
@@ -300,7 +321,7 @@ function crObject(callback){
                 image.src = e.target.result;
              //   document.body.appendChild(image);
             
-             pr2.material.map=THREE.ImageUtils.loadTexture(image.src);
+             ObSelected.material.map=THREE.ImageUtils.loadTexture(image.src);
         //     pr2.material.needsUpdate=true;
         //      render()
               
@@ -308,7 +329,17 @@ function crObject(callback){
             }
              reader.readAsDataURL(file);
          }
+function selMesh(v){
+    var ar=scene.children;
+    for( var i=0;i<ar.length;i++){
+        if(ar[i].name===v){
+            ObSelected=ar[i];
+            i=ar.length;
 
+        }
+    }
+
+}
 
     </script>
 
