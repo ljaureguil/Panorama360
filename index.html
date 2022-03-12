@@ -23,6 +23,15 @@
             cursor: pointer;
             background-color: rgba(0, 0, 0, .4);
         }
+        .csels{
+            background:rgba(100, 100,1000,.35);
+            color:white;
+        }
+        button{
+           background:rgba(100, 100,1000,.35);
+            color:white;
+            
+        }
     </style>
 </head>
 
@@ -32,12 +41,25 @@
     <div id="capture"><button id="capturea">Capture</button>
   <input type=file name=filename id=file>
     <button type=button onclick='test()'>Display</button>
-    <select></select><select></select>
+ 
+    <select class="csels"  id="stextures" onchange="selT(this.value)">
+        <option>Choose Texture</option>
+    </select>
+   <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
+        <option>Create Object</option>
+        <option>Box</option>
+        <option>Sphere</option>
+        <option>Line</option>
+        <option>Cylinder</option>
+        <option>Label</option>     
+        <option>Torus</option> 
 
-
+    </select>
+    <select class="csels"  id="smeshes" onchange="selMesh()">
+        <option>Choose Object</option>
+    </select>
     </div> 
-   
-    <script src="textures.js"></script>
+  
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
     <script src="js/three.min.js"></script> 
@@ -46,18 +68,13 @@
     <script src="js/OrbitControls.js"></script> 
       <script src="TrackballControls.js"></script>
     <script src="js/CubemapToEquirectangular.js"></script>
-  
+   
+    <script src="textures.js"></script>
 
     <script>
  
     </script>
     
-     
-    
-    
-
-
-
     <script>
 
 var pr1, pr2, pr3
@@ -94,7 +111,7 @@ var pr1, pr2, pr3
 			alight = new THREE.AmbientLight( 0xaaaaaa );
 			scene.add(alight)
             var textureLoader = new THREE.TextureLoader();
-             textureLoader.load(w1, function(texture) {
+             textureLoader.load(art[3].pic, function(texture) {
 
                 texture.mapping = THREE.UVMapping;
 
@@ -111,15 +128,16 @@ var pr1, pr2, pr3
             var geometry = new THREE.BoxBufferGeometry( 190,160, 110);
          var d=600;
   
-            textureLoader.load(pic2, function(texture) {
+            textureLoader.load(art[3].pic, function(texture) {
            pr2=crOb(texture,geometry)
            pr2.position.x=0;
            pr2.position.z=-300;
+           pr2.name="Pr2"
 
              scene.add(pr2)
                 
             });  
-    
+     
           
             renderer = new THREE.WebGLRenderer({
                 antialias: true
@@ -131,7 +149,7 @@ var pr1, pr2, pr3
             container.appendChild(renderer.domElement);
 
             equi = new CubemapToEquirectangular(renderer, true);
-
+   setUpSels();
        //     controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls = new THREE.TrackballControls( camera, renderer.domElement );
     //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
@@ -141,34 +159,81 @@ controls.zoomSpeed = 1.2;
 controls.panSpeed = 0.8;
 
 controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
-
-
-
-
-            window.addEventListener('resize', onWindowResize, false);
+          window.addEventListener('resize', onWindowResize, false);
             onWindowResize();
 
             document.getElementById('capturea').addEventListener('click', function(e) {
 
                 equi.update(camera, scene);
-
-           
-           
+         
             });
   
         
+        }
+        function selT(v){
+     
+            for( var i=0;i<art.length;i++){
+                if(art[i].name===v){
+                      pr2.material.map=THREE.ImageUtils.loadTexture(art[i].pic);
+                    i=art.length;
+                }
         
+            }   
+          
         }
-        function updSo(){
-            vars="<option>"+"varr"+"</option"
+        function setUpSels(){
+             var s=stextures.innerHTML+"<option>";
+             
+            for( var i=0;i<art.length;i++){
+                s+="<option>"+art[i].name+"</option>";
+        
+            } 
+   
+            stextures.innerHTML=s;
+          setupMeshs();
+        }
 
-        }
+        function setupMeshs(){
+    var ms=scene.children;
+    var s=smeshes.innerHTML;
+    for(var i=0;i<ms.length;i++){
+        if(ms[i].name!=undefined){
+        s+="<option>"+ms[i].name+"</option>";
+}
+smeshes.innerHTML=s;
+    }
+}
+function chooseMesh(m){
+        var n=prompt("Name");
+  if(m==="Box"){
+  
+      var w=prompt("Width")*1;
+      var d=prompt("Depth")*1;
+      var h=prompt("Heigth")*1
+      scene.add(Box(n,w,d,h))
+
+  }
+  if(m==="Sphere"){
+   var r=prompt("Radius?")*1;
+   var sx=40,sy=20;
+   scene.add(Sphere(r,sx,sy))
+}
+
+if(m==="Cylinder"){
+
+}
+if(m==="Torus"){
+
+}
+
+}
+
 function crOb(texture,geom,pos){
 
     return  new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
-					map:texture    //,
-                  //  color: Math.random() * 0xffffff
-                }));
+					map:texture,
+                    transparent:true    //,
+                      }));
 
 
 }
@@ -232,3 +297,4 @@ function crObject(callback){
 </body>
 
 </html>
+
