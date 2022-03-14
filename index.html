@@ -36,11 +36,29 @@
         select{
             margin: 5px;
         }
+        #dparams{
+            z-index: 50;
+            position: absolute;
+            top:2%;
+            width: 100%;
+            height: 100%;
+            border-style: solid;
+       
+        }
+        #params{
+            width: 100%;
+            height: 90%;
+            background: rgba(255,255,255,.75);
+
+        }
     </style>
 </head>
 
 <body>
   
+
+
+
 
     <div id="capture"><button id="capturea">Capture</button>
   <input type=file name=filename id=file oninput="test()">
@@ -63,8 +81,13 @@
         <option>Choose Object</option>
     </select>
     <button onclick="editMesh()">Edit Obj</button>
-    </div> 
-  
+  <div id="dparam">
+    <button onclick="">Apply</button>
+    <button onclick="dparam.style.display='none'">close</button>
+  <textarea id="params"></textarea>
+  </div>
+</div>
+
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
     <script src="js/three.min.js"></script> 
@@ -90,7 +113,7 @@ var pr1, pr2, pr3
         var camera, scene, renderer;
         var controls;
 
-        var radius = 100,
+        var radius = 100,INTERSECTED,
             theta = 0;
 
         window.addEventListener('load', function() {
@@ -102,13 +125,14 @@ var pr1, pr2, pr3
         const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
-function onPointerMove( event ) {
+function fraycast( event ) {
 
 	// calculate pointer position in normalized device coordinates
 	// (-1 to +1) for both components
 
 	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+  //  params.value=JSON.stringify(pointer)
    // alert(pointer.y)
 
 }
@@ -146,6 +170,7 @@ function onPointerMove( event ) {
                 });
                 world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
+                world1.name="world"
                 scene.add(world1);
             })
      
@@ -179,7 +204,7 @@ controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
          
             });
   
-        document.addEventListener("click", onPointerMove );
+      renderer.domElement.addEventListener( 'click', fraycast ); // document.addEventListener("click", onPointerMove );//, false
         
         }
         function selT(v){
@@ -221,56 +246,58 @@ function chooseMesh(m){
   // op.innerHTML=n;    
   if(m==="Box"){
   
-      var w=prompt("Width")*1;
-      var d=prompt("Depth")*1;
-      var h=prompt("Heigth")*1;
-      var m=Box(n,w,d,h)
-      m.position.x=prompt("Position X")*1;
-   m.position.y=prompt("Position Y")*1;
-   m.position.z=prompt("Position Z")*1
+    //  var w=prompt("Width",10)*1;
+    //  var d=prompt("Depth",10)*1;
+    //  var h=prompt("Heigth",10)*1;
+      var m=Box(n,10,10,10);
+      // var m=Box(n,w,d,h)
+      m.position.x=0;//prompt("Position X",0)*1;
+   m.position.y=0;//prompt("Position Y",0)*1;
+   m.position.z=0;//prompt("Position Z",0)*1;
+   m.name.x=0;m.name.y=0;m.name.z=0;
    scene.add(m);
-   op.innerHTML=m.name;    
+   op.innerHTML=m.name.name;    
    smeshes.appendChild(op);
 
   }
   if(m==="Sphere"){
    var r=prompt("Radius?")*1;
   var m=Sphere(r,80,40);
-   m.position.x=prompt("Position X")*1;
-   m.position.y=prompt("Position Y")*1;
-   m.position.z=prompt("Position Z")*1
+   m.position.x=prompt("Position X",0)*1;
+   m.position.y=prompt("Position Y",0)*1;
+   m.position.z=prompt("Position Z",0)*1
    scene.add(m);
-   op.innerHTML=m.name;   
+   op.innerHTML=m.name.name.name;  ;   
    smeshes.appendChild(op);
 
 }
 
 if(m==="Cylinder"){
-    var r1=prompt("Radius1")*1;
-      var r2=prompt("Radius2")*1;
-      var h=prompt("Heigth")*1;
-      var s=prompt("Segments")*1;
+    var r1=prompt("Radius1",10)*1;
+      var r2=prompt("Radius2",10)*1;
+      var h=prompt("Heigth",10)*1;
+      var s=prompt("Segments",100)*1;
       var cap=prompt("Cap true or false",false);
       alert("r1,r2,h,s,cap\n\n"+r1+"\n"+r2+"\n"+h+"\n"+s+"\n"+cap+"\n") 
     var m=Cylinder(name,r1,r2,h,s,cap);
  
   
    scene.add(m);
-   op.innerHTML=m.name;   
+   op.innerHTML=m.name.name.name;  ;   
    smeshes.appendChild(op);
 
 }
 if(m==="Torus"){
    
-    var r=prompt("Radius")*1;
-    var rs=prompt("segments")*1;
-    var tk=prompt("Thicknes")*1;
-    var ts=prompt("Transversal Segments")*1;
+    var r=prompt("Radius",10)*1;
+    var rs=prompt("segments",10)*1;
+    var tk=prompt("Thicknes",3)*1;
+    var ts=prompt("Transversal Segments",100)*1;
     var m=Torus(n,r,rs,tk,ts);
-    m.position.x=prompt("Position X")*1;
-   m.position.y=prompt("Position Y")*1;
+    m.position.x=prompt("Position X",0)*1;
+   m.position.y=prompt("Position Y",0)*1;
    m.position.z=prompt("Position Z")*1
-   op.innerHTML=m.name;   
+   op.innerHTML=m.name.name.name;  ;   
     smeshes.appendChild(op);
     scene.add(m)
 
@@ -319,25 +346,39 @@ function crObject(callback){
         }
 
         function render() {
+			raycaster.setFromCamera( pointer, camera );
 
-// update the picking ray with the camera and pointer position
-raycaster.setFromCamera( pointer, camera );
+				const intersects = raycaster.intersectObjects( scene.children, false );
 
-// calculate objects intersecting the picking ray
-const intersects = raycaster.intersectObjects( scene.children );
-
-for ( let i = 2; i < intersects.length; i ++ ) {
-
-    intersects[ i ].object.material.color.set( 0xff0000 );
-
-}
-/*
-else{
-    intersects[ i ].object.material.color.set( 0xffffff );
-}
-*/
+				if ( intersects.length > 0 ) {
+                
+					if ( INTERSECTED != intersects[ 0 ].object  ) {
 
 
+					//	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+						INTERSECTED = intersects[ 0 ].object;
+     
+						if(INTERSECTED.name!="world"){
+                            dparam.style.display='block'
+                            params.value=JSON.stringify(INTERSECTED.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
+
+                            ObSelected=INTERSECTED;
+                        
+                        }
+                        else{
+    
+                        }
+
+					}
+
+				} else {
+                  //  if(INTERSECTED.name!="world"){
+				//	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+//}
+					INTERSECTED = null;
+
+				}
 
 
 
@@ -362,18 +403,21 @@ else{
              reader.readAsDataURL(file);
          }
 function selMesh(v){
-  //  alert(v)
-  ObSelected=scene.getObjectByName(v);
+    alert(v)
+//  ObSelected=scene.getObjectByName(v);
+ // alert(ObSelected.name.w)
+    var ar=scene.children
  
- /*
-    for( var i=0;i<scene.children.length;i++){
-        if(scene.children[i].name===v){
-            ObSelected=scene.children[i];
-            i=scene.children.length;
- //  alert(JSON.stringify(ObSelected.geometry.attributes ))
+    for( var i=0;i<ar.length;i++){
+        if(ar[i].name.name===v){
+            ObSelected=ar[i];
+       
+            
+   alert(JSON.stringify(ar[i].name));
+        i=ar.length;
         }
     }
- */
+ /**/
 }
 function editMesh(){
     if(ObSelected!=null){
