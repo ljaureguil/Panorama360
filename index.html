@@ -36,18 +36,17 @@
         select{
             margin: 5px;
         }
-        #dparams{
-            z-index: 50;
-            position: absolute;
-            top:2%;
+        #dparam{
             width: 100%;
             height: 100%;
             border-style: solid;
+               display:none;
        
         }
         #params{
-            width: 100%;
-            height: 90%;
+         
+            width: 50%;
+            height: 200px;
             background: rgba(255,255,255,.75);
 
         }
@@ -82,7 +81,7 @@
     </select>
     <button onclick="editMesh()">Edit Obj</button>
   <div id="dparam">
-    <button onclick="">Apply</button>
+    <button onclick="applay(params.value)">Apply</button>
     <button onclick="dparam.style.display='none'">close</button>
   <textarea id="params"></textarea>
   </div>
@@ -146,7 +145,7 @@ function fraycast( event ) {
             container = document.createElement('div');
             document.body.appendChild(container);
 
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
             camera.position.set(1, 1, 1);
 
             scene = new THREE.Scene();
@@ -246,58 +245,30 @@ function chooseMesh(m){
   // op.innerHTML=n;    
   if(m==="Box"){
   
-    //  var w=prompt("Width",10)*1;
-    //  var d=prompt("Depth",10)*1;
-    //  var h=prompt("Heigth",10)*1;
       var m=Box(n,10,10,10);
-      // var m=Box(n,w,d,h)
-      m.position.x=0;//prompt("Position X",0)*1;
-   m.position.y=0;//prompt("Position Y",0)*1;
-   m.position.z=0;//prompt("Position Z",0)*1;
-   m.name.x=0;m.name.y=0;m.name.z=0;
-   scene.add(m);
+    scene.add(m);
    op.innerHTML=m.name.name;    
    smeshes.appendChild(op);
 
   }
   if(m==="Sphere"){
-   var r=prompt("Radius?")*1;
-  var m=Sphere(r,80,40);
-   m.position.x=prompt("Position X",0)*1;
-   m.position.y=prompt("Position Y",0)*1;
-   m.position.z=prompt("Position Z",0)*1
+   var m=Sphere(n,5,80,40);
    scene.add(m);
-   op.innerHTML=m.name.name.name;  ;   
+   op.innerHTML=m.name.name ;   
    smeshes.appendChild(op);
 
 }
 
 if(m==="Cylinder"){
-    var r1=prompt("Radius1",10)*1;
-      var r2=prompt("Radius2",10)*1;
-      var h=prompt("Heigth",10)*1;
-      var s=prompt("Segments",100)*1;
-      var cap=prompt("Cap true or false",false);
-      alert("r1,r2,h,s,cap\n\n"+r1+"\n"+r2+"\n"+h+"\n"+s+"\n"+cap+"\n") 
-    var m=Cylinder(name,r1,r2,h,s,cap);
- 
-  
+     var m=Cylinder(name,5,5,20,64,false);
    scene.add(m);
-   op.innerHTML=m.name.name.name;  ;   
+   op.innerHTML=m.name.name ;   
    smeshes.appendChild(op);
 
 }
 if(m==="Torus"){
-   
-    var r=prompt("Radius",10)*1;
-    var rs=prompt("segments",10)*1;
-    var tk=prompt("Thicknes",3)*1;
-    var ts=prompt("Transversal Segments",100)*1;
-    var m=Torus(n,r,rs,tk,ts);
-    m.position.x=prompt("Position X",0)*1;
-   m.position.y=prompt("Position Y",0)*1;
-   m.position.z=prompt("Position Z")*1
-   op.innerHTML=m.name.name.name;  ;   
+     var m=Torus(n,10,3,16,100);
+    op.innerHTML=m.name.name ;   
     smeshes.appendChild(op);
     scene.add(m)
 
@@ -423,6 +394,46 @@ function editMesh(){
     if(ObSelected!=null){
     //    alert(ObSelected.parameters)
     }
+}
+function applay(v){
+
+      v=v.replace(/{\n/g,"{").replace(/\n}/g,"}").replace(/\n/g,",")
+     var o= JSON.parse(v);
+     ObSelected.position.set(  o.x,o.y, o.z );
+    if(o.rx!=undefined && o.ry!=undefined && o.rz!=undefined){ 
+         ObSelected.rotation.x=o.rx;
+        ObSelected.rotation.y=o.ry;
+        ObSelected.rotation.z=o.rz;
+             ObSelected.name=o;
+}
+
+      if(o.name.indexOf("Box")>-1){
+       var g=new THREE.BoxBufferGeometry( o.w,o.l,o.h);
+      ObSelected.geometry=g;
+       }
+     if(o.name.indexOf("Sphere")>-1){
+       g = new THREE.SphereGeometry( o.r, o.sx, o.sy );
+        ObSelected.geometry=g;
+      }
+     if(o.name.indexOf("Cylinder")>-1){alert("c")
+     //    alert(o.r1+"........."+o.r2)
+        var g=new THREE.CylinderGeometry( o.r1, o.r2, o.h, o.s);
+        ObSelected.geometry=g;
+
+     }
+     if(o.name.indexOf("Torus")>-1){
+        var g=geometry = new THREE.TorusGeometry( o,r, o.tk, o.rs, o.ts )
+        ObSelected.geometry=g;
+
+     }
+ 
+ 
+ 
+ 
+ 
+   
+     
+
 }
 
     </script>
