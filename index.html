@@ -50,6 +50,13 @@
             background: rgba(255,255,255,.75);
 
         }
+        #file{
+            background: url(https://icons-for-free.com/iconfiles/png/512/folder+open+icon-1320161390409087972.png);
+            background-size: 100% 100%;;
+        }
+        #ct{
+            display: none;
+        }
     </style>
 </head>
 
@@ -59,8 +66,11 @@
 
 
 
-    <div id="capture"><button id="capturea">Capture</button>
-  <input type=file name=filename id=file oninput="test()">
+    <div id="capture">
+        <button id="bm" onclick="if(ct.style.display!='none')ct.style.display='none';else ct.style.display='Block'">M</button>
+        <div id="ct">
+        <button id="capturea">Capture</button>
+  <input type=file name=filename id=file oninput="test()" o</input>
     <button type=button onclick='test()'>Display</button>
  
     <select class="csels"  id="stextures" onchange="selT(this.value)">
@@ -86,10 +96,10 @@
   <textarea id="params"></textarea>
   </div>
 </div>
-
+</div>
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
-    <script src="js/three.min.js"></script> 
+    <script src="js/three.js"></script> 
   
 
     <script src="js/OrbitControls.js"></script> 
@@ -146,7 +156,7 @@ function fraycast( event ) {
             document.body.appendChild(container);
 
             camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.set(1, 1, 1);
+            camera.position.set(0, 0, 1);
 
             scene = new THREE.Scene();
 
@@ -204,7 +214,10 @@ controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
             });
   
       renderer.domElement.addEventListener( 'click', fraycast ); // document.addEventListener("click", onPointerMove );//, false
-        
+    //  const axesHelper = AxesHelper( 5 );
+//scene.add( axesHelper );
+//controls2 = new DeviceOrientationControls(camera);
+
         }
         function selT(v){
      
@@ -247,13 +260,15 @@ function chooseMesh(m){
   
       var m=Box(n,10,10,10);
     scene.add(m);
+    ObSelected=m; selMesh.value=m.name;
+   
    op.innerHTML=m.name.name;    
    smeshes.appendChild(op);
 
   }
   if(m==="Sphere"){
    var m=Sphere(n,5,80,40);
-   scene.add(m);
+   scene.add(m); ObSelected=m; selMesh.value=m.name;
    op.innerHTML=m.name.name ;   
    smeshes.appendChild(op);
 
@@ -261,7 +276,7 @@ function chooseMesh(m){
 
 if(m==="Cylinder"){
      var m=Cylinder(name,5,5,20,64,false);
-   scene.add(m);
+   scene.add(m); ObSelected=m; selMesh.value=m.name;
    op.innerHTML=m.name.name ;   
    smeshes.appendChild(op);
 
@@ -270,7 +285,7 @@ if(m==="Torus"){
      var m=Torus(n,10,3,16,100);
     op.innerHTML=m.name.name ;   
     smeshes.appendChild(op);
-    scene.add(m)
+    scene.add(m); ObSelected=m; selMesh.value=m.name;
 
 }
 
@@ -317,6 +332,8 @@ function crObject(callback){
         }
 
         function render() {
+          
+            if(ct.style.display!='none'){ //  controls2.update();
 			raycaster.setFromCamera( pointer, camera );
 
 				const intersects = raycaster.intersectObjects( scene.children, false );
@@ -350,7 +367,7 @@ function crObject(callback){
 					INTERSECTED = null;
 
 				}
-
+}
 
 
             renderer.render(scene, camera);
@@ -366,8 +383,13 @@ function crObject(callback){
              //   document.body.appendChild(image);
             
              ObSelected.material.map=THREE.ImageUtils.loadTexture(image.src);
+             
+ 
         //     pr2.material.needsUpdate=true;
         //      render()
+
+    /*    setTimeout(function(){ ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
+ObSelected.material.map.repeat.set(2,2);},20000)*/
               
          
             }
@@ -406,10 +428,29 @@ function applay(v){
         ObSelected.rotation.z=o.rz;
              ObSelected.name=o;
 }
+var texture=ObSelected.material.map;
+//ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
+
+texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.x = 200;
+            texture.repeat.y = 200;
+            texture.offset.set( 0, 0 );
+
+
+
+
+//ObSelected.material.map.repeat.set(o.rpx, o.rpy);
+//ObSelected.material.needsUpdate=true;
+
+//Checar esto de la textura
 
       if(o.name.indexOf("Box")>-1){
        var g=new THREE.BoxBufferGeometry( o.w,o.l,o.h);
       ObSelected.geometry=g;
+ //     ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
+//ObSelected.material.map.repeat.set(o.rpx, o.rpy);
+O//bSelected.material.needsUpdate=true;
        }
      if(o.name.indexOf("Sphere")>-1){
        g = new THREE.SphereGeometry( o.r, o.sx, o.sy );
@@ -422,17 +463,13 @@ function applay(v){
 
      }
      if(o.name.indexOf("Torus")>-1){
-        var g=geometry = new THREE.TorusGeometry( o,r, o.tk, o.rs, o.ts )
+     
+        var g=geometry = new THREE.TorusGeometry( o.r, o.tk, o.rs, o.ts )
         ObSelected.geometry=g;
 
      }
  
- 
- 
- 
- 
-   
-     
+  
 
 }
 
