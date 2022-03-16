@@ -16,27 +16,27 @@ var ma_=new THREE.MeshPhongMaterial({map:te_});
 
 
 function Box(name,w,l,h,c){
-    var m=new THREE.Mesh(new THREE.BoxBufferGeometry( w,l,h),new THREE.MeshPhongMaterial({map:te_}));
+    var m=new THREE.Mesh(new THREE.BoxBufferGeometry( w,l,h),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:te_}));
     var s=name+"_Box";
     m.name={name:s,w:w,l:l,h:h,x:0,y:0,z:0,rx:0,ry:0,rz:0,rpx:1,rpy:1,ofx:0,ofy:0,rot:0,piv:c}
     return  m;
 }
 function Sphere(name,r,sx,sy,c){ 
-    var m=new THREE.Mesh(new THREE.SphereBufferGeometry(r, sx, sy),new THREE.MeshPhongMaterial({map:te_}));
+    var m=new THREE.Mesh(new THREE.SphereBufferGeometry(r, sx, sy),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:te_}));
     var s=name+"_Sphere";
     m.name={name:s,r:r,sx:sx,sy:sy,x:0,y:0,z:0,rx:0,ry:0,rz:0,rpx:1,rpy:1,ofx:0,ofy:0,rot:0,piv:c}
     return  m;
 }
 function Cylinder(name,r1,r2,h,s,cap,c){
     if(cap===undefined)cap=false; 
-     var m= new THREE.Mesh(new THREE.CylinderGeometry( r1, r2, h, s),new THREE.MeshPhongMaterial({map:te_}));//,starc,arc)/// new THREE.CylinderGeometry( 5, 5, 20, 32 )/
+     var m= new THREE.Mesh(new THREE.CylinderGeometry( r1, r2, h, s),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:te_}));//,starc,arc)/// new THREE.CylinderGeometry( 5, 5, 20, 32 )/
      var ss=name+"_Cylinder";
  m.name={name:ss,r1:r1,r2:r2,h:h,s:s,cap:cap,x:0,y:0,z:0,rx:0,ry:0,rz:0,rpx:1,rpy:1,ofx:0,ofy:0,rot:0,piv:c}
  m.geometry.openEnded=cap;
  return  m;
 }
 function Torus(name,r,tk,rs,ts,c){
-    var m= new THREE.Mesh( geometry = new THREE.TorusGeometry( r, tk, rs, ts ),new THREE.MeshPhongMaterial({map:te_}));////new THREE.TorusGeometry( 10, 3, 16, 100 )
+    var m= new THREE.Mesh( geometry = new THREE.TorusGeometry( r, tk, rs, ts ),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:te_}));////new THREE.TorusGeometry( 10, 3, 16, 100 )
     var s=name+"_Torus";
  m.name={name:s,r:r,tk:tk,rs:rs,ts:ts,x:0,y:0,z:0,rx:0,ry:0,rz:0,rpx:1,rpy:1,ofx:0,ofy:0,rot:0,piv:c}
  return  m;
