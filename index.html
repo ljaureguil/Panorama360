@@ -192,7 +192,7 @@ function fraycast( event ) {
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.sortObjects = false;
             container.appendChild(renderer.domElement);
-
+            renderer.setScissorTest(false);
             equi = new CubemapToEquirectangular(renderer, true);
    setUpSels();
        //     controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -430,13 +430,13 @@ function applay(v){
 }
 var texture=ObSelected.material.map;
 //ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
-
+/*
 texture.wrapS = THREE.RepeatWrapping;
             texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.x = 200;
             texture.repeat.y = 200;
             texture.offset.set( 0, 0 );
-
+*/
 
 
 
