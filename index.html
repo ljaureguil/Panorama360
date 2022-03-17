@@ -51,8 +51,9 @@
 
         }
         #file{
-            background: url(https://icons-for-free.com/iconfiles/png/512/folder+open+icon-1320161390409087972.png);
-            background-size: 100% 100%;;
+            width:80px;
+           // background: url(https://icons-for-free.com/iconfiles/png/512/folder+open+icon-1320161390409087972.png);
+           // background-size: 100% 100%;;
         }
         #ct{
             display: none;
@@ -76,6 +77,7 @@
     <select class="csels"  id="stextures" onchange="selT(this.value)">
         <option>Choose Texture</option>
     </select>
+    <button id="bw" onclick="setWorld(stextures.value)">App to World</button>
    <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
         <option>Create Object</option>
         <option>Box</option>
@@ -95,6 +97,7 @@
     <button onclick="dparam.style.display='none'">close</button>
   <textarea id="params"></textarea>
   </div>
+
 </div>
 </div>
     <script src="js/ImageData-polyfill.js"></script>
@@ -429,28 +432,20 @@ function applay(v){
              ObSelected.name=o;
 }
 var texture=ObSelected.material.map;
-//ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
-/*
-texture.wrapS = THREE.RepeatWrapping;
-            texture.wrapT = THREE.RepeatWrapping;
-            texture.repeat.x = 200;
-            texture.repeat.y = 200;
-            texture.offset.set( 0, 0 );
-*/
 
 
-
-//ObSelected.material.map.repeat.set(o.rpx, o.rpy);
-//ObSelected.material.needsUpdate=true;
-
-//Checar esto de la textura
+ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
+ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
+ObSelected.material.map.repeat.set(o.rpx,o.rpy);
+ObSelected.material.map.offset.x=o.ofx;//,o.ofy)
+ObSelected.material.map.offset.y=o.ofy;
+ObSelected.material.map.rotation=o.rot;
+ObSelected.material.needsUpdate = true;
+render();
 
       if(o.name.indexOf("Box")>-1){
        var g=new THREE.BoxBufferGeometry( o.w,o.l,o.h);
       ObSelected.geometry=g;
- //     ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
-//ObSelected.material.map.repeat.set(o.rpx, o.rpy);
-O//bSelected.material.needsUpdate=true;
        }
      if(o.name.indexOf("Sphere")>-1){
        g = new THREE.SphereGeometry( o.r, o.sx, o.sy );
@@ -469,8 +464,10 @@ O//bSelected.material.needsUpdate=true;
 
      }
  
-  
-
+}
+function setWorld(v){
+    world1.material.map=THREE.ImageUtils.loadTexture(v);
+    
 }
 
     </script>
