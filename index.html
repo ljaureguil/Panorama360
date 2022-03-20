@@ -435,7 +435,7 @@ function applay(v){
 var texture=ObSelected.material.map;
 
 
-ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
+//ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
 ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
 ObSelected.material.map.repeat.set(o.rpx,o.rpy);
 ObSelected.material.map.offset.x=o.ofx;//,o.ofy)
