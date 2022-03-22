@@ -152,7 +152,7 @@ function fraycast( event ) {
 
 
         var cubeCamera;
-       
+        var textureLoader = new THREE.TextureLoader();
         function init() {
 
             container = document.createElement('div');
@@ -169,7 +169,7 @@ function fraycast( event ) {
 
 			alight = new THREE.AmbientLight( 0xaaaaaa );
 			scene.add(alight)
-            var textureLoader = new THREE.TextureLoader();
+           
              textureLoader.load(art[0].pic, function(texture) {
 
                 texture.mapping = THREE.UVMapping;
@@ -217,8 +217,7 @@ controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
             });
   
       renderer.domElement.addEventListener( 'click', fraycast ); // document.addEventListener("click", onPointerMove );//, false
-    //  const axesHelper = AxesHelper( 5 );
-//scene.add( axesHelper );
+ 
 //controls2 = new DeviceOrientationControls(camera);
 
         }
@@ -351,10 +350,12 @@ function crObject(callback){
 						INTERSECTED = intersects[ 0 ].object;
      
 						if(INTERSECTED.name!="world"){
-                            dparam.style.display='block'
+                            dparam.style.display='block';
+                           
                             params.value=JSON.stringify(INTERSECTED.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
 
                             ObSelected=INTERSECTED;
+                        
                         
                         }
                         else{
@@ -384,18 +385,14 @@ function crObject(callback){
                 var image = document.createElement("img");
                 image.src = e.target.result;
              //   document.body.appendChild(image);
-            
-             ObSelected.material.map=THREE.ImageUtils.loadTexture(image.src);
-             ObSelected.name.pic=image.src;
+            ObSelected.name.pic=image.src;
+           //  ObSelected.material.map=THREE.ImageUtils.loadTexture(image.src);
+       //    alert(JSON.stringify(ObSelected.name))
+           params.value=JSON.stringify(ObSelected.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
+           applay(params.value)
+
              
  
-        //     pr2.material.needsUpdate=true;
-        //      render()
-
-    /*    setTimeout(function(){ ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
-ObSelected.material.map.repeat.set(2,2);},20000)*/
-              
-         
             }
              reader.readAsDataURL(file);
          }
@@ -422,7 +419,7 @@ function editMesh(){
     }
 }
 function applay(v){
-
+  
       v=v.replace(/{\n/g,"{").replace(/\n}/g,"}").replace(/\n/g,",")
      var o= JSON.parse(v);
      ObSelected.position.set(  o.x,o.y, o.z );
@@ -432,17 +429,12 @@ function applay(v){
         ObSelected.rotation.z=o.rz;
              ObSelected.name=o;
 }
-var texture=ObSelected.material.map;
+//textureLoader.load(o.pic,function(texture){
+//var texture=ObSelected.material.map;
+
+//alert(o.pic)
 
 
-//ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
-ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
-ObSelected.material.map.repeat.set(o.rpx,o.rpy);
-ObSelected.material.map.offset.x=o.ofx;//,o.ofy)
-ObSelected.material.map.offset.y=o.ofy;
-ObSelected.material.map.rotation=o.rot;
-ObSelected.material.needsUpdate = true;
-render();
 
       if(o.name.indexOf("Box")>-1){
        var g=new THREE.BoxBufferGeometry( o.w,o.l,o.h);
@@ -464,6 +456,22 @@ render();
         ObSelected.geometry=g;
 
      }
+     ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
+//ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
+ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
+
+     ObSelected.material.map.repeat.set(o.rpx,o.rpy);
+ObSelected.material.map.offset.x=o.ofx;//,o.ofy)
+ObSelected.material.map.offset.y=o.ofy;
+ObSelected.material.map.rotation=o.rot;
+ObSelected.material.needsUpdate = true;
+
+
+params.name=o;
+
+render();
+
+  //   });
  
 }
 function setWorld(v){
