@@ -77,7 +77,7 @@
     <select class="csels"  id="stextures" onchange="selT(this.value)">
         <option>Choose Texture</option>
     </select>
-    <button id="bw" onclick="setWorld(stextures.value)">App to World</button>
+    <button id="bw" onclick="setWorld(stextures.value)">Open Editor</button>
    <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
         <option>Create Object</option>
         <option>Box</option>
@@ -182,7 +182,8 @@ function fraycast( event ) {
                 });
                 world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
-                world1.name="world"
+                world1.name="world";
+                world1.name={name:"World",r:900,sx:312,sy:116,x:0,y:0,z:0,rx:0,ry:0,rz:0,rpx:1,rpy:1,ofx:0,ofy:0,rot:0,piv:"",pic:"".pic}
                 scene.add(world1);
             })
      
@@ -348,17 +349,17 @@ function crObject(callback){
 					//	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
 						INTERSECTED = intersects[ 0 ].object;
-     
-						if(INTERSECTED.name!="world"){
+                       ObSelected=INTERSECTED;
+                        params.value=JSON.stringify(INTERSECTED.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
+          
+						if(INTERSECTED.name.name!="World"){
                             dparam.style.display='block';
                            
-                            params.value=JSON.stringify(INTERSECTED.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
-
-                            ObSelected=INTERSECTED;
-                        
                         
                         }
                         else{
+
+                            dparam.style.display="none";
     
                         }
 
@@ -386,9 +387,15 @@ function crObject(callback){
                 image.src = e.target.result;
              //   document.body.appendChild(image);
             ObSelected.name.pic=image.src;
-           //  ObSelected.material.map=THREE.ImageUtils.loadTexture(image.src);
-       //    alert(JSON.stringify(ObSelected.name))
+ 
+      if(ObSelected.name.name==="World" && !confirm("Are you sure you want to set this background?"))   return;
+      else           dparam.style.display="block"
+ 
+
+
+                
            params.value=JSON.stringify(ObSelected.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
+ 
            applay(params.value)
 
              
@@ -475,8 +482,9 @@ render();
  
 }
 function setWorld(v){
-    world1.material.map=THREE.ImageUtils.loadTexture(v);
-    
+ 
+   dparam.style.display="block"
+
 }
 
     </script>
