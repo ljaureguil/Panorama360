@@ -1,5 +1,4 @@
 
-
 var worlds=[];
 var art=[]
 art.push({"name":"logo","pic":"https://as2.ftcdn.net/v2/jpg/03/37/62/41/1000_F_337624179_SCcRL4gleCZGWyVNS8suSUvyEwBoI1hb.jpg"});
@@ -17,7 +16,12 @@ var ma_=new THREE.MeshPhongMaterial({map:te_});
 
 
 function Box(name,w,l,h,c){
-    var m=new THREE.Mesh(new THREE.BoxBufferGeometry( w,l,h),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:te_}));
+    var m=new THREE.Mesh(new THREE.BoxBufferGeometry( w,l,h),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:te_,
+       bumpMap:THREE.ImageUtils.loadTexture('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHwJBcMHDbc52aZSLh76u4gBQ4lESWhyrRmXRxA9KJ3ATp4kkVfYZGzBbD2Un8b1C7MY0&usqp=CAU'),
+    bumpScale:   0.13005,
+    //specularMap: THREE.ImageUtils.loadTexture('https://www.cati.com/wp-content/uploads/SOLIDWORKS-1536355419728.jpeg'),
+    //specular:    new THREE.Color('grey')
+}));
     var s=name+"_Box";
     m.name={name:s,w:w,l:l,h:h,x:0,y:0,z:0,rx:0,ry:0,rz:0,rpx:1,rpy:1,ofx:0,ofy:0,rot:0,piv:c,pic:art[5].pic}
     return  m;
@@ -48,20 +52,3 @@ function Torus(name,r,tk,rs,ts,c){
 var sbox=""
 
 ////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
