@@ -23,46 +23,46 @@
             cursor: pointer;
             background-color: rgba(0, 0, 0, .4);
         }
-        .csels{
-            background:rgba(100, 100,1000,.35);
-            color:white;
+        .csels {
+            background: rgba(100, 100, 1000, .35);
+            color: white;
         }
-        button{
+        button {
             margin: 5px;
-           background:rgba(100, 100,1000,.35);
-            color:white;
-            
+            background: rgba(100, 100, 1000, .35);
+            color: white;
         }
-        select{
+        select {
             margin: 5px;
         }
-        #dparam{
+        #dparam {
             width: 100%;
             height: 100%;
             border-style: solid;
-               display:none;
-       
+            display: none;
         }
-        #params{
-         
+        #params {
             width: 50%;
             height: 200px;
-            background: rgba(255,255,255,.75);
-
+            background: rgba(255, 255, 255, .75);
         }
-        #file{
-            width:80px;
-           // background: url(https://icons-for-free.com/iconfiles/png/512/folder+open+icon-1320161390409087972.png);
-           // background-size: 100% 100%;;
+        #file {
+            width: 80px;
+            // background: url(https://icons-for-free.com/iconfiles/png/512/folder+open+icon-1320161390409087972.png);
+            // background-size: 100% 100%;
+            ;
         }
-        #ct{
+        #ct {
             display: none;
+        }
+        #smeshes {
+            display: none
         }
     </style>
 </head>
 
 <body>
-  
+
 
 
 
@@ -70,89 +70,90 @@
     <div id="capture">
         <button id="bm" onclick="if(ct.style.display!='none')ct.style.display='none';else ct.style.display='Block'">M</button>
         <div id="ct">
-        <button id="capturea">Capture</button>
-  <input type=file name=filename id=file oninput="test()" o</input>
-    <button type=button onclick='test()'>Display</button>
- 
-    <select class="csels"  id="stextures" onchange="selT(this.value)">
-        <option>Choose Texture</option>
-    </select>
-    <button id="bw" onclick="setWorld(stextures.value)">Open Editor</button>
-   <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
-        <option>Create Object</option>
-        <option>Box</option>
-        <option>Sphere</option>
-        <option>Line</option>
-        <option>Cylinder</option>
-        <option>Label</option>     
-        <option>Torus</option> 
+            <button id="capturea">Capture</button>
+            <input type=file name=filename id=file oninput="test()" o</input>
+            <button type=button onclick='test()'>Display</button>
 
-    </select>
-    <select class="csels"  id="smeshes" onchange="selMesh(this.value)">
-        <option>Choose Object</option>
-    </select>
-    <button onclick="editMesh()">Edit Obj</button>
-  <div id="dparam">
-    <button onclick="applay(params.value)">Apply</button>
-    <button onclick="dparam.style.display='none'">close</button>
-  <textarea id="params"></textarea>
-  </div>
+            <select class="csels" id="stextures" onchange="selT(this.value)">
+                <option>Choose Texture</option>
+            </select>
+            <button id="bw" onclick="setWorld(stextures.value)">Open Editor</button>
+            <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
+                <option>Create Object</option>
+                <option>Box</option>
+                <option>Sphere</option>
+                <option>Line</option>
+                <option>Cylinder</option>
+                <option>Label</option>
+                <option>Torus</option>
 
-</div>
-</div>
+            </select>
+            <select class="csels" id="smeshes" onchange="selMesh(this.value)">
+                <option>Choose Object</option>
+            </select>
+            <button onclick="editMesh()">Editor</button>
+            <button onclick="if(blight)blight=false;else blight=true">Light</button>
+            <button onclick="if(vrmode){renderer.setScissorTest(false);vrmode=false;onWindowResize();;}else vrmode=true">VR</button>
+            <div id="dparam">
+                <button onclick="applay(params.value)">Apply</button>
+                <button onclick="dparam.style.display='none'">close</button>
+                <textarea id="params"></textarea>
+            </div>
+
+        </div>
+    </div>
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
-    <script src="js/three.min.js"></script> 
-  
+    <script src="js/three.min.js"></script>
 
-    <script src="js/OrbitControls.js"></script> 
-      <script src="TrackballControls.js"></script>
+
+    <script src="js/OrbitControls.js"></script>
+    <script src="TrackballControls.js"></script>
     <script src="js/CubemapToEquirectangular.js"></script>
-   
+    <script src="DeviceOrientationControls.js"></script>
+
     <script src="textures.js"></script>
 
     <script>
- 
     </script>
-    
-    <script>
 
-var pr1, pr2, pr3
+    <script>
+        var pr1, pr2, pr3, blight = false,
+            vrmode = false,
+            gap = 2
         var equi;
-        var ObSelected=null;
+        var ObSelected = null;
 
         var container, stats;
         var camera, scene, renderer;
         var controls;
 
-        var radius = 100,INTERSECTED,
+        var radius = 100,
+            INTERSECTED,
             theta = 0;
 
         window.addEventListener('load', function() {
             init();
             animate();
         });
-
-
+        var eyes = new THREE.Group();
+        controlsr = new THREE.DeviceOrientationControls(eyes);
         const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
+        const pointer = new THREE.Vector2();
 
-function fraycast( event ) {
-
-	// calculate pointer position in normalized device coordinates
-	// (-1 to +1) for both components
-
-	pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-  //  params.value=JSON.stringify(pointer)
-   // alert(pointer.y)
-
-}
-
-
-
+        function fraycast(event) {
+            pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
+            pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        }
         var cubeCamera;
         var textureLoader = new THREE.TextureLoader();
+        var light = new THREE.DirectionalLight(0xaaaaaa, .71);
+        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+         // camera.position.set(0, 0, 1);
+        camera.position.x = gap;
+        camera2 = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+        camera2.position.x = -gap;
+
         function init() {
 
             container = document.createElement('div');
@@ -162,15 +163,28 @@ function fraycast( event ) {
             camera.position.set(0, 0, 1);
 
             scene = new THREE.Scene();
-
-            var light = new THREE.DirectionalLight(0xffffff, 1);
-            light.position.set(1, 1, 1).normalize();
+            //////////////////////////////////
+            s = new THREE.Mesh(
+                new THREE.SphereGeometry(1, 16, 16),
+                new THREE.MeshPhongMaterial({
+                    //	map:         THREE.ImageUtils.loadTexture('https://cdn.britannica.com/52/77152-050-9C010169/Joanne-Woodward-The-Three-Faces-of-Eve.jpg'),
+                    color: "#00ff00"
+                })
+            );
+            light4 = new THREE.PointLight(0xffffff, 2, 500);
+            light4.add(s);
+            //	light4.add( new THREE.Mesh( s, new THREE.MeshBasicMaterial( { color: 0xffaa00 } ) ) );
+            scene.add(light4);
+            ////////////////////////
+            eyes.add(camera)
+            scene.add(eyes);
+            light.position.set(1, 1, 1); //.normalize();
             scene.add(light);
 
-			alight = new THREE.AmbientLight( 0xaaaaaa );
-			scene.add(alight)
-           
-             textureLoader.load(art[0].pic, function(texture) {
+            alight = new THREE.AmbientLight(0x888888);
+            scene.add(alight)
+
+            textureLoader.load(art[0].pic, function(texture) {
 
                 texture.mapping = THREE.UVMapping;
 
@@ -182,12 +196,30 @@ function fraycast( event ) {
                 });
                 world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
-                world1.name="world";
-                world1.name={name:"World",r:900,sx:312,sy:116,x:0,y:0,z:0,rx:0,ry:0,rz:0,rpx:1,rpy:1,ofx:0,ofy:0,rot:0,piv:"",pic:"".pic}
+                world1.name = "world";
+                world1.name = {
+                    name: "World",
+                    r: 900,
+                    sx: 312,
+                    sy: 116,
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                    rx: 0,
+                    ry: 0,
+                    rz: 0,
+                    rpx: 1,
+                    rpy: 1,
+                    ofx: 0,
+                    ofy: 0,
+                    rot: 0,
+                    piv: "",
+                    pic: "".pic
+                }
                 scene.add(world1);
             })
-     
-          
+
+
             renderer = new THREE.WebGLRenderer({
                 antialias: true
             });
@@ -198,132 +230,152 @@ function fraycast( event ) {
             container.appendChild(renderer.domElement);
             renderer.setScissorTest(false);
             equi = new CubemapToEquirectangular(renderer, true);
-   setUpSels();
-       //     controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls = new THREE.TrackballControls( camera, renderer.domElement );
-    //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
+            setUpSels();
+            //     controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls = new THREE.TrackballControls(camera, renderer.domElement);
+            //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
 
-controls.rotateSpeed = 1.0;
-controls.zoomSpeed = 1.2;
-controls.panSpeed = 0.8;
+            controls.rotateSpeed = 1.0;
+            controls.zoomSpeed = 1.2;
+            controls.panSpeed = 0.8;
 
-controls.keys = [ 'KeyA', 'KeyS', 'KeyD' ];
-          window.addEventListener('resize', onWindowResize, false);
+            controls.keys = ['KeyA', 'KeyS', 'KeyD'];
+            window.addEventListener('resize', onWindowResize, false);
             onWindowResize();
 
             document.getElementById('capturea').addEventListener('click', function(e) {
 
                 equi.update(camera, scene);
-         
+
             });
-  
-      renderer.domElement.addEventListener( 'click', fraycast ); // document.addEventListener("click", onPointerMove );//, false
- 
-//controls2 = new DeviceOrientationControls(camera);
+
+            renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
+
+            //controls2 = new DeviceOrientationControls(camera);
 
         }
-        function selT(v){
-     
-            for( var i=0;i<art.length;i++){
-                if(art[i].name===v){
-                      ObSelected.material.map=THREE.ImageUtils.loadTexture(art[i].pic);
-                    i=art.length;
+
+        function selT(v) {
+
+            for (var i = 0; i < art.length; i++) {
+                if (art[i].name === v) {
+                    ObSelected.material.map = THREE.ImageUtils.loadTexture(art[i].pic);
+                    i = art.length;
                 }
-        
-            }   
-          
-        }
-        function setUpSels(){
-             var s=stextures.innerHTML+"<option>";
-             
-            for( var i=0;i<art.length;i++){
-                s+="<option>"+art[i].name+"</option>";
-        
-            } 
-   
-            stextures.innerHTML=s;
-          setupMeshs();
+
+            }
+
         }
 
- function setupMeshs(){
-    var ms=scene.children;
-    var s=smeshes.innerHTML;
-    for(var i=0;i<ms.length;i++){
-        if(ms[i].name!=undefined){
-        s+="<option>"+ms[i].name+"</option>";
-}
-smeshes.innerHTML=s;
-    }
-}
-function chooseMesh(m){
-        var n=prompt("Name");
-        var op=document.createElement("option");
-  // op.innerHTML=n;    
-  if(m==="Box"){
-  
-      var m=Box(n,10,10,10);
-    scene.add(m);
-    ObSelected=m; selMesh.value=m.name;
-   
-   op.innerHTML=m.name.name;    
-   smeshes.appendChild(op);
+        function setUpSels() {
+            var s = stextures.innerHTML + "<option>";
 
-  }
-  if(m==="Sphere"){
-   var m=Sphere(n,5,80,40);
-   scene.add(m); ObSelected=m; selMesh.value=m.name;
-   op.innerHTML=m.name.name ;   
-   smeshes.appendChild(op);
+            for (var i = 0; i < art.length; i++) {
+                s += "<option>" + art[i].name + "</option>";
 
-}
+            }
 
-if(m==="Cylinder"){
-     var m=Cylinder(name,5,5,20,64,false);
-   scene.add(m); ObSelected=m; selMesh.value=m.name;
-   op.innerHTML=m.name.name ;   
-   smeshes.appendChild(op);
+            stextures.innerHTML = s;
+            setupMeshs();
+        }
 
-}
-if(m==="Torus"){
-     var m=Torus(n,10,3,16,100);
-    op.innerHTML=m.name.name ;   
-    smeshes.appendChild(op);
-    scene.add(m); ObSelected=m; selMesh.value=m.name;
+        function setupMeshs() {
+            var ms = scene.children;
+            var s = smeshes.innerHTML;
+            for (var i = 0; i < ms.length; i++) {
+                if (ms[i].name != undefined) {
+                    s += "<option>" + ms[i].name + "</option>";
+                }
+                smeshes.innerHTML = s;
+            }
+        }
 
-}
+        function chooseMesh(m) {
+            var n = prompt("Name");
+            var op = document.createElement("option");
+            // op.innerHTML=n;    
+            if (m === "Box") {
 
-}
+                var m = Box(n, 10, 10, 10);
+                scene.add(m);
+                ObSelected = m;
+                selMesh.value = m.name;
 
-function crOb(texture,geom,pos){
+                op.innerHTML = m.name.name;
+                smeshes.appendChild(op);
 
-    return  new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
-					map:texture,
-                    transparent:true    //,
-                      }));
+            }
+            if (m === "Sphere") {
+                var m = Sphere(n, 5, 80, 40);
+                scene.add(m);
+                ObSelected = m;
+                selMesh.value = m.name;
+                op.innerHTML = m.name.name;
+                smeshes.appendChild(op);
+
+            }
+
+            if (m === "Cylinder") {
+                var m = Cylinder(name, 5, 5, 20, 64, false);
+                scene.add(m);
+                ObSelected = m;
+                selMesh.value = m.name;
+                op.innerHTML = m.name.name;
+                smeshes.appendChild(op);
+
+            }
+            if (m === "Torus") {
+                var m = Torus(n, 10, 3, 16, 100);
+                op.innerHTML = m.name.name;
+                smeshes.appendChild(op);
+                scene.add(m);
+                ObSelected = m;
+                selMesh.value = m.name;
+
+            }
+
+        }
+
+        function crOb(texture, geom, pos) {
+
+            return new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
+                map: texture,
+                transparent: true //,
+            }));
 
 
-}
-function crObject(callback){
-    if(callback!=undefined){
-        var c=new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
-					map:texture    //,
-                  //  color: Math.random() * 0xffffff
+        }
+
+        function crObject(callback) {
+            if (callback != undefined) {
+                var c = new THREE.Mesh(geom, new THREE.MeshPhongMaterial({
+                    map: texture //,
+                    //  color: Math.random() * 0xffffff
                 }));
 
-    callback(c)
+                callback(c)
 
-    }
-}
+            }
+        }
 
         function onWindowResize() {
 
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
+            camera2.aspect = window.innerWidth / window.innerHeight;
+            camera2.updateProjectionMatrix();
 
             renderer.setSize(window.innerWidth, window.innerHeight);
 
         }
+        function WindowResize(x, y, cam, rend) {
+                windowHalfX = window.innerWidth / 2;
+                windowHalfY = window.innerHeight / 2;
+                cam.aspect = x / y;
+                cam.updateProjectionMatrix();
+                rend.setSize(x, y);
 
+            }
 
         function animate() {
 
@@ -335,158 +387,200 @@ function crObject(callback){
         }
 
         function render() {
+            //   light.position.set(canera.position.x,camera.position.y,camera.position.z)
+            if (blight) {
+                const time = Date.now() * 0.0005;
+
+                light.position.y += 0.005;
+                light.position.z += 0.0080105;
+                light4.position.x = Math.sin(time * .9101013) * 100.00;
+                light4.position.y = Math.cos(time * .061017) * 100.2;
+                light4.position.z = -Math.sin(time * .052015) * 100.1;
+                light4.rotation.y += 0.014;
+            }
+
+            if (!vrmode) {
+
+
+            if (ct.style.display != 'none') { //  controls2.update();
+                raycaster.setFromCamera(pointer, camera);
+
+                const intersects = raycaster.intersectObjects(scene.children, false);
+
+                if (intersects.length > 0) {
+
+                    if (INTERSECTED != intersects[0].object) {
+
+
+                        //	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+                        INTERSECTED = intersects[0].object;
+                        ObSelected = INTERSECTED;
+                        params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+
+                        if (INTERSECTED.name.name != "World") {
+                            dparam.style.display = 'block';
+
+
+                        } else {
+
+                            dparam.style.display = "none";
+
+                        }
+
+                    }
+
+                } else {
+
+                    INTERSECTED = null;
+
+                }
+            }
           
-            if(ct.style.display!='none'){ //  controls2.update();
-			raycaster.setFromCamera( pointer, camera );
-
-				const intersects = raycaster.intersectObjects( scene.children, false );
-
-				if ( intersects.length > 0 ) {
+              //  eyes.position=camera.position;
+              //  eyes.rotation=camera.rotation;
                 
-					if ( INTERSECTED != intersects[ 0 ].object  ) {
+                renderer.render(scene, camera);
+            } else {
+             //   camera2.position=camera.position;
+              //  camera2.rotation=camera.rotation;     
+                renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissor(0, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissorTest(true);
+                camera.aspect = (window.innerWidth / 2) / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.render(scene, camera);
 
+                renderer.setViewport(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissor(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissorTest(true);
+                camera2.aspect = (window.innerWidth / 2) / window.innerHeight;
+                camera2.updateProjectionMatrix();
+                renderer.render(scene, camera2);
 
-					//	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
-
-						INTERSECTED = intersects[ 0 ].object;
-                       ObSelected=INTERSECTED;
-                        params.value=JSON.stringify(INTERSECTED.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
-          
-						if(INTERSECTED.name.name!="World"){
-                            dparam.style.display='block';
-                           
-                        
-                        }
-                        else{
-
-                            dparam.style.display="none";
-    
-                        }
-
-					}
-
-				} else {
-                  //  if(INTERSECTED.name!="world"){
-				//	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
-//}
-					INTERSECTED = null;
-
-				}
-}
-
-
-            renderer.render(scene, camera);
-
+                // pingpong
+                /*      if (count % 2 === 0) {
+                mtex.envMap = cubeCamera1.renderTarget //.texture;
+                cubeCamera2.update(renderer, scene);
+            } else {
+                mtex.envMap = cubeCamera2.renderTarget //.texture;
+                cubeCamera1.update(renderer, scene);
+            }*/
+            }
         }
 
         function test() {
             var file = document.getElementById('file').files[0];
-           var reader  = new FileReader();
-            reader.onload = function(e)  {
+            var reader = new FileReader();
+            reader.onload = function(e) {
                 var image = document.createElement("img");
                 image.src = e.target.result;
-             //   document.body.appendChild(image);
-            ObSelected.name.pic=image.src;
- 
-      if(ObSelected.name.name==="World" && !confirm("Are you sure you want to set this background?"))   return;
-      else           dparam.style.display="block"
- 
+                //   document.body.appendChild(image);
+                ObSelected.name.pic = image.src;
+
+                if (ObSelected.name.name === "World" && !confirm("Are you sure you want to set this background?")) return;
+                else dparam.style.display = "block"
 
 
-                
-           params.value=JSON.stringify(ObSelected.name).replace(/{/g,"{\n").replace(/}/g,"\n}").replace(/,/g,"\n");
- 
-           applay(params.value)
 
-             
- 
+
+                    params.value = JSON.stringify(ObSelected.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+
+                applay(params.value)
+
+
+
             }
-             reader.readAsDataURL(file);
-         }
-function selMesh(v){
-    alert(v)
-//  ObSelected=scene.getObjectByName(v);
- // alert(ObSelected.name.w)
-    var ar=scene.children
- 
-    for( var i=0;i<ar.length;i++){
-        if(ar[i].name.name===v){
-            ObSelected=ar[i];
-       
-            
-   alert(JSON.stringify(ar[i].name));
-        i=ar.length;
+            reader.readAsDataURL(file);
         }
-    }
- /**/
-}
-function editMesh(){
-    if(ObSelected!=null){
-    //    alert(ObSelected.parameters)
-    }
-}
-function applay(v){
-  
-      v=v.replace(/{\n/g,"{").replace(/\n}/g,"}").replace(/\n/g,",")
-     var o= JSON.parse(v);
-     ObSelected.position.set(  o.x,o.y, o.z );
-    if(o.rx!=undefined && o.ry!=undefined && o.rz!=undefined){ 
-         ObSelected.rotation.x=o.rx;
-        ObSelected.rotation.y=o.ry;
-        ObSelected.rotation.z=o.rz;
-             ObSelected.name=o;
-}
-//textureLoader.load(o.pic,function(texture){
-//var texture=ObSelected.material.map;
 
-//alert(o.pic)
+        function selMesh(v) {
+            alert(v)
+            //  ObSelected=scene.getObjectByName(v);
+            // alert(ObSelected.name.w)
+            var ar = scene.children
+
+            for (var i = 0; i < ar.length; i++) {
+                if (ar[i].name.name === v) {
+                    ObSelected = ar[i];
 
 
+                    alert(JSON.stringify(ar[i].name));
+                    i = ar.length;
+                }
+            }
+            /**/
+        }
 
-      if(o.name.indexOf("Box")>-1){
-       var g=new THREE.BoxBufferGeometry( o.w,o.l,o.h);
-      ObSelected.geometry=g;
-       }
-     if(o.name.indexOf("Sphere")>-1){
-       g = new THREE.SphereGeometry( o.r, o.sx, o.sy );
-        ObSelected.geometry=g;
-      }
-     if(o.name.indexOf("Cylinder")>-1){alert("c")
-     //    alert(o.r1+"........."+o.r2)
-        var g=new THREE.CylinderGeometry( o.r1, o.r2, o.h, o.s);
-        ObSelected.geometry=g;
+        function editMesh() {
+            if (ObSelected != null) {
+                //    alert(ObSelected.parameters)
+            }
+        }
 
-     }
-     if(o.name.indexOf("Torus")>-1){
-     
-        var g=geometry = new THREE.TorusGeometry( o.r, o.tk, o.rs, o.ts )
-        ObSelected.geometry=g;
+        function applay(v) {
 
-     }
-     ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
-//ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
-ObSelected.material.map.wrapS =  ObSelected.material.map.wrapT = THREE.RepeatWrapping;
+            v = v.replace(/{\n/g, "{").replace(/\n}/g, "}").replace(/\n/g, ",")
+            var o = JSON.parse(v);
+            ObSelected.position.set(o.x, o.y, o.z);
+            if (o.rx != undefined && o.ry != undefined && o.rz != undefined) {
+                ObSelected.rotation.x = o.rx;
+                ObSelected.rotation.y = o.ry;
+                ObSelected.rotation.z = o.rz;
+                ObSelected.name = o;
+            }
+            //textureLoader.load(o.pic,function(texture){
+            //var texture=ObSelected.material.map;
 
-     ObSelected.material.map.repeat.set(o.rpx,o.rpy);
-ObSelected.material.map.offset.x=o.ofx;//,o.ofy)
-ObSelected.material.map.offset.y=o.ofy;
-ObSelected.material.map.rotation=o.rot;
-ObSelected.material.needsUpdate = true;
+            //alert(o.pic)
 
 
-params.name=o;
 
-render();
+            if (o.name.indexOf("Box") > -1) {
+                var g = new THREE.BoxBufferGeometry(o.w, o.l, o.h);
+                ObSelected.geometry = g;
+            }
+            if (o.name.indexOf("Sphere") > -1) {
+                g = new THREE.SphereGeometry(o.r, o.sx, o.sy);
+                ObSelected.geometry = g;
+            }
+            if (o.name.indexOf("Cylinder") > -1) {
+                alert("c")
+                //    alert(o.r1+"........."+o.r2)
+                var g = new THREE.CylinderGeometry(o.r1, o.r2, o.h, o.s);
+                ObSelected.geometry = g;
 
-  //   });
- 
-}
-function setWorld(v){
- 
-   dparam.style.display="block"
+            }
+            if (o.name.indexOf("Torus") > -1) {
 
-}
+                var g = geometry = new THREE.TorusGeometry(o.r, o.tk, o.rs, o.ts)
+                ObSelected.geometry = g;
 
+            }
+            ObSelected.material.map = THREE.ImageUtils.loadTexture(o.pic);
+            //ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
+            ObSelected.material.map.wrapS = ObSelected.material.map.wrapT = THREE.RepeatWrapping;
+
+            ObSelected.material.map.repeat.set(o.rpx, o.rpy);
+            ObSelected.material.map.offset.x = o.ofx; //,o.ofy)
+            ObSelected.material.map.offset.y = o.ofy;
+            ObSelected.material.map.rotation = o.rot;
+            ObSelected.material.needsUpdate = true;
+
+
+            params.name = o;
+
+            render();
+
+            //   });
+
+        }
+
+        function setWorld(v) {
+
+            dparam.style.display = "block"
+
+        }
     </script>
 
 </body>
