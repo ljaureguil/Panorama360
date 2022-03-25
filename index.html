@@ -93,7 +93,7 @@
             </select>
             <button onclick="editMesh()">Editor</button>
             <button onclick="if(blight)blight=false;else blight=true">Light</button>
-            <button onclick="if(vrmode){renderer.setScissorTest(false);vrmode=false;onWindowResize();;}else vrmode=true">VR</button>
+            <button onclick="SetVr();">VR</button>
             <div id="dparam">
                 <button onclick="applay(params.value)">Apply</button>
                 <button onclick="dparam.style.display='none'">close</button>
@@ -388,7 +388,7 @@
         function animate() {
 
             requestAnimationFrame(animate);
-
+            if (vrmode) controlsr.update();
             controls.update();
             render();
 
@@ -589,8 +589,29 @@
             dparam.style.display = "block"
 
         }
+function SetVr(){
+    if(vrmode){
+        renderer.setScissorTest(false);vrmode=false;onWindowResize();;
+               // adjusttexture(matiron,1,3);
+              // if (vr) {
+                 //   controls.enabled = false;
+                    controlsr.connect();
+                    vrmode=false ;      
+                    render()
+        
+}
+else {
+    vrmode=true ;
+                 controls.enabled = true;
+                    controlsr.desconnect;
+                    render()
+
+}
+}
+
     </script>
 
 </body>
 
 </html>
+
