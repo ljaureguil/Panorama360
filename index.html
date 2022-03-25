@@ -149,10 +149,16 @@
         var textureLoader = new THREE.TextureLoader();
         var light = new THREE.DirectionalLight(0xaaaaaa, .71);
         camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
-         // camera.position.set(0, 0, 1);
-        camera.position.x = gap;
-        camera2 = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
-        camera2.position.x = -gap;
+      
+      
+         camera.position.set(0, 0, 1);
+       // 
+        cameral = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
+        camerar = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+ 
+        cameral.position.x = -gap;
+        camerar.position.x = gap;
+        eyes.add(cameral);    eyes.add(camerar)
 
         function init() {
 
@@ -176,7 +182,7 @@
             //	light4.add( new THREE.Mesh( s, new THREE.MeshBasicMaterial( { color: 0xffaa00 } ) ) );
             scene.add(light4);
             ////////////////////////
-            eyes.add(camera)
+        
             scene.add(eyes);
             light.position.set(1, 1, 1); //.normalize();
             scene.add(light);
@@ -362,8 +368,10 @@
 
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
-            camera2.aspect = window.innerWidth / window.innerHeight;
-            camera2.updateProjectionMatrix();
+            camerar.aspect = window.innerWidth / window.innerHeight;
+            camerar.updateProjectionMatrix();
+          cameral.aspect = window.innerWidth / window.innerHeight;
+            cameral.updateProjectionMatrix();
 
             renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -447,16 +455,16 @@
                 renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissor(0, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissorTest(true);
-                camera.aspect = (window.innerWidth / 2) / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.render(scene, camera);
+                cameral.aspect = (window.innerWidth / 2) / window.innerHeight;
+                cameral.updateProjectionMatrix();
+                renderer.render(scene, cameral);
 
                 renderer.setViewport(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissor(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissorTest(true);
-                camera2.aspect = (window.innerWidth / 2) / window.innerHeight;
-                camera2.updateProjectionMatrix();
-                renderer.render(scene, camera2);
+                camerar.aspect = (window.innerWidth / 2) / window.innerHeight;
+                camerar.updateProjectionMatrix();
+                renderer.render(scene, camerar);
 
                 // pingpong
                 /*      if (count % 2 === 0) {
