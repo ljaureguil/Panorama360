@@ -69,6 +69,7 @@
 
     <div id="capture">
         <button id="bm" onclick="if(ct.style.display!='none')ct.style.display='none';else ct.style.display='Block'">M</button>
+        <p id="tt"></p>
         <div id="ct">
             <button id="capturea">Capture</button>
             <input type=file name=filename id=file oninput="test()" o</input>
@@ -393,7 +394,8 @@
 
             requestAnimationFrame(animate);
             if (vrmode) controlsr.update();
-            controls.update();
+            else controls.update();
+           
             render();
 
         }
@@ -402,13 +404,19 @@
             //   light.position.set(canera.position.x,camera.position.y,camera.position.z)
             if (blight) {
                 const time = Date.now() * 0.0005;
-
                 light.position.y += 0.005;
                 light.position.z += 0.0080105;
                 light4.position.x = Math.sin(time * .9101013) * 100.00;
                 light4.position.y = Math.cos(time * .061017) * 100.2;
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
-                light4.rotation.y += 0.014;
+               // light4.rotation.y += 0.014;
+                eyes.position.x=light4.position.x
+        eyes.position.y=light4.position.y
+        eyes.position.z=light4.position.z
+        tt.innerHTML=eyes.position.x+"<br>"+eyes.position.y+"<br>"+eyes.position.z;
+
+
+
             }
 
             if (!vrmode) {
@@ -599,12 +607,14 @@
         renderer.setScissorTest(false);
         vrmode = false;
         onWindowResize();;
-        //   controls.enabled = false;
+        controls.enabled = false;
         controlsr.connect();
+
         vrmode = false;
         eyes.position.x=camera.position.x;
         eyes.position.y=camera.position.y;
         eyes.position.z=camera.position.z;
+        eyes.rotation.y=Math.PI;
         render()
         closeFullscreen(renderer.domElement)
     } else {
