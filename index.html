@@ -85,6 +85,10 @@
       border: 1px solid;
       border-color: transparent #efe4e4;
     }
+ #cpp{
+        color:black;
+        font-size:18px;
+    }
 
 
 
@@ -177,6 +181,8 @@ recognition.addEventListener('result', e => {
 
     if (e.results[0].isFinal) {
       p = document.createElement('p');
+         p.setAttribute("class","cpp");  
+        
       words.appendChild(p);
     }
 });
