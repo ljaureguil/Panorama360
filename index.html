@@ -177,7 +177,7 @@ recognition.addEventListener('result', e => {
     .join('');
 
     const poopScript = transcript.replace(/poop|poo|shit|dump/gi, ' K ');
-  //  p.innerHTML = poopScript;
+    p.innerHTML = poopScript;
 
     if (e.results[0].isFinal) {
       p = document.createElement('p');
