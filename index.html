@@ -155,7 +155,11 @@
 
     <script>
 
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
 
 let p = document.createElement('p');
 
@@ -168,7 +172,7 @@ recognition.addEventListener('result', e => {
     .map(result => result.transcript)
     .join('');
 
-    const poopScript = transcript.replace(/poop|poo|shit|dump/gi, '💩');
+    const poopScript = transcript.replace(/poop|poo|shit|dump/gi, ' K ');
   //  p.innerHTML = poopScript;
 
     if (e.results[0].isFinal) {
