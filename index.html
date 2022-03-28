@@ -85,7 +85,7 @@
       border: 1px solid;
       border-color: transparent #efe4e4;
     }
- #cpp{
+    #cpp{
         color:black;
         font-size:18px;
     }
@@ -170,19 +170,21 @@ let p = document.createElement('p');
 words.appendChild(p);
 
 recognition.addEventListener('result', e => {
-    p.innerHTML = e.results
+    p.innerHTML = e.results;
+
   const transcript = Array.from(e.results)
     .map(result => result[0])
     .map(result => result.transcript)
     .join('');
-alert(result.transcript)
-    const poopScript = transcript.replace(/poop|poo|shit|dump/gi, ' K ');
-    p.innerHTML = poopScript;
+
+  //  const poopScript = transcript.replace(/poop|poo|shit|dump/gi, ' K ');
+    p.innerHTML =e.results;// poopScript;
 
     if (e.results[0].isFinal) {
       p = document.createElement('p');
-         p.setAttribute("class","cpp");  
-        
+      p.setAttribute("class","cpp");
+      p.innerHTML =e.results;
+
       words.appendChild(p);
     }
 });
