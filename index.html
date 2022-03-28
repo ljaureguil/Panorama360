@@ -98,7 +98,8 @@
 
 <body>
 
-
+    <div id="words" contenteditable>
+    </div>
 <div id="todo">
 
 
@@ -140,8 +141,7 @@
         </div>
     </div>
 </div>
-<div id="words" contenteditable>
-</div>
+
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
     <script src="js/three.min.js"></script>
@@ -165,12 +165,12 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
   recognition.interimResults = true;
   recognition.lang = 'en-US';
 
-let p = document.createElement('p');
+let p = document.createElement('textarea');
 
 words.appendChild(p);
 
 recognition.addEventListener('result', e => {
-    p.innerHTML = e.results;
+    p.value+= e.results+"\n\n";
 
   const transcript = Array.from(e.results)
     .map(result => result[0])
@@ -178,22 +178,18 @@ recognition.addEventListener('result', e => {
     .join('');
 
   //  const poopScript = transcript.replace(/poop|poo|shit|dump/gi, ' K ');
-    p.innerHTML =e.results;// poopScript;
+    p.innerHTML+=e.results+"\n\n";// poopScript;
 
     if (e.results[0].isFinal) {
-      p = document.createElement('p');
-      p.setAttribute("class","cpp");
-      p.innerHTML =e.results;
+      ps = document.createElement('p');
+      ps.setAttribute("class","cpp");
+      ps.innerHTML =e.results;
 
-      words.appendChild(p);
+      words.appendChild(ps);
     }
 });
 
 recognition.addEventListener('end', recognition.start);
-
-
-
-
 
 
 
