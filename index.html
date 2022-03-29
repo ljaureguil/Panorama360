@@ -180,12 +180,12 @@ recognition.addEventListener('result', e => {
 
 
   //  const poopScript = transcript.replace(/poop|poo|shit|dump/gi, ' K ');
-    p.innerHTML+=e.result+"\n\n";// poopScript;
+    p.innerHTML+=e.result+"\n\n"+transcript+result[0];// poopScript;
 
     if (e.results[0].isFinal) {
       ps = document.createElement('p');
       ps.setAttribute("class","cpp");
-      ps.innerHTML =e.results;
+  //    ps.innerHTML =e.results;
 
       words.appendChild(ps);
     }
