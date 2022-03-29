@@ -170,7 +170,7 @@ let p = document.createElement('textarea');
 words.appendChild(p);
 
 recognition.addEventListener('result', e => {
-    p.value+= JSON.stringify(e.results[0])+"\n\n";
+    p.value+= e.results[0]+"\n\n";
 
   const transcript = Array.from(e.results)
     .map(result => result[0])
@@ -738,4 +738,68 @@ recognition.start();
 
 </body>
 
+</html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Speech Recognition</title>
+    <style>
+    body{Background:white};
+    </style>
+    <script>
+      window.onload = () => {
+        const button = document.getElementById('button');
+        button.addEventListener('click', () => {
+          if (button.style['animation-name'] === 'flash') {
+            recognition.stop();
+            button.style['animation-name'] = 'none';
+            button.innerText = 'Press to Start';
+            content.innerText = '';
+          } else {
+            button.style['animation-name'] = 'flash';
+            button.innerText = 'Press to Stop';
+            recognition.start();
+          }
+        });
+
+        const content = document.getElementById('content');
+
+        const recognition = new webkitSpeechRecognition();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.onresult = function (event) {
+            
+            content.innerText+="\n************"+ vent.results[i][0].transcript;
+            
+          let result = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            result += event.results[i][0].transcript;
+          }
+          content.innerText = result;
+        };
+      };
+    </script>
+    <style>
+      button {
+        background: yellow;
+        animation-name: none;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+      }
+      @keyframes flash {
+        0% {
+          background: red;
+        }
+        50% {
+          background: green;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <button id="button">Press to Start</button>
+    <div id="content"></div>
+  </body>
 </html>
