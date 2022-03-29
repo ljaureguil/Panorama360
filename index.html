@@ -170,7 +170,7 @@ let p = document.createElement('textarea');
 words.appendChild(p);
 
 recognition.addEventListener('result', e => {
-    p.value+= e.results+"\n\n";
+    p.value+= e.results[0]+"\n\n";
 
   const transcript = Array.from(e.results)
     .map(result => result[0])
