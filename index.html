@@ -744,6 +744,7 @@ recognition.start();
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      
     <title>Speech Recognition</title>
     <style>
     body{Background:white};
@@ -777,7 +778,8 @@ recognition.start();
           for (let i = event.resultIndex; i < event.results.length; i++) {
             result += event.results[i][0].transcript;
           }
-          content.innerText = result;
+         // content.innerText = result;
+            words.innerHTML+=result+"\n\n";
         };
       };
     </script>
