@@ -158,20 +158,34 @@
     </script>
 
     <script>
-document.ready(function(){
-    navigator.mediaDevices.getUserMedia({audio: true})
-});
-window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
  
+
+   navigator.mediaDevices.getUserMedia({audio: true})
+
+
+window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+ let p = document.createElement('textarea');
   const recognition = new SpeechRecognition();
   recognition.interimResults = true;
   recognition.lang = 'en-US';
 recognition.continuous = true;
-let p = document.createElement('textarea');
+
+recognition.onresult = function(event) {
+    if (event.results.length > 0) {
+      p.value += event.results[0][0].transcript+"\n---------\n";
+      
+    }
+    else p.value+='.'
+  }
+
+
+
+
 
 words.appendChild(p);
-
+/*
 recognition.addEventListener('result', e => {
    // p.value+= e.results[0]+"\n\n";
 
@@ -192,7 +206,7 @@ recognition.addEventListener('result', e => {
       words.appendChild(ps);
     }
 });
-
+*/
 recognition.addEventListener('end', recognition.start);
 
 
