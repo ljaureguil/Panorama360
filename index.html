@@ -162,7 +162,7 @@
     <script>
 
  
-
+var bsp=false;
 //   navigator.mediaDevices.getUserMedia({audio: true})
 
 navigator.mediaDevices.getUserMedia({ audio: true })
@@ -726,13 +726,15 @@ function closeFullscreen(elem) {
 
 
 function inicSpeech(){
-    if(bcom.style.background==="blue"){
+    if(!bsp){
         bcom.style.background="green";
+        bsp=true;
 recognition.start();
     }else
     {
-          bcom.style.background="blue
-recognition.stop;      
+          bcom.style.background="blue"
+        bsp=false;
+recognition.stop();      
     }
 
 
