@@ -175,7 +175,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
  let p = document.createElement('textarea');
   const recognition = new SpeechRecognition();
   recognition.interimResults = true;
-  recognition.lang = 'es-MX en-US';
+  recognition.lang = 'es-MX | en-US';
 recognition.continuous = true;
 
 recognition.onresult = function(event) {
@@ -183,16 +183,12 @@ recognition.onresult = function(event) {
           for (let i = event.resultIndex; i < event.results.length; i++) {
             result += event.results[i][0].transcript;
           }
-         // content.innerText = result;
-
-    if (event.results.length > 0) {
-   //   p.value += event.results[0][0].transcript+"\n-------\n"+result+"\n.................\n";
+     if (event.results.length > 0) {
        if(result!="") p.value+=result+"\n"
-      
-    }
+     }
     else p.value+='.'
   }
-recognition.addEventListener('end', recognition.start);
+//recognition.addEventListener('end', recognition.start);
 words.appendChild(p);
       var pr1, pr2, pr3, blight = false,
             vrmode = false,
