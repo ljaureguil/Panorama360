@@ -171,11 +171,11 @@ navigator.mediaDevices.getUserMedia({ audio: true })
         alert('No mic for you!')
       });
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
+       
  let p = document.createElement('textarea');
   const recognition = new SpeechRecognition();
   recognition.interimResults = true;
-  recognition.lang = 'en-US';
+  recognition.lang = 'es-MX en-US';
 recognition.continuous = true;
 
 recognition.onresult = function(event) {
@@ -187,45 +187,14 @@ recognition.onresult = function(event) {
 
     if (event.results.length > 0) {
    //   p.value += event.results[0][0].transcript+"\n-------\n"+result+"\n.................\n";
-        p.value+=result+"\n"
+       if(result!="") p.value+=result+"\n"
       
     }
     else p.value+='.'
   }
-
-
-
-
-
-words.appendChild(p);
-/*
-recognition.addEventListener('result', e => {
-   // p.value+= e.results[0]+"\n\n";
-
-  const transcript = Array.from(e.results)
-    .map(result => result[0])
-    .map(result => result.transcript)
-    .join('');
-
-
-  //  const poopScript = transcript.replace(/poop|poo|shit|dump/gi, ' K ');
-    p.value+=+transcript+"\n-\n"+ e.results[0]+"\n-------------\n"+e.result+"\n-----------\n"+transcript+result[0]// poopScript;
-
-    if (e.results[0].isFinal) {
-      ps = document.createElement('p');
-      ps.setAttribute("class","cpp");
-  //    ps.innerHTML =e.results;
-
-      words.appendChild(ps);
-    }
-});
-*/
 recognition.addEventListener('end', recognition.start);
-
-
-
-
-        var pr1, pr2, pr3, blight = false,
+words.appendChild(p);
+      var pr1, pr2, pr3, blight = false,
             vrmode = false,
             gap = 1
         var equi;
