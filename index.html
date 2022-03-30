@@ -162,7 +162,7 @@
     <script>
 
  
-var bsp=false;
+var bsp=false,comando="";
 //   navigator.mediaDevices.getUserMedia({audio: true})
 
 navigator.mediaDevices.getUserMedia({ audio: true })
@@ -181,16 +181,17 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
 recognition.continuous = true;
 
 recognition.onresult = function(event) {
-    let result = '';
+    comando = '';
           for (let i = event.resultIndex; i < event.results.length; i++) {
-            result += event.results[i][0].transcript;
+            comando += event.results[i][0].transcript;
           }
      if (event.results.length > 0) {
-       if(result!="") p.value+=result+"\n"
+       if(comando!="") p.value+=comando+"\n"
      }
-    else p.value+='.'
+   // else p.value+='.'
   }
-recognition.addEventListener('end', recognition.start);
+//recognition.addEventListener('end', recognition.start);
+recognition.ondend=recognition.start;
 words.appendChild(p);
       var pr1, pr2, pr3, blight = false,
             vrmode = false,
