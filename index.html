@@ -59,6 +59,7 @@
             display: none
         }
         #words {
+            height:40%;
       max-width: 500px;
       margin: 50px auto;
       background: white;
@@ -163,17 +164,15 @@
 
  
 var bsp=false,comando="";
-//   navigator.mediaDevices.getUserMedia({audio: true})
 var nota=""
 navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(function(stream) {
-  //      alert('You let me use your mic!')
-      })
+      .then(function(stream) {;
+       })
       .catch(function(err) {
         alert('No mic for you!')
       });
 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-       
+      
  let p = document.createElement('textarea');
   const recognition = new SpeechRecognition();
   recognition.interimResults = true;
@@ -187,7 +186,8 @@ recognition.onresult = function(event) {
           }
           result=event.results[0][0].transcript;
      if (event.results.length > 0) {
-       if(comando!=""){ p.value=comando+"\n";nota=comando}//nota=comando;//
+       if(comando!=""){ p.value="\nResult= "+result+"\ncomando= "+comando"+\n\n";//comando+"\n";nota=comando
+    }//nota=comando;//
      }
     else alert(nota)
   }
