@@ -164,10 +164,10 @@
  
 var bsp=false,comando="";
 //   navigator.mediaDevices.getUserMedia({audio: true})
-
+var nota=""
 navigator.mediaDevices.getUserMedia({ audio: true })
       .then(function(stream) {
-        alert('You let me use your mic!')
+  //      alert('You let me use your mic!')
       })
       .catch(function(err) {
         alert('No mic for you!')
@@ -185,13 +185,14 @@ recognition.onresult = function(event) {
           for (let i = event.resultIndex; i < event.results.length; i++) {
             comando += event.results[i][0].transcript;
           }
+          result=event.results[0][0].transcript;
      if (event.results.length > 0) {
-       if(comando!="") p.value+=comando+"\n"
+       if(comando!=""){ p.value=comando+"\n";nota=comando}//nota=comando;//
      }
-   // else p.value+='.'
+    else alert(nota)
   }
 //recognition.addEventListener('end', recognition.start);
-recognition.ondend=recognition.start;
+recognition.ondend=function(){alert(nota);p.value+=nota+"\n\n";recognition.start;}
 words.appendChild(p);
       var pr1, pr2, pr3, blight = false,
             vrmode = false,
