@@ -70,6 +70,7 @@
       background-size: 100% 3rem;
       position: relative;
       line-height: 3rem;
+      display:none;
     }
     
     p {
@@ -108,7 +109,7 @@
 
     <div id="capture">
         <button id="bm" onclick="if(ct.style.display!='none')ct.style.display='none';else ct.style.display='Block'">M</button>
-        <p id="tt"></p>
+       
         <div id="ct">
             <button id="capturea">Capture</button>
             <input type=file name=filename id=file oninput="test()" o</input>
@@ -185,17 +186,25 @@ recognition.onresult = function(event) {
             comando += event.results[i][0].transcript;
           }
        if (event.results.length > 0) {
-       if(comando!=""){ p.value=comando+"\n";nota=comando
+       if(comando!=""){ 
+           p.value=comando+"\n";nota=comando;
+           exComando(comando)
+
     }
      }
-    else alert(nota)
+   
   }//recognition.addEventListener('end', recognition.start);
-recognition.addEventListener('end', function(){recognition.stop();alert(nota);p.value+=nota+"\n\n";recognition.start();});
-//recognition.ondend=function(){alert(nota);p.value+=nota+"\n\n";recognition.start;}
+recognition.addEventListener('end', function(){
+  //  alert(nota);
+    p.value+=nota+"\n\n";
+   if(bps) recognition.start;
+
+});
+
 words.appendChild(p);
       var pr1, pr2, pr3, blight = false,
             vrmode = false,
-            gap = 1
+            gap = .75
         var equi;
         var ObSelected = null;
 
@@ -677,20 +686,18 @@ words.appendChild(p);
         }
         function SetVr() {
     if (vrmode) {
-
+ 
         renderer.setScissorTest(false);
         vrmode = false;
         onWindowResize();;
-       // controls.enabled = false;
         controlsr.connect();
-
-        vrmode = false;
         eyes.position.x=camera.position.x;
         eyes.position.y=camera.position.y;
         eyes.position.z=camera.position.z;
         eyes.rotation.y=Math.PI;
         render()
-        closeFullscreen(renderer.domElement)
+        closeFullscreen(renderer.domElement);
+        inicSpeech()
     } else {
         eyes.position = camera.position;
         vrmode = true;
@@ -698,6 +705,8 @@ words.appendChild(p);
         controlsr.desconnect;
         render();
         openFullscreen(renderer.domElement);
+        bps=false;
+        inicSpeech()
     }
 }
 
@@ -737,6 +746,43 @@ recognition.start();
         bsp=false;
 recognition.stop();      
     }
+}
+function exComando(cc){
+    c=cc.split(" ")
+    c=c[c.length-1];
+    if(c.indexOf("salir")>-1){
+        bsp=false;
+        recognition.stop();
+        SetVr();
+    }
+    if(c.indexOf("luz")>-1){ 
+        if(blight)blight=false;
+        else blight=true
+    }
+    if(c.indexOf("arriba")>-1){ 
+
+}
+if(c.indexOf("abajo")>-1){ 
+
+}
+if(c.indexOf("hizquierda")>-1){ 
+
+}
+if(c.indexOf("derecha")>-1){ 
+
+}
+if(c.indexOf("girar hizquierda")>-1){ 
+
+}
+if(c.indexOf("girar girar derecha")>-1){ 
+
+}
+if(c.indexOf("parar")>-1){ 
+
+}
+
+
+
 
 
 }
