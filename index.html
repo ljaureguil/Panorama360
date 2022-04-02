@@ -144,6 +144,7 @@
             <button onclick="if(blight)blight=false;else blight=true">Light</button>
             <button onclick="SetVr();">VR</button>
             <button id="bcom" onclick="inicSpeech();">Comands</button>
+            <button onclick="saveScene()">Save Scene</button>
             <div id="dparam">
                 <button onclick="applay(params.value)">Apply</button>
                 <button onclick="dparam.style.display='none'">close</button>
@@ -209,8 +210,11 @@ recognition.addEventListener('end', function(){
    if(vrmode) recognition.start();
 
 });
-
+var Esenas={};
 words.appendChild(p);
+GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(ob.esenas.length)})
+
+
       var pr1, pr2, pr3, blight = false,
             vrmode = false,
             gap = .75
@@ -257,7 +261,7 @@ words.appendChild(p);
         eyes.add(cameral);
         eyes.add(camerar);
      //   eyes.add(new THREE.Vector3( 0, 0, 0 ))
-        eyes.position.x=oy.x;eyes.position.y=oy.y;eyes.position.oy.z=10;
+        eyes.position.x=oy.x;eyes.position.y=oy.y;eyes.position.z=oy.z;
       
 
         function init() {
@@ -505,9 +509,7 @@ words.appendChild(p);
                 light4.position.y = Math.cos(time * .061017) * 100.2;
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
                // light4.rotation.y += 0.014;
-                eyes.position.x=light4.position.y
-        eyes.position.y=light4.position.x
-        eyes.position.z=light4.position.x
+
      //   tt.innerHTML=eyes.position.x+"<br>"+eyes.position.y+"<br>"+eyes.position.z;
 
 
@@ -515,7 +517,9 @@ words.appendChild(p);
             }
 
             if (!vrmode) {
-
+         eyes.position.x=light4.position.y
+        eyes.position.y=light4.position.x
+        eyes.position.z=light4.position.x
 
             if (ct.style.display != 'none') { //  controls2.update();
                 raycaster.setFromCamera(pointer, camera);
@@ -581,6 +585,7 @@ words.appendChild(p);
         function test(t) {
            // alert(t)
             var file = document.getElementById(t).files[0];
+          //  alert(file.path)
             var reader = new FileReader();
             reader.onload = function(e) {
                 var image = document.createElement("img");
@@ -806,11 +811,69 @@ if(c.indexOf("parar")>-1){
 
 }
 
+}
 
-
-
+function saveScene(){
+var obs=scene.children;
+var ar=[]
+for(var i=0;i<obs.length;i++){
+    if(obs[i].name!=undefined){
+       if(obs[i].name.name!=undefined) ar.push(obs[i].name);
+    }
+ 
 
 }
+   alert(ar)
+ //  localStorage.setItem("esenas",ar);
+ 
+ GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
+     ob.esenas.push(ar);
+ UpdateJ("https://jsonblob.com/api/959920656255041536",ob,function(ob){
+    
+    alert("Done...")
+ })
+})
+}
+function GetJ(url, callback) {
+
+//var url  = "http://localhost:8080/api/v1/users";
+var xhr = new XMLHttpRequest()
+xhr.open('GET', url + '/1', true)
+xhr.onload = function() {
+    //         (xhr.responseText)
+    var users = JSON.parse(xhr.responseText);
+    //     var obb=decoding(users.prim);
+
+    if (xhr.readyState == 4 && xhr.status == "200") {
+        callback(users);
+    } else {
+        console.error(users);
+    }
+}
+xhr.send(null);
+}
+
+// Update a user
+function UpdateJ(url, ob, callback) {
+
+json = JSON.stringify(ob);
+var xhr = new XMLHttpRequest();
+xhr.open("PUT", url + '/12', true);
+xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+xhr.onload = function() {
+    var users = JSON.parse(xhr.responseText);
+    if (xhr.readyState == 4 && xhr.status == "200") {
+        //  alert("Tu Forma ha sido Enviada");
+        if (callback != undefined) callback(users);
+    } else {
+        (users);
+    }
+}
+xhr.send(json);
+}
+
+
+
     </script>
 
 </body>
