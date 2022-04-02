@@ -171,7 +171,7 @@
 
     <script>
 
- 
+ var oy={x:0,y:0,z:15,vx:0,vy:0,vx:0}
 var bsp=false,comando="";
 var nota=""
 navigator.mediaDevices.getUserMedia({ audio: true })
@@ -249,12 +249,15 @@ words.appendChild(p);
         cameral = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
         camerar = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
  
-        cameral.position.x = -gap;
-        camerar.position.x = gap;
+        cameral.position.x = gap;
+        camerar.position.x = -gap;
+        cameral.lookAt(0,-100,0);
+         cameral.lookAt(0,-100,0);
+   
         eyes.add(cameral);
         eyes.add(camerar);
      //   eyes.add(new THREE.Vector3( 0, 0, 0 ))
-        eyes.position.x=0;eyes.position.y=30;eyes.position.z=10;
+        eyes.position.x=oy.x;eyes.position.y=oy.y;eyes.position.oy.z=10;
       
 
         function init() {
@@ -502,9 +505,9 @@ words.appendChild(p);
                 light4.position.y = Math.cos(time * .061017) * 100.2;
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
                // light4.rotation.y += 0.014;
-                eyes.position.x=light4.position.x
-        eyes.position.y=light4.position.y
-        eyes.position.z=light4.position.z
+                eyes.position.x=light4.position.y
+        eyes.position.y=light4.position.x
+        eyes.position.z=light4.position.x
      //   tt.innerHTML=eyes.position.x+"<br>"+eyes.position.y+"<br>"+eyes.position.z;
 
 
@@ -553,31 +556,25 @@ words.appendChild(p);
               //  eyes.rotation=camera.rotation;
                 
                 renderer.render(scene, camera);
-            } else {
-             //   camera2.position=camera.position;
-              //  camera2.rotation=camera.rotation;     
+            }
+             else {
+  // renderer.setScissorTest(true);
                 renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissor(0, 0, window.innerWidth / 2, window.innerHeight);
-                renderer.setScissorTest(true);
+               
                 cameral.aspect = (window.innerWidth / 2) / window.innerHeight;
                 cameral.updateProjectionMatrix();
                 renderer.render(scene, cameral);
 
+     // renderer.setScissorTest(true);
                 renderer.setViewport(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissor(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
-                renderer.setScissorTest(true);
+          
                 camerar.aspect = (window.innerWidth / 2) / window.innerHeight;
                 camerar.updateProjectionMatrix();
                 renderer.render(scene, camerar);
 
-                // pingpong
-                /*      if (count % 2 === 0) {
-                mtex.envMap = cubeCamera1.renderTarget //.texture;
-                cubeCamera2.update(renderer, scene);
-            } else {
-                mtex.envMap = cubeCamera2.renderTarget //.texture;
-                cubeCamera1.update(renderer, scene);
-            }*/
+            
             }
         }
 
@@ -686,14 +683,6 @@ words.appendChild(p);
         
         }
 
-  //     bumpMap:THREE.ImageUtils.loadTexture('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHwJBcMHDbc52aZSLh76u4gBQ4lESWhyrRmXRxA9KJ3ATp4kkVfYZGzBbD2Un8b1C7MY0&usqp=CAU'),
- //   bumpScale:   0.13005,
-    //specularMap: THREE.ImageUtils.loadTexture('https://www.cati.com/wp-content/uploads/SOLIDWORKS-1536355419728.jpeg'),
-    //specular:    new THREE.Color('grey')
-///////////////////////////////
-
-
-            //ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
             ObSelected.material.map.wrapS = ObSelected.material.map.wrapT = THREE.RepeatWrapping;
 
             ObSelected.material.map.repeat.set(o.rpx, o.rpy);
@@ -733,6 +722,7 @@ words.appendChild(p);
         closeFullscreen(renderer.domElement);
         inicSpeech()
     } else {
+        renderer.setScissorTest(true);
         eyes.position = camera.position;
         vrmode = true;
         controls.enabled = true;
