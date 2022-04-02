@@ -94,7 +94,13 @@
 
 
 #bcom{
-        backgrund:blue;
+        background:blue;
+        }
+        .ct{
+            width: 30px;
+            overflow: auto;
+            color:blanchedalmond;
+            background: blanchedalmond;
         }
 
     </style>
@@ -112,14 +118,16 @@
        
         <div id="ct">
             <button id="capturea">Capture</button>
-            <input type=file name=filename id=file oninput="test()" o</input>
+            Texture<input type=file name=filename id=Texture oninput="test('Texture')" class=cte ></input>
+            Bump<input type=file name=filename id=Bump oninput="test('Bump')"  class=cte ></input>
+            Specular<input type=file name=filename id=Specular oninput="test('Specular')" class=cte  ></input>
+
             <button type=button onclick='test()'>Display</button>
 
             <select class="csels" id="stextures" onchange="selT(this.value)">
                 <option>Choose Texture</option>
             </select>
-            <button id="bw" onclick="setWorld(stextures.value)">Open Editor</button>
-            <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
+                   <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
                 <option>Create Object</option>
                 <option>Box</option>
                 <option>Sphere</option>
@@ -197,7 +205,8 @@ recognition.onresult = function(event) {
 recognition.addEventListener('end', function(){
   //  alert(nota);
     p.value+=nota+"\n\n";
-   if(bps) recognition.start;
+   if(bps) recognition.start();
+   if(vrmode) recognition.start();
 
 });
 
@@ -522,7 +531,7 @@ words.appendChild(p);
                         params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
 
                         if (INTERSECTED.name.name != "World") {
-                            dparam.style.display = 'block';
+                           if(dparam.style.display === 'none'){ dparam.style.display = 'block';}
 
 
                         } else {
@@ -572,17 +581,20 @@ words.appendChild(p);
             }
         }
 
-        function test() {
-            var file = document.getElementById('file').files[0];
+        function test(t) {
+           // alert(t)
+            var file = document.getElementById(t).files[0];
             var reader = new FileReader();
             reader.onload = function(e) {
                 var image = document.createElement("img");
                 image.src = e.target.result;
                 //   document.body.appendChild(image);
-                ObSelected.name.pic = image.src;
+               if(t==="Texture") ObSelected.name.pic = image.src;
+               if(t==="Bump") ObSelected.name.bump = image.src;
+               if(t==="Specular") ObSelected.name.specular = image.src;
 
                 if (ObSelected.name.name === "World" && !confirm("Are you sure you want to set this background?")) return;
-                else dparam.style.display = "block"
+                else dparam.style.display = "block";
 
 
 
@@ -618,6 +630,7 @@ words.appendChild(p);
         function editMesh() {
             if (ObSelected != null) {
                 //    alert(ObSelected.parameters)
+                dparam.style.display='block'
             }
         }
 
@@ -661,6 +674,25 @@ words.appendChild(p);
 
             }
             ObSelected.material.map = THREE.ImageUtils.loadTexture(o.pic);
+          /////////////////////////
+          if(o.bump!=undefined){
+               ObSelected.material.bumpMap=THREE.ImageUtils.loadTexture(o.bump);
+               ObSelected.material.bumpScale=.13;
+        
+        }
+        if(o.specular!=undefined){
+               ObSelected.material.specularMap=THREE.ImageUtils.loadTexture(o.specular);
+               ObSelected.material.specular=new THREE.Color('grey');
+        
+        }
+
+  //     bumpMap:THREE.ImageUtils.loadTexture('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHwJBcMHDbc52aZSLh76u4gBQ4lESWhyrRmXRxA9KJ3ATp4kkVfYZGzBbD2Un8b1C7MY0&usqp=CAU'),
+ //   bumpScale:   0.13005,
+    //specularMap: THREE.ImageUtils.loadTexture('https://www.cati.com/wp-content/uploads/SOLIDWORKS-1536355419728.jpeg'),
+    //specular:    new THREE.Color('grey')
+///////////////////////////////
+
+
             //ObSelected.material.map=THREE.ImageUtils.loadTexture(o.pic);
             ObSelected.material.map.wrapS = ObSelected.material.map.wrapT = THREE.RepeatWrapping;
 
@@ -673,6 +705,7 @@ words.appendChild(p);
 
             params.name = o;
 
+
             render();
 
             //   });
@@ -684,6 +717,7 @@ words.appendChild(p);
             dparam.style.display = "block"
 
         }
+
         function SetVr() {
     if (vrmode) {
  
@@ -694,7 +728,7 @@ words.appendChild(p);
         eyes.position.x=camera.position.x;
         eyes.position.y=camera.position.y;
         eyes.position.z=camera.position.z;
-        eyes.rotation.y=Math.PI;
+        eyes.rotation.x=Math.PI;
         render()
         closeFullscreen(renderer.domElement);
         inicSpeech()
@@ -748,8 +782,9 @@ recognition.stop();
     }
 }
 function exComando(cc){
-    c=cc.split(" ")
+    var c=cc.split(" ")
     c=c[c.length-1];
+    alert(c)
     if(c.indexOf("salir")>-1){
         bsp=false;
         recognition.stop();
