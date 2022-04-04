@@ -212,7 +212,7 @@ recognition.addEventListener('end', function(){
 });
 var Esenas={};
 words.appendChild(p);
-GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(ob.esenas.length)})
+
 
 
       var pr1, pr2, pr3, blight = false,
@@ -245,13 +245,13 @@ GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(
         var cubeCamera;
         var textureLoader = new THREE.TextureLoader();
         var light = new THREE.DirectionalLight(0xaaaaaa, .71);
-        camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+        camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 10000);
       
       
          camera.position.set(0, 0, 1);
        // 
         cameral = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
-        camerar = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+        camerar = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
  
         cameral.position.x = gap;
         camerar.position.x = -gap;
@@ -362,8 +362,17 @@ GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(
             renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
 
             //controls2 = new DeviceOrientationControls(camera);
+            GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
+    Esenas=ob.esenas;//alert(ob.esenas.length);
+    for(var i=0;i<Esenas.length;i++){
+      //  alert(Esenas[i].name)
+         if(Esenas[i].name!="World" && Esenas[i].name!=undefined) applay(Esenas[i],"web")
+    }
 
+})
         }
+
+
 
         function selT(v) {
 
@@ -636,10 +645,21 @@ GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(
             }
         }
 
-        function applay(v) {
+        function applay(v,from) {
+            var o=v;
+          
+            if(from!="web"){
+                 v = v.replace(/{\n/g, "{").replace(/\n}/g, "}").replace(/\n/g, ",")
+            o = JSON.parse(v);
+        }
+                if(from==="web"){
+                   // ObSelected=new THREE.Object3D();
+                    ObSelected=new THREE.Mesh(new THREE.SphereBufferGeometry(),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:o.pic}));
+                    ObSelected.name=o;
+                    scene.add(ObSelected)
 
-            v = v.replace(/{\n/g, "{").replace(/\n}/g, "}").replace(/\n/g, ",")
-            var o = JSON.parse(v);
+                }
+
             ObSelected.position.set(o.x, o.y, o.z);
             if (o.rx != undefined && o.ry != undefined && o.rz != undefined) {
                 ObSelected.rotation.x = o.rx;
@@ -647,14 +667,7 @@ GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(
                 ObSelected.rotation.z = o.rz;
                 ObSelected.name = o;
             }
-            //textureLoader.load(o.pic,function(texture){
-            //var texture=ObSelected.material.map;
-
-            //alert(o.pic)
-
-
-
-            if (o.name.indexOf("Box") > -1) {
+             if (o.name.indexOf("Box") > -1) {
                 var g = new THREE.BoxBufferGeometry(o.w, o.l, o.h);
                 ObSelected.geometry = g;
             }
@@ -663,7 +676,7 @@ GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(
                 ObSelected.geometry = g;
             }
             if (o.name.indexOf("Cylinder") > -1) {
-                alert("c")
+            //    alert("c")
                 //    alert(o.r1+"........."+o.r2)
                 var g = new THREE.CylinderGeometry(o.r1, o.r2, o.h, o.s);
                 ObSelected.geometry = g;
@@ -695,14 +708,13 @@ GetJ("https://jsonblob.com/api/959920656255041536",function(ob){Esenas=ob;alert(
             ObSelected.material.map.offset.y = o.ofy;
             ObSelected.material.map.rotation = o.rot;
             ObSelected.material.needsUpdate = true;
+            if(ObSelected.material.color===undefined) ObSelected.material.color='#ffffff'
 
 
             params.name = o;
-
+     
 
             render();
-
-            //   });
 
         }
 
@@ -779,7 +791,7 @@ recognition.stop();
 function exComando(cc){
     var c=cc.split(" ")
     c=c[c.length-1];
-    alert(c)
+ //   alert(c)
     if(c.indexOf("salir")>-1){
         bsp=false;
         recognition.stop();
@@ -823,7 +835,7 @@ for(var i=0;i<obs.length;i++){
  
 
 }
-   alert(ar)
+ //  alert(ar)
  //  localStorage.setItem("esenas",ar);
  
  GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
