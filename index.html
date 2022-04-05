@@ -114,13 +114,14 @@
 
 
     <div id="capture">
+       <span id="r"></span>
         <button id="bm" onclick="if(ct.style.display!='none')ct.style.display='none';else ct.style.display='Block'">M</button>
        
         <div id="ct">
-            <button id="capturea">Capture</button>
-            Texture<input type=file name=filename id=Texture oninput="test('Texture')" class=cte ></input>
-            Bump<input type=file name=filename id=Bump oninput="test('Bump')"  class=cte ></input>
-            Specular<input type=file name=filename id=Specular oninput="test('Specular')" class=cte  ></input>
+            <button id="capturea">Capture</button><br>
+            Texture<input type=file name=filename id=Texture oninput="test('Texture')" class=cte ></input><br>
+            Bump<input type=file name=filename id=Bump oninput="test('Bump')"  class=cte ></input><br>
+            Specular<input type=file name=filename id=Specular oninput="test('Specular')" class=cte  ></input><br>
 
             <button type=button onclick='test()'>Display</button>
 
@@ -140,6 +141,10 @@
             <select class="csels" id="smeshes" onchange="selMesh(this.value)">
                 <option>Choose Object</option>
             </select>
+            <select class="csels" id="sproyestos" onchange="selProy(this.value)">
+                <option>Choose Project</option>
+            </select>
+             
             <button onclick="editMesh()">Editor</button>
             <button onclick="if(blight)blight=false;else blight=true">Light</button>
             <button onclick="SetVr();">VR</button>
@@ -171,7 +176,20 @@
     </script>
 
     <script>
+var Esenas={};
+GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
+    Esenas=ob.esenas;//alert(ob.esenas.length);
+    for(var i=0;i<Esenas.length;i++){
+     
+        sproyestos.innerHTML+="<option>"+Esenas[i].name+"</option>";
+         if(Esenas[i].name!="World" && Esenas[i].name!=undefined){
 
+
+         //  applay(Esenas[i],"web")
+         } 
+    }
+
+})
  var oy={x:0,y:0,z:15,vx:0,vy:0,vx:0}
 var bsp=false,comando="";
 var nota=""
@@ -210,7 +228,7 @@ recognition.addEventListener('end', function(){
    if(vrmode) recognition.start();
 
 });
-var Esenas={};
+
 words.appendChild(p);
 
 
@@ -342,7 +360,7 @@ words.appendChild(p);
             equi = new CubemapToEquirectangular(renderer, true);
             setUpSels();
             //     controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls = new THREE.TrackballControls(camera, renderer.domElement);
+            controls = new THREE.TrackballControls(camera, renderer.domElement);//camera
             //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
 
             controls.rotateSpeed = 1.0;
@@ -362,14 +380,7 @@ words.appendChild(p);
             renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
 
             //controls2 = new DeviceOrientationControls(camera);
-            GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
-    Esenas=ob.esenas;//alert(ob.esenas.length);
-    for(var i=0;i<Esenas.length;i++){
-      //  alert(Esenas[i].name)
-        // if(Esenas[i].name!="World" && Esenas[i].name!=undefined) applay(Esenas[i],"web")
-    }
 
-})
         }
 
 
@@ -509,6 +520,11 @@ words.appendChild(p);
         }
 
         function render() {
+    
+       // eyes.position=light4.position;
+                
+         //       r.innerHTML="x= "+camera.position.x+" y="+camera.position.y+" z="+eyes.position.z;
+
             //   light.position.set(canera.position.x,camera.position.y,camera.position.z)
             if (blight) {
                 const time = Date.now() * 0.0005;
@@ -522,14 +538,14 @@ words.appendChild(p);
      //   tt.innerHTML=eyes.position.x+"<br>"+eyes.position.y+"<br>"+eyes.position.z;
 
 
-
             }
 
             if (!vrmode) {
-         eyes.position.x=light4.position.y
-        eyes.position.y=light4.position.x
-        eyes.position.z=light4.position.x
-
+      //   eyes.position.x=camera.position.y
+      //  eyes.position.y=camera.position.x
+     //   eyes.position.z=camera.position.x
+   
+ 
             if (ct.style.display != 'none') { //  controls2.update();
                 raycaster.setFromCamera(pointer, camera);
 
@@ -567,10 +583,11 @@ words.appendChild(p);
           
               //  eyes.position=camera.position;
               //  eyes.rotation=camera.rotation;
-                
+                        eyes.position.x=camera.position.x;eyes.position.y=camera.position.y;eyes.position.z=camera.position.z;        
                 renderer.render(scene, camera);
             }
              else {
+ 
   // renderer.setScissorTest(true);
                 renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissor(0, 0, window.innerWidth / 2, window.innerHeight);
@@ -647,17 +664,18 @@ words.appendChild(p);
 
         function applay(v,from) {
             var o=v;
-          
+         //   alert(from)
             if(from!="web"){
                  v = v.replace(/{\n/g, "{").replace(/\n}/g, "}").replace(/\n/g, ",")
             o = JSON.parse(v);
         }
                 if(from==="web"){
+                 //   alert(JSON.stringify(o))
                    // ObSelected=new THREE.Object3D();
                     ObSelected=new THREE.Mesh(new THREE.SphereBufferGeometry(),new THREE.MeshPhongMaterial({ side: THREE.DoubleSide,map:o.pic}));
                     ObSelected.name=o;
                     scene.add(ObSelected)
-
+                      
                 }
 
             ObSelected.position.set(o.x, o.y, o.z);
@@ -827,19 +845,32 @@ if(c.indexOf("parar")>-1){
 
 function saveScene(){
 var obs=scene.children;
-var ar=[]
+var n=prompt("Type scene name...",sproyestos.value);
+if(n===null || n==="" || n===undefined) {alert("Wrong Name, try again");retunr}
+
+var os={name:n};
+var ar=[];
 for(var i=0;i<obs.length;i++){
     if(obs[i].name!=undefined){
        if(obs[i].name.name!=undefined) ar.push(obs[i].name);
     }
- 
-
-}
- //  alert(ar)
- //  localStorage.setItem("esenas",ar);
+ }
+ os.objects=ar;
  
  GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
-     ob.esenas.push(ar);
+     var c=false;
+    for(var i=0;i<ob.esenas.length;i++){
+        if(ob.esenas[i].name===os.name){
+             if(confirm("Already exist, do you want to update it?")) ob.esenas[i]=os;
+             else return;
+             i=ob.esenas.length;
+             c=true;
+        }
+    }
+
+        if(!c) ob.esenas.push(os);
+
+
  UpdateJ("https://jsonblob.com/api/959920656255041536",ob,function(ob){
     
     alert("Done...")
@@ -882,6 +913,26 @@ xhr.onload = function() {
     }
 }
 xhr.send(json);
+}
+function selProy(v){
+ //   
+    for(var i=0;i<Esenas.length;i++){
+       // alert(v);
+       // alert(Esenas[i].name)
+     //  alert(JSON.stringify(Esenas[i]))
+        if(v===Esenas[i].name){//alert("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+            oo=Esenas[i].objects;
+            for(ii=0;ii<oo.length;ii++){
+          
+     if(oo[ii].name!="World")applay(oo[ii],"web")
+
+            }
+
+        //   
+ 
+        }
+    }
+
 }
 
 
