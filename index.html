@@ -169,6 +169,8 @@
     <script src="TrackballControls.js"></script>
     <script src="js/CubemapToEquirectangular.js"></script>
     <script src="DeviceOrientationControls.js"></script>
+       <script src="OBJLoader.js"></script>
+ 
 
     <script src="textures.js"></script>
 
@@ -176,15 +178,13 @@
     </script>
 
     <script>
-var Esenas={};
+var Esenas=[];
 GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
     Esenas=ob.esenas;//alert(ob.esenas.length);
     for(var i=0;i<Esenas.length;i++){
      
         sproyestos.innerHTML+="<option>"+Esenas[i].name+"</option>";
          if(Esenas[i].name!="World" && Esenas[i].name!=undefined){
-
-
          //  applay(Esenas[i],"web")
          } 
     }
@@ -288,7 +288,7 @@ words.appendChild(p);
             document.body.appendChild(container);
 
             camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.set(0, 0, 1);
+            camera.position.set(0, 0, -10);
 
             scene = new THREE.Scene();
             //////////////////////////////////
@@ -382,8 +382,6 @@ words.appendChild(p);
             //controls2 = new DeviceOrientationControls(camera);
 
         }
-
-
 
         function selT(v) {
 
