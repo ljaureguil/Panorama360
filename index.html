@@ -170,8 +170,9 @@
     <script src="js/CubemapToEquirectangular.js"></script>
     <script src="DeviceOrientationControls.js"></script>
        <script src="OBJLoader.js"></script>
- 
+  
 
+    <script src="Split Body.js"></script>
     <script src="textures.js"></script>
 
     <script>
@@ -179,6 +180,7 @@
 
     <script>
 var Esenas=[];
+
 GetJ("https://jsonblob.com/api/959920656255041536",function(ob){
     Esenas=ob.esenas;//alert(ob.esenas.length);
     for(var i=0;i<Esenas.length;i++){
@@ -199,7 +201,7 @@ navigator.mediaDevices.getUserMedia({ audio: true })
       .catch(function(err) {
         alert('No mic for you!')
       });
-window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+/*window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       
  let p = document.createElement('textarea');
   const recognition = new SpeechRecognition();
@@ -230,7 +232,7 @@ recognition.addEventListener('end', function(){
 });
 
 words.appendChild(p);
-
+*/
 
 
       var pr1, pr2, pr3, blight = false,
@@ -312,7 +314,7 @@ words.appendChild(p);
             alight = new THREE.AmbientLight(0x888888);
             scene.add(alight)
 
-            textureLoader.load(art[0].pic, function(texture) {
+            textureLoader.load(art[1].pic, function(texture) {
 
                 texture.mapping = THREE.UVMapping;
 
@@ -322,6 +324,15 @@ words.appendChild(p);
                     transparent: true,
                     opacity: 1 //.450
                 });
+               // Lib= new LJL();
+               // struct=new structural();
+                setTimeout(function(){
+                spbody=Body(270,90,90,1/8,12,"https://i1.sndcdn.com/artworks-lzgLYBDs3jQ2jo3b-eTevEA-t500x500.jpg","#eeeeee",false,50,false,"body")
+                    scene.add(spbody)
+             
+                  //  scene.add(struct.squaretubingedged(17.0,9.0,9.0,1/8,1.2,"","#ff0000",0))
+                },2000)
+
                 world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
                 world1.name = "world";
@@ -558,12 +569,22 @@ words.appendChild(p);
 
                         INTERSECTED = intersects[0].object;
                         ObSelected = INTERSECTED;
-                        params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
-
+                     //   params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+                      
+  
                         if (INTERSECTED.name.name != "World") {
-                           if(dparam.style.display === 'none'){ dparam.style.display = 'block';}
+                                     params.value = JSON.stringify(INTERSECTED.geometry.parameters).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+     
+                           if(dparam.style.display === 'none'){
+                                dparam.style.display = 'block';
+                     //   INTERSECTED.parameters={"radius":10,"tube":3,"radialSegments":4,"tubularSegments":50}
+                    //   INTERSECTED.geometry.parameters.needsUpdate = true;
 
+                             //   var g=new THREE.Geometry({"radius":10,"tube":3,"radialSegments":4,"tubularSegments":50});
+                         //  INTERSECTED.geometry=g;
+                        }
 
+//alert(INTERSECTED.geometry.parameters)
                         } else {
 
                             dparam.style.display = "none";
@@ -684,8 +705,17 @@ words.appendChild(p);
                 ObSelected.name = o;
             }
              if (o.name.indexOf("Box") > -1) {
+                 ObSelected.geometry.dispose();
                 var g = new THREE.BoxBufferGeometry(o.w, o.l, o.h);
                 ObSelected.geometry = g;
+                alert(JSON.stringify(ObSelected.material.parameters))
+
+              //  ObSelected.geometry.attributes.width=o.w;ObSelected.geometry.attributes.width.needsUpdate = true;
+               // ObSelected.geometry.attributes.height=o.h; ObSelected.geometry.attributes.height.needsUpdate = true;
+              //  ObSelected.geometry.attributes.depth=o.l;ObSelected.geometry.attributes.depth.needsUpdate = true;
+               // ObSelected.geometry.attributes.needsUpdate=true;
+
+
             }
             if (o.name.indexOf("Sphere") > -1) {
                 g = new THREE.SphereGeometry(o.r, o.sx, o.sy);
