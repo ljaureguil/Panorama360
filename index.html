@@ -568,12 +568,7 @@
                 light4.position.x = Math.sin(time * .9101013) * 100.00;
                 light4.position.y = Math.cos(time * .061017) * 100.2;
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
-                // light4.rotation.y += 0.014;
-
-                //   tt.innerHTML=eyes.position.x+"<br>"+eyes.position.y+"<br>"+eyes.position.z;
-
-
-            }
+              }
 
             if (!vrmode) {
          
@@ -658,7 +653,7 @@
 
             if (t === "TextureBump") {
                 ObSelected.name.bump = TextureBump.value;
-          )
+          
 
                 if (ObSelected.name.name === "World" && !confirm("Are you sure you want to set this background?")) return;
                 else dparam.style.display = "block";
