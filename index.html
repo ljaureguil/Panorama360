@@ -111,21 +111,31 @@
             border-style: groove;
         }
         #dbrec{ 
+            text-align: center;
             position: absolute;
             right: 5px;
             top:5px;
             border-width: .1;
-            border-style: solid;
-        }     
+            border-style: solid; 
+                overflow: auto;
+                width:20%;
+                height: 20%;
+                        }     
         #dr{
                 background-color: red;
             color:white;       
         }      
     #drec{
+     
+        //   background:red;
            display: none;
+           width: 100%;
+           height: 100%;
+       
         } 
         #Video{
             height: 80%;
+            width: 60%;
         }  
         #binicrec{
          //   display: none;
@@ -1075,7 +1085,7 @@ if (chunks.length) {
   }
 
  Video.controls = true;
- Video.width=600;
+ //Video.width=600;
   Video.src = vidURL;
   Video.onend = function() {
     URL.revokeObjectURL(vidURL);
