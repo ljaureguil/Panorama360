@@ -122,11 +122,14 @@
             color:white;       
         }      
     #drec{
-        position: absolute;
-      
-        right: 0%;
-        top:0%;
-    }   
+           display: none;
+        } 
+        #Video{
+            height: 80%;
+        }  
+        #binicrec{
+         //   display: none;
+        }
     </style>
 </head>
 
@@ -137,14 +140,15 @@
     <div id="todo">
  
 <div id="dbrec">
-                <button id="dr" onclick="if(drec.style.display!='none')drec.style.display='none';else drec.style.display='Block'">></button>
-
+                <button id="dr" onclick="if(drec.style.display!='none')drec.style.display='none';else drec.style.display='block';">></button>
 
  <div id="drec">
   
     Choose a Video or audio: ... 
     <input type=file name=filename id=VidAud oninput="ExtractAudio(this)"></input>
-  <video id="Video" controls></video>
+  <video id="Video" onload="binicrec.style.display='block'" controls></video>
+  <button id="binicrec" onclick="InicRecording(renderer.domElement)">Once Video es Loaded press to record</button>
+  <button id="bstoprec" onclick="StopRecording(renderer.domElement)">Stop recording</button>
 
  </div>
  </div>
@@ -452,7 +456,7 @@
            alert("ready")
             animate();
             //controls2 = new DeviceOrientationControls(camera);
-
+            setupAudio()
         }
 
         function selT(v) {
@@ -1020,23 +1024,66 @@
         }
 
         function ExtractAudio(el){
-// var file = document.getElementById(t).files[0];
 var file = el.files[0];
-alert(file)
                 var reader = new FileReader();
                 reader.onload = function(e) {
                      Video.src=e.target.result;
-               //     v.onload=initAudioStream
+               
                 }
                 reader.readAsDataURL(file);
 
 }
+function InicRecording(canvas) {
+Video.play();
+cStream = canvas.captureStream(30);
+cStream.addTrack(aStream.getAudioTracks()[0]);
+var mixedStream = 'MediaStream' in window ? new MediaStream([cStream.getVideoTracks()[0], aStream.getAudioTracks()[0]]) : cStream;
+recorder = new MediaRecorder(mixedStream);
+recorder.start();
+  recorder.ondataavailable = function(e) {
+chunks.push(e.data);
+};
+recorder.onstop = exportStream;
 
-     
+};
+function setupAudio() {
+   var ac = new AudioContext();
+        dest = ac.createMediaStreamDestination();
+       aStream = dest.stream;
+        var  sourceNode = ac.createMediaElementSource(Video);
+    sourceNode.connect(dest);
+  
+  // output to our headphones
+  sourceNode.connect(ac.destination)
+
+       };
+       function StopRecording() {
+
+Video.pause();
+ recorder.stop()
+exportStream();
+}
+function exportStream(e) {
+
+if (chunks.length) {
+
+  var blob = new Blob(chunks, { 'type' : 'video/mp4' })
+  var vidURL = URL.createObjectURL(blob);
+  //chunks=[];
+  for(i=0;i<chunks.length;i++){
+    chunks.pop();
+  }
+
+ Video.controls = true;
+ Video.width=600;
+  Video.src = vidURL;
+  Video.onend = function() {
+    URL.revokeObjectURL(vidURL);
+  }
 
 
-
-
+} 
+}
     </script>
 
     <script>
@@ -1048,8 +1095,7 @@ var cStream,
   analyser,
   dataArray,
   bufferLength,
- // chunks = [],
-  vc=false;
+   vc=false;
 
 
     let clicked = false;
@@ -1058,98 +1104,6 @@ var cStream,
      let osc;
      let dest;
      let mediaRecorder;
-
-
-    function init2() {
-       ac = new AudioContext();
-       osc = ac.createOscillator();
-       dest = ac.createMediaStreamDestination();
-       mediaRecorder = new MediaRecorder(dest.stream);
-       osc.connect(dest);
-
-       mediaRecorder.ondataavailable = function(evt) {
-         // push each chunk (blobs) in an array
-         chunks.push(evt.data);
-       };
-
-       mediaRecorder.onstop = function(evt) {
-         // Make blob out of our blobs, and open it.
-         let blob = new Blob(chunks, { 'type' : 'audio/mp3; codecs=opus' });
-         let audioTag = document.createElement('audio');
-         document.querySelector("audio").src = URL.createObjectURL(blob);
-       };
-     }
-function Record(clicked){
-    if (!clicked) {
-           mediaRecorder.start();
-           osc.start(0);
-           e.target.innerHTML = "Stop recording";
-           clicked = true;
-         } else {
-           mediaRecorder.requestData();
-           mediaRecorder.stop();
-           osc.stop(0);
-           e.target.disabled = true;
-         }
-}
-
-function InicRecording(canvas) {
-
-//this.textContent = 'stop recording';
-cStream = canvas.captureStream(30);
-cStream.addTrack(aStream.getAudioTracks()[0]);
-var mixedStream = 'MediaStream' in window ? new MediaStream([cStream.getVideoTracks()[0], aStream.getAudioTracks()[0]]) : cStream;
-recorder = new MediaRecorder(mixedStream);
-recorder.start();
-  recorder.ondataavailable = function(e) {
-chunks.push(e.data);
-};
-//recorder.ondataavailable = saveChunks;
-
-recorder.onstop = exportStream;
-
-this.onclick = stopRecording;
-
-};
-
-function exportStream(e) {
-
-if (chunks.length) {
-
-  var blob = new Blob(chunks, { 'type' : 'video/mp4' })
-  var vidURL = URL.createObjectURL(blob);
- // var vid = document.createElement('video');
-  chunks=[];
-  for(i=0;i<chunks.length;i++){
-    chunks.pop();
-  }
-
-  vid.height=im.naturalHeight;
-  vid.width=im.naturalWidth;
-  vid.controls = true;
-  vid.src = vidURL;
-  vid.onend = function() {
-    URL.revokeObjectURL(vidURL);
-  }
-document.body.insertBefore(vid, dd);
-   //  document.appendChild(vid)
-
-} else {
-
-  document.body.insertBefore(document.createTextNode('no data saved'), canvas);
-
-}
-}
-
-function stopRecording() {
-
-vid.pause();
-  this.disabled = true;
-recorder.stop(),
-audioCtx;
-
-
-}
 
 
     </script>
