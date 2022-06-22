@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>CubemapToEquirectangular - Managed</title>
+    <title>Panorama 360</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
@@ -98,48 +98,50 @@
             color: blanchedalmond;
             background: blanchedalmond;
         }
-        #ilocal{
-            padding: 5px;;
+        #ilocal {
+            padding: 5px;
+            ;
             border-style: groove;
         }
-        #iweb{
-            padding: 5px;;
-            border-style: groove;
-        }  
-        #accion{
-            padding: 5px;;
+        #iweb {
+            padding: 5px;
+            ;
             border-style: groove;
         }
-        #dbrec{ 
+        #accion {
+            padding: 5px;
+            ;
+            border-style: groove;
+        }
+        #dbrec {
             text-align: center;
             position: absolute;
             right: 5px;
-            top:5px;
+            top: 5px;
             border-width: .1;
-            border-style: solid; 
-                overflow: auto;
-                width:20%;
-                height: 20%;
-                        }     
-        #dr{
-                background-color: red;
-            color:white;       
-        }      
-    #drec{
-     
-        //   background:red;
-           display: none;
-           width: 100%;
-           height: 100%;
-       
-        } 
-        #Video{
+            border-style: solid;
+            overflow: auto;
+ 
+        }
+        #dr {
+            background-color: red;
+            color: white;
+        }
+        #drec {
+            text-align: right;
+ 
+            display: none;
+            width: 50%;
+            height: 40%;
+        }
+        #Video {
             height: 80%;
             width: 60%;
-        }  
-        #binicrec{
-         //   display: none;
         }
+        #binicrec {
+            // display: none;
+        }
+    
     </style>
 </head>
 
@@ -148,87 +150,88 @@
     <div id="words" contenteditable>
     </div>
     <div id="todo">
- 
-<div id="dbrec">
-                <button id="dr" onclick="if(drec.style.display!='none')drec.style.display='none';else drec.style.display='block';">></button>
 
- <div id="drec">
-  
-    Choose a Video or audio: ... 
-    <input type=file name=filename id=VidAud oninput="ExtractAudio(this)"></input>
-  <video id="Video" onload="binicrec.style.display='block'" controls src="file:///Sdcard:/Aaa.mp4"></video>
-  <button id="binicrec" onclick="InicRecording(renderer.domElement)">Once Video es Loaded press to record</button>
-  <button id="bstoprec" onclick="StopRecording(renderer.domElement)">Stop recording</button>
+        <div id="dbrec">
+            <button id="dr" onclick="if(drec.style.display==='block' )drec.style.display='none';else drec.style.display='block';">></button>
 
- </div>
- </div>
-        <div id="capture">
-            <span id="r"></span>
-            <button id="bm" onclick="if(ct.style.display!='none')ct.style.display='none';else ct.style.display='Block'">M</button>
-  
-            <div id="ct">
-                <button id="capturea">Capture</button>
-                  <div id="iweb">
-                <br>Texture URL
-                <input type=text name=filename id=TextureURL class=cte></input>
-                <button onclick="test('TextureURL')">Apply</button>
-                </button>
-                <br>Texture Bump
-                <input type=text name=filename id=TextureBump class=cte></input>
-                <button onclick="test('TextureBump')">Apply</button>
-                </button>
-                <br>Texture Specular
-                <input type=text name=filename id=TextureSpecular class=cte></input>
-                <button onclick="test('TextureSpecular')">Apply</button>
-                </button>
-            </div><br>
-            <div id="ilocal">
-                <br>Texture
-                <input type=file name=filename id=Texture oninput="test('Texture')" class=cte></input>
-                <br>Bump
+            <div id="drec">
 
-                <input type=file name=filename id=Bump oninput="test('Bump')" class=cte></input>
-                <br>Specular
-                <input type=file name=filename id=Specular oninput="test('Specular')" class=cte></input>
-            </div>
-                <br>
-                <div id="accion">
-                <button type=button onclick='test()'>Display</button>
-
-                <select class="csels" id="stextures" onchange="selT(this.value)">
-                    <option>Choose Texture</option>
-                </select>
-                <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
-                    <option>Create Object</option>
-                    <option>Box</option>
-                    <option>Sphere</option>
-                    <option>Line</option>
-                    <option>Cylinder</option>
-                    <option>Label</option>
-                    <option>Torus</option>
-
-                </select>
-                <select class="csels" id="smeshes" onchange="selMesh(this.value)">
-                    <option>Choose Object</option>
-                </select>
-                <select class="csels" id="sproyestos" onchange="selProy(this.value)">
-                    <option>Choose Project</option>
-                </select>
-
-                <button onclick="editMesh()">Editor</button>
-                <button onclick="if(blight)blight=false;else blight=true">Light</button>
-                <button onclick="SetVr();">VR</button>
-                <button id="bcom" onclick="inicSpeech();">Comands</button>
-                <button onclick="saveScene()">Save Scene</button>
-                <div id="dparam">
-                    <button onclick="applay(params.value)">Apply</button>
-                    <button onclick="dparam.style.display='none'">close</button>
-                    <textarea id="params"></textarea>
-                </div>
+                Choose a Video or audio: ...
+                <input type=file name=filename id=VidAud oninput="ExtractAudio(this)"></input>
+                <video id="Video" onload="binicrec.style.display='block'" controls src="file:///c:/Users/djvdj/Desktop/Panorama360-main/bassguitar.mp3"></video>
+                <button id="binicrec" onclick="InicRecording(renderer.domElement)">Once Video es Loaded press to record</button>
+                <button id="bstoprec" onclick="StopRecording(renderer.domElement)">Stop recording</button>
 
             </div>
         </div>
-    </div>
+        <div id="capture">
+            <span id="r"></span>
+            <button id="bm" onclick="if(ct.style.display==='block')ct.style.display='none';else ct.style.display='block'">M</button>
+
+            <div id="ct">
+                <button id="capturea">Capture</button>
+                <div id="iweb">
+                    <br>Texture URL
+                    <input type=text name=filename id=TextureURL class=cte></input>
+                    <button onclick="test('TextureURL')">Apply</button>
+                    </button>
+                    <br>Texture Bump
+                    <input type=text name=filename id=TextureBump class=cte></input>
+                    <button onclick="test('TextureBump')">Apply</button>
+                    </button>
+                    <br>Texture Specular
+                    <input type=text name=filename id=TextureSpecular class=cte></input>
+                    <button onclick="test('TextureSpecular')">Apply</button>
+                    </button>
+                </div>
+                <br>
+                <div id="ilocal">
+                    <br>Texture
+                    <input type=file name=filename id=Texture oninput="test('Texture')" class=cte></input>
+                    <br>Bump
+
+                    <input type=file name=filename id=Bump oninput="test('Bump')" class=cte></input>
+                    <br>Specular
+                    <input type=file name=filename id=Specular oninput="test('Specular')" class=cte></input>
+                </div>
+                <br>
+                <div id="accion">
+                    <button type=button onclick='test()'>Display</button>
+
+                    <select class="csels" id="stextures" onchange="selT(this.value)">
+                        <option>Choose Texture</option>
+                    </select>
+                    <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
+                        <option>Create Object</option>
+                        <option>Box</option>
+                        <option>Sphere</option>
+                        <option>Line</option>
+                        <option>Cylinder</option>
+                        <option>Label</option>
+                        <option>Torus</option>
+
+                    </select>
+                    <select class="csels" id="smeshes" onchange="selMesh(this.value)">
+                        <option>Choose Object</option>
+                    </select>
+                    <select class="csels" id="sproyestos" onchange="selProy(this.value)">
+                        <option>Choose Project</option>
+                    </select>
+
+                    <button onclick="editMesh()">Editor</button>
+                    <button onclick="if(blight)blight=false;else blight=true">Light</button>
+                    <button onclick="SetVr();">VR</button>
+                    <button id="bcom" onclick="inicSpeech();">Comands</button>
+                    <button onclick="saveScene()">Save Scene</button>
+                    <div id="dparam">
+                        <button onclick="applay(params.value)">Apply</button>
+                        <button onclick="dparam.style.display='none'">close</button>
+                        <textarea id="params"></textarea>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="js/ImageData-polyfill.js"></script>
@@ -245,12 +248,49 @@
 
     <script src="textures.js"></script>
 
-    <script>
+    <script type="text/javascript">
+        //
+        function getPaht(file) {
+            var path = (window.URL || window.webkitURL).createObjectURL(file);
+            alert('path', path);
+            return path;
+        }
     </script>
 
+
     <script>
+        var cStream,
+            aStream,
+            vid,
+            recorder,
+            analyser,
+            dataArray,
+            bufferLength,
+            vc = false;
+
+
+        let clicked = false;
+        let chunks = [];
+        let ac;
+        let osc;
+        let dest;
+        let mediaRecorder;
+
+
+
         var Esenas = [];
-        GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
+         //   Video.onplay=function(){
+        ac = new AudioContext();
+        dest = ac.createMediaStreamDestination();
+        aStream = dest.stream;
+        var sourceNode = ac.createMediaElementSource(Video);
+        sourceNode.connect(dest);
+
+         // output to our headphones
+        sourceNode.connect(ac.destination)
+
+         //      }
+         GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
             Esenas = ob.esenas; //alert(ob.esenas.length);
             for (var i = 0; i < Esenas.length; i++) {
 
@@ -281,7 +321,7 @@
         catch (function(err) {
             alert('No mic for you!')
         });
-/*        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        /*        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
         let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
@@ -332,7 +372,7 @@
 
         window.addEventListener('load', function() {
             init();
-        
+
         });
         var eyes = new THREE.Group();
         controlsr = new THREE.DeviceOrientationControls(eyes);
@@ -463,10 +503,10 @@
             });
 
             renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
-           alert("ready")
+            alert("ready")
             animate();
             //controls2 = new DeviceOrientationControls(camera);
-            setupAudio()
+            //       setupAudio()
         }
 
         function selT(v) {
@@ -612,10 +652,10 @@
                 light4.position.x = Math.sin(time * .9101013) * 100.00;
                 light4.position.y = Math.cos(time * .061017) * 100.2;
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
-              }
+            }
 
             if (!vrmode) {
-         
+
                 if (ct.style.display != 'none') { //  controls2.update();
                     raycaster.setFromCamera(pointer, camera);
 
@@ -652,15 +692,15 @@
 
                     }
 
-                                  //  eyes.position=camera.position;
-                //  eyes.rotation=camera.rotation;
-                eyes.position.x = camera.position.x;
-                eyes.position.y = camera.position.y;
-                eyes.position.z = camera.position.z;
-   
+                    //  eyes.position=camera.position;
+                    //  eyes.rotation=camera.rotation;
+                    eyes.position.x = camera.position.x;
+                    eyes.position.y = camera.position.y;
+                    eyes.position.z = camera.position.z;
+
                 }
                 renderer.render(scene, camera);
-  
+
             } else {
 
                 // renderer.setScissorTest(true);
@@ -697,7 +737,7 @@
 
             if (t === "TextureBump") {
                 ObSelected.name.bump = TextureBump.value;
-          
+
 
                 if (ObSelected.name.name === "World" && !confirm("Are you sure you want to set this background?")) return;
                 else dparam.style.display = "block";
@@ -707,7 +747,7 @@
             }
             if (t === "TextureURL") {
                 ObSelected.name.pic = TextureURL.value;
-               
+
 
                 if (ObSelected.name.name === "World" && !confirm("Are you sure you want to set this background?")) return;
                 else dparam.style.display = "block";
@@ -731,7 +771,7 @@
                     params.value = JSON.stringify(ObSelected.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
 
                     applay(params.value)
-               }
+                }
                 reader.readAsDataURL(file);
             }
         }
@@ -763,7 +803,7 @@
                 o = JSON.parse(v);
             }
             if (from === "web") {
- 
+
                 ObSelected = new THREE.Mesh(new THREE.SphereBufferGeometry(), new THREE.MeshPhongMaterial({
                     side: THREE.DoubleSide,
                     map: o.pic
@@ -789,7 +829,7 @@
                 ObSelected.geometry = g;
             }
             if (o.name.indexOf("Cylinder") > -1) {
-                  var g = new THREE.CylinderGeometry(o.r1, o.r2, o.h, o.s);
+                var g = new THREE.CylinderGeometry(o.r1, o.r2, o.h, o.s);
                 ObSelected.geometry = g;
 
             }
@@ -1018,7 +1058,7 @@
         function selProy(v) {
             //   
             for (var i = 0; i < Esenas.length; i++) {
-                 if (v === Esenas[i].name) { 
+                if (v === Esenas[i].name) {
                     oo = Esenas[i].objects;
                     for (ii = 0; ii < oo.length; ii++) {
 
@@ -1033,90 +1073,101 @@
 
         }
 
-        function ExtractAudio(el){
-var file = el.files[0];
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                     Video.src=e.target.result;
-               
-                }
-                reader.readAsDataURL(file);
+        function ExtractAudio(el) {
+      
+    var file = el.files[0]
+    var type = file.type
+    var videoNode = document.querySelector('Video')
+    var canPlay = videoNode.canPlayType(type)
+    if (canPlay === '') canPlay = 'no'
+   // var message = 'Can play type "' + type + '": ' + canPlay
+   // var isError = canPlay === 'no'
+  //  displayMessage(message, isError)
 
-}
-function InicRecording(canvas) {
-Video.play();
-cStream = canvas.captureStream(30);
-cStream.addTrack(aStream.getAudioTracks()[0]);
-var mixedStream = 'MediaStream' in window ? new MediaStream([cStream.getVideoTracks()[0], aStream.getAudioTracks()[0]]) : cStream;
-recorder = new MediaRecorder(mixedStream);
-recorder.start();
-  recorder.ondataavailable = function(e) {
-chunks.push(e.data);
-};
-recorder.onstop = exportStream;
+  //  if (isError) {
+   //   return
+  //  }
 
-};
-function setupAudio() {
-   var ac = new AudioContext();
-        dest = ac.createMediaStreamDestination();
-       aStream = dest.stream;
-        var  sourceNode = ac.createMediaElementSource(Video);
-    sourceNode.connect(dest);
+    var fileURL = URL.createObjectURL(file)
+    videoNode.src = fileURL
+  }
   
-  // output to our headphones
-  sourceNode.connect(ac.destination)
 
-       };
-       function StopRecording() {
+        function ExtractAudio2(el) {
+            var file = el.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                Video.src = e.target.result;
+                getPaht(file)
+            }
+            reader.readAsDataURL(file);
 
-Video.pause();
- recorder.stop()
-exportStream();
-}
-function exportStream(e) {
+        }
 
-if (chunks.length) {
+        function InicRecording(canvas) {
+            Video.play();
 
-  var blob = new Blob(chunks, { 'type' : 'video/mp4' })
-  var vidURL = URL.createObjectURL(blob);
-  //chunks=[];
-  for(i=0;i<chunks.length;i++){
-    chunks.pop();
-  }
+            cStream = canvas.captureStream(30);
+            cStream.addTrack(aStream.getAudioTracks()[0]);
+            var mixedStream = 'MediaStream' in window ? new MediaStream([cStream.getVideoTracks()[0], aStream.getAudioTracks()[0]]) : cStream;
+            recorder = new MediaRecorder(mixedStream);
+            recorder.start();
+            recorder.ondataavailable = function(e) {
+                chunks.push(e.data);
+            };
+            recorder.onstop = exportStream;
 
- Video.controls = true;
- //Video.width=600;
-  Video.src = vidURL;
-  Video.onend = function() {
-    URL.revokeObjectURL(vidURL);
-  }
+        };
+
+        function setupAudio() {
 
 
-} 
-}
+
+
+            //AudioContext = window.AudioContext || window.webkitAudioContext;
+            var ac = new AudioContext();
+            dest = ac.createMediaStreamDestination();
+            aStream = dest.stream;
+            var sourceNode = ac.createMediaElementSource(Video);
+            sourceNode.connect(dest);
+
+            // output to our headphones
+            sourceNode.connect(ac.destination)
+
+        };
+
+        function StopRecording() {
+
+            Video.pause();
+            recorder.stop()
+            exportStream();
+        }
+
+        function exportStream(e) {
+
+            if (chunks.length) {
+
+                var blob = new Blob(chunks, {
+                    'type': 'video/mp4'
+                })
+                var vidURL = URL.createObjectURL(blob);
+                //chunks=[];
+                for (i = 0; i < chunks.length; i++) {
+                    chunks.pop();
+                }
+
+                Video.controls = true;
+                //Video.width=600;
+                Video.src = vidURL;
+                Video.onend = function() {
+                    URL.revokeObjectURL(vidURL);
+                }
+
+
+            }
+        }
     </script>
 
-    <script>
-
-var cStream,
-  aStream,
-  vid,
-  recorder,
-  analyser,
-  dataArray,
-  bufferLength,
-   vc=false;
-
-
-    let clicked = false;
-     let chunks = [];
-     let ac;
-     let osc;
-     let dest;
-     let mediaRecorder;
-
-
-    </script>
 
 </body>
 
