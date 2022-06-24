@@ -161,6 +161,8 @@
                 <video id="Video" onload="binicrec.style.display='block'" controls src="file:///Internal storage/Aaa.mp4"></video>
                 <button id="binicrec" onclick="InicRecording(renderer.domElement)">Once Video es Loaded press to record</button>
                 <button id="bstoprec" onclick="StopRecording(renderer.domElement)">Stop recording</button>
+                 <button id="bscreenshot" onclick="screenShot()">screenShot</button>
+              
 
             </div>
         </div>
@@ -1166,8 +1168,16 @@
 
             }
         }
-    </script>
 
+function screenShot(){
+   render();
+    var cata=renderer.domElement.toDataURL("png");
+
+  window.open(cata, '_blank')
+
+}
+
+    </script>
 
 </body>
 
