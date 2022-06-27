@@ -44,7 +44,15 @@
         #params {
             width: 50%;
             height: 200px;
-            background: rgba(255, 255, 255, .75);
+         
+           background:white;
+           
+        }
+        tanim{
+            background-color: white;
+            width: 50%;
+            height: 200px;
+            display:none;
         }
         #file {
             width: 80px;
@@ -229,6 +237,8 @@
                         <button onclick="applay(params.value)">Apply</button>
                         <button onclick="dparam.style.display='none'">close</button>
                         <textarea id="params"></textarea>
+                        <button onclick="anim()">Animate</button>
+                        <textarea id="tanim"></textarea>
                     </div>
 
                 </div>
@@ -268,7 +278,8 @@
             analyser,
             dataArray,
             bufferLength,
-            vc = false;
+            vc = false,
+            aranim=[];
 
 
         let clicked = false;
@@ -647,13 +658,24 @@
         }
 
         function render() {
+            const time = Date.now() * 0.0005;
+
             if (blight) {
-                const time = Date.now() * 0.0005;
+   
                 light.position.y += 0.005;
                 light.position.z += 0.0080105;
                 light4.position.x = Math.sin(time * .9101013) * 100.00;
                 light4.position.y = Math.cos(time * .061017) * 100.2;
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
+            }
+            if(aranim.length>0){
+                for(var i=0;i<aranim.length;i++){
+                    var o=aranim[i];
+
+
+                }
+
+
             }
 
             if (!vrmode) {
@@ -1123,9 +1145,6 @@
 
         function setupAudio() {
 
-
-
-
             //AudioContext = window.AudioContext || window.webkitAudioContext;
             var ac = new AudioContext();
             dest = ac.createMediaStreamDestination();
@@ -1172,8 +1191,13 @@
 function screenShot(){
    render();
     var cata=renderer.domElement.toDataURL("png");
-
   window.open(cata, '_blank')
+}
+
+function anim(){
+    params.style.display="none";
+    tanim.style.display="block"
+  //  ObSelected;
 
 }
 
