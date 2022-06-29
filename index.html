@@ -149,6 +149,11 @@
         #binicrec {
             // display: none;
         }
+        #pi{
+            position: absolute;
+            bottom:0%;
+            left: 10%;
+                    }
     
     </style>
 </head>
@@ -245,6 +250,7 @@
             </div>
         </div>
     </div>
+    <p id="pi">muestra</p>
 
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
@@ -279,7 +285,8 @@
             dataArray,
             bufferLength,
             vc = false,
-            aranim=[];
+            aranim=[],
+            sobs=[];
 
 
         let clicked = false;
@@ -334,6 +341,7 @@
         catch (function(err) {
             alert('No mic for you!')
         });
+
         /*        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
         let p = document.createElement('textarea');
@@ -656,9 +664,29 @@
             render();
 
         }
-
+  
         function render() {
-            const time = Date.now() * 0.0005;
+            const time = Date.now() * 0.0001 ;
+            var os=scene.children;
+           
+            for(var i=0;i<os.length;i++){
+
+                var o=os[i].name.anim;pi.innerHTML=JSON.stringify(o)
+                    if(o!=undefined){
+                var oo=os[i];
+        
+         //    if(o.pvx!=undefined && o.pvy!=undefined && o.pvz!=undefined)oo.geometry.translate(o.pvx, o.pvy, o.pvz)
+                if(o.gx!=0) oo.rotateX(o.gx)
+                if(o.gy!=0) oo.rotateY(o.gy)
+                if(o.gz!=0) oo.rotateZ(o.gz)
+              //  console.log(o.vy)
+           
+               pi.innerHTML="dos de dos<br>"+os.length+"<br<br> "+oo.position.x
+            }
+ 
+
+            }
+ 
 
             if (blight) {
    
@@ -836,8 +864,11 @@
                 scene.add(ObSelected)
 
             }
+           
+     
 
             ObSelected.position.set(o.x, o.y, o.z);
+        
             if (o.rx != undefined && o.ry != undefined && o.rz != undefined) {
                 ObSelected.rotation.x = o.rx;
                 ObSelected.rotation.y = o.ry;
@@ -875,7 +906,8 @@
                 ObSelected.material.specular = new THREE.Color('grey');
 
             }
-
+            if(o.pvx!=undefined && o.pvy!=undefined && o.pvz!=undefined)ObSelected.geometry.translate(o.pvx, o.pvy, o.pvz)
+  
             ObSelected.material.map.wrapS = ObSelected.material.map.wrapT = THREE.RepeatWrapping;
 
             ObSelected.material.map.repeat.set(o.rpx, o.rpy);
@@ -1205,4 +1237,5 @@ function anim(){
 
 </body>
 
+</html>
 </html>
