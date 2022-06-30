@@ -242,12 +242,11 @@
                     <button onclick="SetVr();">VR</button>
                     <button id="bcom" onclick="inicSpeech();">Comands</button>
                     <button onclick="saveScene()">Save Scene</button>
-                    <div id="dparam">
+                    <div id="dparam" name=false>
                         <button onclick="applay(params.value)">Apply</button>
                         <button onclick="dparam.style.display='none'">close</button>
                         <textarea id="params"></textarea>
-                        <button onclick="anim()">Animate</button>
-                        <textarea id="tanim"></textarea>
+ 
                     </div>
 
                 </div>
@@ -674,26 +673,15 @@
             var os=scene.children;
            
             for(var i=0;i<os.length;i++){
-
-                var o=os[i].name.anim;pi.innerHTML=JSON.stringify(o)
+               var o=os[i].name.anim;
                     if(o!=undefined){
                 var oo=os[i];
-        
-         //    if(o.pvx!=undefined && o.pvy!=undefined && o.pvz!=undefined)oo.geometry.translate(o.pvx, o.pvy, o.pvz)
-                if(o.gx!=0) oo.rotateX(o.gx)
+               if(o.gx!=0) oo.rotateX(o.gx)
                 if(o.gy!=0) oo.rotateY(o.gy)
                 if(o.gz!=0) oo.rotateZ(o.gz)
-              //  console.log(o.vy)
-           
-               pi.innerHTML="dos de dos<br>"+os.length+"<br<br> "+oo.position.x
-            }
- 
-
-            }
- 
-
-            if (blight) {
-   
+             }
+             }
+           if (blight) {
                 light.position.y += 0.005;
                 light.position.z += 0.0080105;
                 light4.position.x = Math.sin(time * .9101013) * 100.00;
@@ -701,18 +689,18 @@
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
             }
             if(aranim.length>0){
-                for(var i=0;i<aranim.length;i++){
+                for(var i=2;i<aranim.length;i++){
                     var o=aranim[i];
-
-
                 }
-
-
             }
 
             if (!vrmode) {
-                if(dparam.style.display=="none"){
+                pi.innerHTML=dparam.style.display
+               // 
+
                 if (ct.style.display != 'none') { //  controls2.update();
+           
+                 if (dparam.style.display === 'none'){
                     raycaster.setFromCamera(pointer, camera);
 
                     const intersects = raycaster.intersectObjects(scene.children, false);
@@ -730,12 +718,12 @@
 
                             if (INTERSECTED.name.name != "World") {
                                 if (dparam.style.display === 'none') {
+                                    // byp=false;
                                     dparam.style.display = 'block';
+                                   
                                 }
-
-
                             } else {
-
+                              //  byp=true;
                                 dparam.style.display = "none";
 
                             }
@@ -754,8 +742,11 @@
                     eyes.position.y = camera.position.y;
                     eyes.position.z = camera.position.z;
 
+              }
+           else pi.innerHTML="nooooo"          
+              
                 }
-            }
+ 
                 renderer.render(scene, camera);
 
             } else {
@@ -1230,14 +1221,6 @@ function screenShot(){
     var cata=renderer.domElement.toDataURL("png");
   window.open(cata, '_blank')
 }
-
-function anim(){
-    params.style.display="none";
-    tanim.style.display="block"
-  //  ObSelected;
-
-}
-
     </script>
 
 </body>
