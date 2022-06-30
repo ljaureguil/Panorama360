@@ -108,17 +108,17 @@
         }
         #ilocal {
             padding: 5px;
-            ;
+            display:none;
             border-style: groove;
         }
         #iweb {
             padding: 5px;
-            ;
+            display:none;
             border-style: groove;
         }
         #accion {
             padding: 5px;
-            ;
+         
             border-style: groove;
         }
         #dbrec {
@@ -184,7 +184,11 @@
             <button id="bm" onclick="if(ct.style.display==='block')ct.style.display='none';else ct.style.display='block'">M</button>
 
             <div id="ct">
-                <button id="capturea">Capture</button>
+                     <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">Show WL</button>      
+                     <button id="" onclick="if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">Show Loc</button>      
+                     <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">Show action</button>      
+             
+                     <button id="capturea">Capture</button>
                 <div id="iweb">
                     <br>Texture URL
                     <input type=text name=filename id=TextureURL class=cte></input>
@@ -197,7 +201,7 @@
                     <br>Texture Specular
                     <input type=text name=filename id=TextureSpecular class=cte></input>
                     <button onclick="test('TextureSpecular')">Apply</button>
-                    </button>
+                   
                 </div>
                 <br>
                 <div id="ilocal">
@@ -524,7 +528,7 @@
             });
 
             renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
-            alert("ready")
+        
             animate();
             //controls2 = new DeviceOrientationControls(camera);
             //       setupAudio()
@@ -707,7 +711,7 @@
             }
 
             if (!vrmode) {
-
+                if(dparam.style.display=="none"){
                 if (ct.style.display != 'none') { //  controls2.update();
                     raycaster.setFromCamera(pointer, camera);
 
@@ -751,6 +755,7 @@
                     eyes.position.z = camera.position.z;
 
                 }
+            }
                 renderer.render(scene, camera);
 
             } else {
@@ -1237,5 +1242,4 @@ function anim(){
 
 </body>
 
-</html>
 </html>
