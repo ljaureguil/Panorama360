@@ -494,6 +494,7 @@
                     pic: "".pic
                 }
                 scene.add(world1);
+                renderer.setClearColor( 0xff0000, .3 );
             })
 
 
@@ -695,12 +696,12 @@
             }
 
             if (!vrmode) {
-                pi.innerHTML=dparam.style.display
-               // 
-
-                if (ct.style.display != 'none') { //  controls2.update();
+       
+               //  if (ct.style.display === 'none') { //  controls2.update();
            
-                 if (dparam.style.display === 'none'){
+               // if (dparam.style.display === 'none'){
+                   pi.innerHTML=document.activeElement.id     
+                 if (dparam!=document.activeElement){      
                     raycaster.setFromCamera(pointer, camera);
 
                     const intersects = raycaster.intersectObjects(scene.children, false);
@@ -742,11 +743,12 @@
                     eyes.position.y = camera.position.y;
                     eyes.position.z = camera.position.z;
 
-              }
-           else pi.innerHTML="nooooo"          
+          //    }
+        //   else pi.innerHTML="nooooo"          
               
                 }
- 
+               
+                        
                 renderer.render(scene, camera);
 
             } else {
@@ -911,7 +913,9 @@
             ObSelected.material.map.offset.y = o.ofy;
             ObSelected.material.map.rotation = o.rot;
             ObSelected.material.needsUpdate = true;
-            if (ObSelected.material.color === undefined) ObSelected.material.color = '#ffffff'
+            if (ObSelected.material.color === undefined) ObSelected.material.color = '#ffffff';
+            if(o.transparent != undefined) ObSelected.material.transparent=o.transparent;
+            if(o.opacity!=undefined) ObSelected.material.opacity=o.opacity;
             params.name = o;
 
 
