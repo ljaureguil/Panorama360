@@ -229,7 +229,7 @@
                         <option>Label</option>
                         <option>Torus</option>
 
-                    </select>
+                    </select><button onclick="chooseMesh(meshes.value)">Cr.</button>
                     <select class="csels" id="smeshes" onchange="selMesh(this.value)">
                         <option>Choose Object</option>
                     </select>
@@ -246,6 +246,7 @@
                         <button onclick="applay(params.value)">Apply</button>
                         <button onclick="dparam.style.display='none'">close</button>
                         <textarea id="params"></textarea>
+                        <button onclick="delM()" style="background:red;color:white">Delete</button>
  
                     </div>
 
@@ -494,7 +495,7 @@
                     pic: "".pic
                 }
                 scene.add(world1);
-                renderer.setClearColor( 0x000000, 1 );
+                renderer.setClearColor( 0xff0000, .3 );
             })
 
 
@@ -570,12 +571,15 @@
         }
 
         function chooseMesh(m) {
+            if(m==="Create Object") return;
             var n = prompt("Name");
+            var a=scene.children.length;
+   
             var op = document.createElement("option");
             // op.innerHTML=n;    
             if (m === "Box") {
 
-                var m = Box(n, 10, 10, 10);
+                var m = Box(n+a, 10, 10, 10);
                 scene.add(m);
                 ObSelected = m;
                 selMesh.value = m.name;
@@ -585,7 +589,7 @@
 
             }
             if (m === "Sphere") {
-                var m = Sphere(n, 5, 80, 40);
+                var m = Sphere(n+a, 5, 80, 40);
                 scene.add(m);
                 ObSelected = m;
                 selMesh.value = m.name;
@@ -595,7 +599,7 @@
             }
 
             if (m === "Cylinder") {
-                var m = Cylinder(name, 5, 5, 20, 64, false);
+                var m = Cylinder(n+a, 5, 5, 20, 64, false);
                 scene.add(m);
                 ObSelected = m;
                 selMesh.value = m.name;
@@ -604,7 +608,7 @@
 
             }
             if (m === "Torus") {
-                var m = Torus(n, 10, 3, 16, 100);
+                var m = Torus(n+a, 10, 3, 16, 100);
                 op.innerHTML = m.name.name;
                 smeshes.appendChild(op);
                 scene.add(m);
@@ -697,7 +701,7 @@
 
             if (!vrmode) {
        
-               //  if (ct.style.display === 'none') { //  controls2.update();
+          //       if (ct.style.display === 'none') { //  controls2.update();
            
                // if (dparam.style.display === 'none'){
                    pi.innerHTML=document.activeElement.id     
@@ -716,7 +720,7 @@
                             INTERSECTED = intersects[0].object;
                             ObSelected = INTERSECTED;
                             params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
-
+                            //params.name=Obselected;
                             if (INTERSECTED.name.name != "World") {
                                 if (dparam.style.display === 'none') {
                                     // byp=false;
@@ -747,6 +751,7 @@
         //   else pi.innerHTML="nooooo"          
               
                 }
+            //    }
                
                         
                 renderer.render(scene, camera);
@@ -922,6 +927,39 @@
             render();
 
         }
+        function delM(){ 
+   //
+    if(confirm("Are you sure you want to Delete "+ObSelected.name.name)){
+       var a = scene.children;
+       for(var i=0;i<a.length;i++){
+        if(ObSelected.name.name===a[i].name.name){
+            scene.remove(a[i])
+        }
+
+       }
+   
+        render(); 
+    }
+ }
+ function removeObject3D(object3D) {object3D=ObSelected
+    if (!(object3D instanceof THREE.Object3D)) return false;
+
+    // for better memory management and performance
+    if (object3D.geometry) object3D.geometry.dispose();
+
+    if (object3D.material) {
+        if (object3D.material instanceof Array) {
+            // for better memory management and performance
+            object3D.material.forEach(material => material.dispose());
+        } else {
+            // for better memory management and performance
+            object3D.material.dispose();
+        }
+    }
+    object3D.removeFromParent(); // the parent might be the scene or another Object3D, but it is sure to be removed this way
+    return true;
+}
+
 
         function setWorld(v) {
 
@@ -1046,7 +1084,11 @@
             var ar = [];
             for (var i = 0; i < obs.length; i++) {
                 if (obs[i].name != undefined) {
-                    if (obs[i].name.name != undefined) ar.push(obs[i].name);
+                    if (obs[i].name.name != undefined){
+                        if(obs[i].name.pic.indexOf("http")===-1) obs[i].name.pic="";
+                        
+                        ar.push(obs[i].name);
+                    }
                 }
             }
             os.objects = ar;
@@ -1225,6 +1267,7 @@ function screenShot(){
     var cata=renderer.domElement.toDataURL("png");
   window.open(cata, '_blank')
 }
+
     </script>
 
 </body>
