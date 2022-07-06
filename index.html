@@ -702,8 +702,7 @@
             if (!vrmode) {
        
           //       if (ct.style.display === 'none') { //  controls2.update();
-           
-               // if (dparam.style.display === 'none'){
+     
                    pi.innerHTML=document.activeElement.id     
                  if (dparam!=document.activeElement){      
                     raycaster.setFromCamera(pointer, camera);
@@ -725,6 +724,7 @@
                                 if (dparam.style.display === 'none') {
                                     // byp=false;
                                     dparam.style.display = 'block';
+                                   setTimeout("params.focus()",40);
                                    
                                 }
                             } else {
