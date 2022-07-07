@@ -64,7 +64,9 @@
             display: none;
         }
         #smeshes {
-            display: none
+         //   background:red;
+        //    color:white;
+   
         }
         #words {
             height: 40%;
@@ -215,9 +217,7 @@
                 </div>
                 <br>
                 <div id="accion">
-                    <button type=button onclick='test()'>Display</button>
-
-                    <select class="csels" id="stextures" onchange="selT(this.value)">
+                     <select class="csels" id="stextures" onchange="selT(this.value)">
                         <option>Choose Texture</option>
                     </select>
                     <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
@@ -233,8 +233,9 @@
                     <select class="csels" id="smeshes" onchange="selMesh(this.value)">
                         <option>Choose Object</option>
                     </select>
+                  
                     <select class="csels" id="sproyestos" onchange="selProy(this.value)">
-                        <option>Choose Project</option>
+                        <option>Choose Scene</option>
                     </select>
 
                     <button onclick="editMesh()">Editor</button>
@@ -247,6 +248,8 @@
                         <button onclick="dparam.style.display='none'">close</button>
                         <textarea id="params"></textarea>
                         <button onclick="delM()" style="background:red;color:white">Delete</button>
+                        <button onclick="alert('Choose Object');addTo=true;" style="background:gray;color:white">Add To</button>
+                        
  
                     </div>
 
@@ -269,6 +272,7 @@
 
 
     <script src="textures.js"></script>
+ 
 
     <script type="text/javascript">
         //
@@ -290,7 +294,10 @@
             bufferLength,
             vc = false,
             aranim=[],
-            sobs=[];
+            sobs=[],
+            fromob="",
+            toob="", 
+            addTo=false;
 
 
         let clicked = false;
@@ -299,8 +306,7 @@
         let osc;
         let dest;
         let mediaRecorder;
-
-
+   
 
         var Esenas = [];
          //   Video.onplay=function(){
@@ -704,7 +710,7 @@
           //       if (ct.style.display === 'none') { //  controls2.update();
      
                    pi.innerHTML=document.activeElement.id     
-                 if (dparam!=document.activeElement){      
+                 if (params!=document.activeElement){      
                     raycaster.setFromCamera(pointer, camera);
 
                     const intersects = raycaster.intersectObjects(scene.children, false);
@@ -717,6 +723,14 @@
                             //	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
                             INTERSECTED = intersects[0].object;
+                            if(addTo){
+                                if(confirm("Do you want to Add "+ObSelected.name.name +" To "+INTERSECTED.name.name)){
+                                    ObSelected.add(INTERSECTED);
+                                    alert("All done");
+                                    addTo=false;
+
+                                }
+                            }
                             ObSelected = INTERSECTED;
                             params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
                             //params.name=Obselected;
@@ -724,7 +738,7 @@
                                 if (dparam.style.display === 'none') {
                                     // byp=false;
                                     dparam.style.display = 'block';
-                                   setTimeout("params.focus()",40);
+                                  params.focus()
                                    
                                 }
                             } else {
@@ -909,7 +923,18 @@
                 ObSelected.material.specular = new THREE.Color('grey');
 
             }
-            if(o.pvx!=undefined && o.pvy!=undefined && o.pvz!=undefined)ObSelected.geometry.translate(o.pvx, o.pvy, o.pvz)
+            if(o.pvx!=undefined && o.pvy!=undefined && o.pvz!=undefined){
+               
+               // g=new THREE.Geometry().fromBufferGeometry(ObSelected.geometry);
+              //  g.translate(o.pvx, o.pvy, o.pvz);
+                
+
+               //  ObSelected.geometry=g;
+               //  ObSelected.matrixAutoUpdate = false;
+               //  ObSelected.updateMatrix();
+
+                 render()
+                }
   
             ObSelected.material.map.wrapS = ObSelected.material.map.wrapT = THREE.RepeatWrapping;
 
@@ -1085,8 +1110,11 @@
             for (var i = 0; i < obs.length; i++) {
                 if (obs[i].name != undefined) {
                     if (obs[i].name.name != undefined){
-                        if(obs[i].name.pic.indexOf("http")===-1) obs[i].name.pic="";
                         
+                        alert(JSON.stringify(obs[i].name))
+                        if(obs[i].name.pic!=undefined){
+                        if(obs[i].name.pic.indexOf("http")===-1) obs[i].name.pic="";
+                        }
                         ar.push(obs[i].name);
                     }
                 }
@@ -1266,6 +1294,13 @@ function screenShot(){
    render();
     var cata=renderer.domElement.toDataURL("png");
   window.open(cata, '_blank')
+}
+
+function add(o){
+    alert('Choose an Object');
+    fromob=o;
+
+
 }
 
     </script>
