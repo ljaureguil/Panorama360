@@ -222,6 +222,7 @@
                     </select>
                     <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
                         <option>Create Object</option>
+                        <option>Group</option>
                         <option>Box</option>
                         <option>Sphere</option>
                         <option>Line</option>
@@ -570,7 +571,7 @@
             var s = smeshes.innerHTML;
             for (var i = 0; i < ms.length; i++) {
                 if (ms[i].name != undefined) {
-                    s += "<option>" + ms[i].name + "</option>";
+                   if(ms[i].length>0) s += "<option>" + ms[i].name + "</option>";
                 }
                 smeshes.innerHTML = s;
             }
@@ -582,7 +583,19 @@
             var a=scene.children.length;
    
             var op = document.createElement("option");
-            // op.innerHTML=n;    
+            // op.innerHTML=n;   
+            if (m === "Group") {
+/*
+var m = new THREE.Group();
+scene.add();
+ObSelected = m;
+selMesh.value = m.name;
+
+op.innerHTML = m.name.name;
+smeshes.appendChild(op);
+*/
+}   
+
             if (m === "Box") {
 
                 var m = Box(n+a, 10, 10, 10);
@@ -923,17 +936,9 @@
                 ObSelected.material.specular = new THREE.Color('grey');
 
             }
-            if(o.pvx!=undefined && o.pvy!=undefined && o.pvz!=undefined){
-               
-               // g=new THREE.Geometry().fromBufferGeometry(ObSelected.geometry);
-              //  g.translate(o.pvx, o.pvy, o.pvz);
-                
-
-               //  ObSelected.geometry=g;
-               //  ObSelected.matrixAutoUpdate = false;
-               //  ObSelected.updateMatrix();
-
-                 render()
+            if(o.anim.pvx!=undefined && o.anim.pvy!=undefined && o.anim.pvz!=undefined){
+                ObSelected.geometry.translate(o.anim.pvx, o.anim.pvy, o.anim.pvz )
+                    render()
                 }
   
             ObSelected.material.map.wrapS = ObSelected.material.map.wrapT = THREE.RepeatWrapping;
