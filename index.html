@@ -585,16 +585,13 @@
             var op = document.createElement("option");
             // op.innerHTML=n;   
             if (m === "Group") {
-/*
-var m = new THREE.Group();
-scene.add();
-ObSelected = m;
-selMesh.value = m.name;
-
-op.innerHTML = m.name.name;
-smeshes.appendChild(op);
-*/
-}   
+                var m=Group(n+a)
+                scene.add(m);
+                ObSelected = m;
+                selMesh.value = m.name;
+                op.innerHTML = m.name.name;
+                smeshes.appendChild(op);
+            }   
 
             if (m === "Box") {
 
@@ -864,7 +861,10 @@ smeshes.appendChild(op);
             for (var i = 0; i < ar.length; i++) {
                 if (ar[i].name.name === v) {
                     ObSelected = ar[i];
-                    alert(JSON.stringify(ar[i].name));
+                    dparam.style.display="block";
+                    params.value = JSON.stringify(ObSelected.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+ 
+                    params.focus();
                     i = ar.length;
                 }
             }
@@ -878,6 +878,7 @@ smeshes.appendChild(op);
         }
 
         function applay(v, from) {
+
             var o = v;
             //   alert(from)
             if (from != "web") {
@@ -894,9 +895,7 @@ smeshes.appendChild(op);
                 scene.add(ObSelected)
 
             }
-           
-     
-
+       if(o.name.indexOf("Group")>-1){alert("Grupo estamos trabajando");return}
             ObSelected.position.set(o.x, o.y, o.z);
         
             if (o.rx != undefined && o.ry != undefined && o.rz != undefined) {
