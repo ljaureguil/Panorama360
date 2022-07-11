@@ -187,10 +187,11 @@
 
             <div id="ct">
                      <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">Show WL</button>      
-                     <button id="" onclick="if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">Show Loc</button>      
+                     <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">Show Loc</button>      
                      <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">Show action</button>      
              
                      <button id="capturea">Capture</button>
+                     <button id="bc" onclick="if(bcast){bcast=false;bc.style.background='red'}else {bcast=true;bc.style.background='green'}" style="background:green;color:white">Cast</button>
                 <div id="iweb">
                     <br>Texture URL
                     <input type=text name=filename id=TextureURL class=cte></input>
@@ -298,7 +299,8 @@
             sobs=[],
             fromob="",
             toob="", 
-            addTo=false;
+            addTo=false,
+            bcast=true;
 
 
         let clicked = false;
@@ -717,7 +719,7 @@
 
             if (!vrmode) {
        
-          //       if (ct.style.display === 'none') { //  controls2.update();
+                 if (bcast) { //  controls2.update();
      
                    pi.innerHTML=document.activeElement.id     
                  if (params!=document.activeElement){      
@@ -735,7 +737,7 @@
                             INTERSECTED = intersects[0].object;
                             if(addTo){
                                 if(confirm("Do you want to Add "+ObSelected.name.name +" To "+INTERSECTED.name.name)){
-                                    ObSelected.add(INTERSECTED);
+                                    INTERSECTED.add(ObSelected);
                                     alert("All done");
                                     addTo=false;
 
@@ -775,7 +777,7 @@
         //   else pi.innerHTML="nooooo"          
               
                 }
-            //    }
+               }
                
                         
                 renderer.render(scene, camera);
@@ -1307,6 +1309,12 @@ function add(o){
 
 }
 
+function getP(){
+    var loc = window.location.pathname;
+var dir = loc.substring(0, loc.lastIndexOf('/'));
+pi.innerHTML=dir;
+alert(dir)
+}
     </script>
 
 </body>
