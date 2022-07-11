@@ -186,10 +186,10 @@
             <button id="bm" onclick="if(ct.style.display==='block')ct.style.display='none';else ct.style.display='block'">M</button>
 
             <div id="ct">
-                      <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>      
+                     <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>      
                      <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">L</button>      
                      <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">A</button>      
-            
+             
                      <button id="capturea">Capture</button>
                      <button id="bc" onclick="if(bcast){bcast=false;bc.style.background='red'}else {bcast=true;bc.style.background='green'}" style="background:green;color:white">Cast</button>
                 <div id="iweb">
@@ -1117,9 +1117,9 @@
                 if (obs[i].name != undefined) {
                     if (obs[i].name.name != undefined){
                         
-                        alert(JSON.stringify(obs[i].name))
+                       // alert(JSON.stringify(obs[i].name))
                         if(obs[i].name.pic!=undefined){
-                        if(obs[i].name.pic.indexOf("http")===-1) obs[i].name.pic="";
+                        if(obs[i].name.pic.length>1000) obs[i].name.pic="";
                         }
                         ar.push(obs[i].name);
                     }
@@ -1128,7 +1128,7 @@
             os.objects = ar;
 
             GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
-                alert(JSON.stringify(ob))
+            //    alert(JSON.stringify(ob))
                 var c = false;
                 for (var i = 0; i < ob.esenas.length; i++) {
                     if (ob.esenas[i].name === os.name) {
