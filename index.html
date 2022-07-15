@@ -1119,7 +1119,7 @@
                         
                        // alert(JSON.stringify(obs[i].name))
                         if(obs[i].name.pic!=undefined){
-                        if(obs[i].name.pic.length>1000) obs[i].name.pic="";
+                        if(obs[i].name.pic.length<500) obs[i].name.pic="";
                         }
                         ar.push(obs[i].name);
                     }
@@ -1297,9 +1297,36 @@
         }
 
 function screenShot(){
-   render();
-    var cata=renderer.domElement.toDataURL("png");
-  window.open(cata, '_blank')
+ //  render();
+ //   var cata=renderer.domElement.toDataURL("png");
+ // window.open(cata, '_blank');
+
+
+ // this.canvas.toBlob( function( blob ) {
+     render();
+    renderer.domElement.toBlob( function( blob ) {
+
+var url = URL.createObjectURL(blob);
+//var fileName = 'ScreenShot-' + document.title + '-' + Date.now() + 'jpeg';//png';
+var fileName = 'ScreenShot-' + document.title + '-' + Date.now();//png';
+var anchor = document.createElement( 'a' );
+anchor.href = url;
+anchor.setAttribute("download", fileName);
+anchor.className = "download-js-link";
+anchor.innerHTML = "downloading...";
+anchor.style.display = "none";
+document.body.appendChild(anchor);
+setTimeout(function() {
+    anchor.click();
+    document.body.removeChild(anchor);
+}, 1 );
+
+}, 'image/jpeg' );
+
+
+
+
+
 }
 
 function add(o){
