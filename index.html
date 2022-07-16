@@ -348,14 +348,11 @@
         navigator.mediaDevices.getUserMedia({
             audio: true
         })
-            .then(function(stream) {;
-            })
-            .
-        catch (function(err) {
-            alert('No mic for you!')
-        });
-
-              window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            .then(function(stream) {
+        //////////////////////////////////
+        
+      
+        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 try{
         let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
@@ -389,6 +386,18 @@ try{
         words.appendChild(p);
     }
     catch(e){alert(e)}
+  
+                
+                
+                
+                
+                /////////////////////////
+                ;
+            })
+            .
+        catch (function(err) {
+            alert('No mic for you!')
+        });
 
 
         var pr1, pr2, pr3, blight = false,
