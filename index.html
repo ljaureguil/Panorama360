@@ -441,7 +441,7 @@ try{
         eyes.position.y = oy.y;
         eyes.position.z = oy.z;
         var me={};
-        me.mx=0;me.my=o;me.mz=0;me.esc=1;me.rx=0;me.ry=0;me.rz=0;me.factor=1;me.pos=oy;
+        me.mx=0;me.my=0;me.mz=0;me.esc=1;me.rx=0;me.ry=0;me.rz=0;me.factor=1;me.pos=oy;
         eyes.name=me;
 
 
@@ -787,12 +787,12 @@ try{
                 renderer.render(scene, camera);
 
             } else {
-              //  eyes.position.x+=eyes.name.mx*eyes.name.factor;
-             //   eyes.position.y+=eyes.name.my*eyes.name.factor;
-             //   eyes.position.z+=eyes.name.mz*eyes.name.factor;
-             //   eyes.rotation.x+=eyes.name.rx*eyes.name.factor;
-             //   eyes.rotation.y+=eyes.name.ry*eyes.name.factor;
-             //   eyes.rotation.z+=eyes.name.rz*eyes.name.factor;
+                eyes.position.x+=eyes.name.mx*eyes.name.factor;
+                eyes.position.y+=eyes.name.my*eyes.name.factor;
+                eyes.position.z+=eyes.name.mz*eyes.name.factor;
+                eyes.rotation.x+=eyes.name.rx*eyes.name.factor;
+                eyes.rotation.y+=eyes.name.ry*eyes.name.factor;
+                eyes.rotation.z+=eyes.name.rz*eyes.name.factor;
 
              //   eyes.position.x+=eyes.name.mx;
 
