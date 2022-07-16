@@ -355,8 +355,8 @@
             alert('No mic for you!')
         });
 
-        /*        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
+              window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+try{
         let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
         recognition.interimResults = true;
@@ -386,8 +386,9 @@
 
         });
 
-        words.appendChild(p);*/
-
+        words.appendChild(p);
+    }
+    catch(e){alert(e)}
 
 
         var pr1, pr2, pr3, blight = false,
@@ -439,6 +440,9 @@
         eyes.position.x = oy.x;
         eyes.position.y = oy.y;
         eyes.position.z = oy.z;
+        var me={};
+        me.mx=0;me.my=o;me.mz=0;me.esc=1;me.rx=0;me.ry=0;me.rz=0;me.factor=1;me.pos=oy;
+        eyes.name=me;
 
 
         function init() {
@@ -783,6 +787,14 @@
                 renderer.render(scene, camera);
 
             } else {
+                eyes.position.x+=eyes.name.mx*eyes.name.factor;
+                eyes.position.y+=eyes.name.my*eyes.name.factor;
+                eyes.position.z+=eyes.name.mz*eyes.name.factor;
+                eyes.rotation.x+=eyes.name.rx*eyes.name.factor;
+                eyes.rotation.y+=eyes.name.ry*eyes.name.factor;
+                eyes.rotation.z+=eyes.name.rz*eyes.name.factor;
+
+             //   eyes.position.x+=eyes.name.mx;
 
                 // renderer.setScissorTest(true);
                 renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
@@ -1008,7 +1020,8 @@
                 eyes.position.x = camera.position.x;
                 eyes.position.y = camera.position.y;
                 eyes.position.z = camera.position.z;
-                eyes.rotation.x = Math.PI;
+            //    eyes.rotation.x = Math.PI;
+                eyes.rotation=camera.rotation;
                 render()
                 closeFullscreen(renderer.domElement);
                 inicSpeech()
@@ -1068,6 +1081,7 @@
             var c = cc.split(" ")
             c = c[c.length - 1];
             //   alert(c)
+            c=cc;
             if (c.indexOf("salir") > -1) {
                 bsp = false;
                 recognition.stop();
@@ -1078,27 +1092,43 @@
                 else blight = true
             }
             if (c.indexOf("arriba") > -1) {
+                eyes.name.my=0.001
 
             }
             if (c.indexOf("abajo") > -1) {
-
+                eyes.name.my=-0.001
             }
             if (c.indexOf("hizquierda") > -1) {
-
+                eyes.name.my=-0.001
             }
             if (c.indexOf("derecha") > -1) {
-
+                eyes.name.mx=0.001
             }
             if (c.indexOf("girar hizquierda") > -1) {
-
+                eyes.name.ry=-0.001
             }
-            if (c.indexOf("girar girar derecha") > -1) {
-
+            if (c.indexOf("girar derecha") > -1) {
+                eyes.name.ry=0.001
             }
+            if (c.indexOf("girar arriba") > -1) {
+                eyes.name.rx=-0.001
+            }
+            if (c.indexOf("girar abajo") > -1) {
+                eyes.name.rx=0.001
+            }          
             if (c.indexOf("parar") > -1) {
-
+                eyes.name.my=0;eyes.name.mx=0;eyes.name.mx=0;eyes.name.rx=0;eyes.name.ry=0;eyes.name.rz=0;me.name.factor=1;
             }
-
+            if (c.indexOf("origen") > -1) {
+                eyes.name.my=0;eyes.name.mx=0;eyes.name.mx=0;eyes.name.rx=0;eyes.name.ry=0;eyes.name.rz=0;me.name.factor=1;
+                eyes.position=eyes.name.pos;
+            }         
+            if (c.indexOf("lento") > -1) {
+                eyes.name.factor-=eyes.name.factor/5;
+            }             
+            if (c.indexOf("rapido") > -1) {
+                eyes.name.factor+=eyes.name.factor/5;
+            }             
         }
 
         function saveScene() {
