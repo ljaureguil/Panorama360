@@ -352,9 +352,9 @@
         //////////////////////////////////
         
       
-        window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 try{
-        let p = document.createElement('textarea');
+   /*       let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
         recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
@@ -383,7 +383,34 @@ try{
 
         });
 
-        words.appendChild(p);
+        words.appendChild(p);*/
+
+      // new speech recognition object
+SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+var recognition = new SpeechRecognition();
+            
+// This runs when the speech recognition service starts
+recognition.onstart = function() {
+    alert("We are listening. Try speaking into the microphone.");
+};
+
+recognition.onspeechend = function() {
+    // when user is done speaking
+    recognition.stop();
+}
+              
+// This runs when the speech recognition service returns result
+recognition.onresult = function(event) {
+    var transcript = event.results[0][0].transcript;
+    var confidence = event.results[0][0].confidence;
+    alert(transcript+"\n\n"+confidence)
+};
+              
+// start recognition
+//recognition.start();
+
+
+
     }
     catch(e){alert(e)}
   
