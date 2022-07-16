@@ -384,11 +384,11 @@ try{
         });
 
         words.appendChild(p);*/
-
+alert("ok0")
       // new speech recognition object
 SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
 var recognition = new SpeechRecognition();
-            
+            alert("ok1")
 // This runs when the speech recognition service starts
 recognition.onstart = function() {
     alert("We are listening. Try speaking into the microphone.");
@@ -396,11 +396,12 @@ recognition.onstart = function() {
 
 recognition.onspeechend = function() {
     // when user is done speaking
+    alert("ok2")
     recognition.stop();
 }
               
 // This runs when the speech recognition service returns result
-recognition.onresult = function(event) {
+recognition.onresult = function(event) {alert("ok3")
     var transcript = event.results[0][0].transcript;
     var confidence = event.results[0][0].confidence;
     alert(transcript+"\n\n"+confidence)
@@ -1102,11 +1103,14 @@ recognition.onresult = function(event) {
 
 
         function inicSpeech() {
+            alert(bsp)
             if (!bsp) {
+                alert("ok5")
                 bcom.style.background = "green";
                 bsp = true;
                 recognition.start();
             } else {
+                alert("ok6")
                 bcom.style.background = "blue"
                 bsp = false;
                 recognition.stop();
