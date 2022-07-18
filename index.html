@@ -294,7 +294,8 @@
             fromob = "",
             toob = "",
             addTo = false,
-            bcast = true;
+            bcast = true,
+            spe;
 
 
         let clicked = false;
@@ -1429,7 +1430,7 @@
         words.appendChild(p);*/
         function runSpeechRecognition() {
 
-
+    clearTimeout(spe);
             pi.innerHTML = "oklll";
             try {
                 // new speech recognition object
@@ -1446,7 +1447,8 @@
 
                 recognition.onspeechend = function() {
                     pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
-                    if(bsp) setTimeout(runSpeechRecognition,2000);
+                    if(bsp) spe=setTimeout(runSpeechRecognition,1500);
+                    
                     recognition.stop();
  
                 }
@@ -1457,10 +1459,11 @@
                     var confidence = event.results[0][0].confidence;
                     pi.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
                     //  output.classList.remove("hide");
-                  if(bsp) setTimeout(runSpeechRecognition,1000);
+                  if(bsp) spe=setTimeout(runSpeechRecognition,1500);
                 };
 
                 // start recognition
+            
                 recognition.start();
 
             } catch (e) {
