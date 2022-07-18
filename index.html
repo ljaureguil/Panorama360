@@ -1435,9 +1435,9 @@
                 // new speech recognition object
                 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
                 var recognition = new SpeechRecognition();
-       recognition.interimResults = true;
+    //   recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
-        recognition.continuous = true;
+    //    recognition.continuous = true;
 
                 // This runs when the speech recognition service starts
                 recognition.onstart = function() {
@@ -1465,7 +1465,7 @@
                 };
 
                 // start recognition
-              //  recognition.start();
+                recognition.start();
 
             } catch (e) {
                 pi.innerHTML = e
