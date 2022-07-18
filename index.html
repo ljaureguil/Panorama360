@@ -1443,7 +1443,8 @@
 
                 recognition.onspeechend = function() {
                     pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
-                    recognition.stop();
+                     if(bsp) setTimeout(runSpeechRecognition,2000);
+                    else recognition.stop();
  
                 }
 
