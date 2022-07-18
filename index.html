@@ -349,11 +349,12 @@
             audio: true
         })
             .then(function(stream) {
+
+                
         //////////////////////////////////
         
       
-      window.SpeechRecognition = window.SpeechRecognition;// || window.webkitSpeechRecognition;
-            alert("iniciamos bien")
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 try{
    /*       let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
@@ -385,47 +386,19 @@ try{
         });
 
         words.appendChild(p);*/
-alert("ok0")
-      // new speech recognition object
-//SpeechRecognition = SpeechRecognition;// || webkitSpeechRecognition;
-var recognition = new SpeechRecognition();
-            alert("ok1222222222222")
-// This runs when the speech recognition service starts
-recognition.onstart = function() {
-    alert("We are listening. Try speaking into the microphone.");
-};
-
-recognition.onspeechend = function() {
-    // when user is done speaking
-    alert("ok2end")
-    recognition.stop();
-}
-              
-// This runs when the speech recognition service returns result
-recognition.onresult = function(event) {alert("ok3")
-    var transcript = event.results[0][0].transcript;
-    var confidence = event.results[0][0].confidence;
-    alert(transcript+"\n\n"+confidence)
-};
-              
-// start recognition
-//recognition.start();
-
-
-
+		/* JS comes here */
+        runSpeechRecognition();
     }
     catch(e){alert(e)}
   
-                
-                
-                
-                
+      
                 /////////////////////////
                 ;
             })
             .
         catch (function(err) {
-            alert('No mic for you!')
+            alert('No mic for you!');
+            runSpeechRecognition()
         });
 
 
@@ -1104,7 +1077,7 @@ recognition.onresult = function(event) {alert("ok3")
 
 
         function inicSpeech() {
-            alert(bsp)
+            alert("ok4")
             if (!bsp) {
                 alert("ok5")
                 bcom.style.background = "green";
@@ -1413,6 +1386,69 @@ function getP(){
 //pi.innerHTML=dir;
 //alert(dir)
 }
+/*       let p = document.createElement('textarea');
+        const recognition = new SpeechRecognition();
+        recognition.interimResults = true;
+        recognition.lang = 'es-MX | en-US';
+        recognition.continuous = true;
+
+        recognition.onresult = function(event) {
+            comando = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                comando += event.results[i][0].transcript;
+            }
+            if (event.results.length > 0) {
+                if (comando != "") {
+                    p.value = comando + "\n";
+                    nota = comando;
+                    exComando(comando)
+
+                }
+            }
+
+        } //recognition.addEventListener('end', recognition.start);
+        recognition.addEventListener('end', function() {
+            //  alert(nota);
+            p.value += nota + "\n\n";
+            if (bps) recognition.start();
+            if (vrmode) recognition.start();
+
+        });
+
+        words.appendChild(p);*/
+function runSpeechRecognition() {alert("oklll")
+		        // get output div reference
+		        var output = document.getElementById("output");
+		        // get action element reference
+		        var action = document.getElementById("action");
+                // new speech recognition object
+                var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+                var recognition = new SpeechRecognition();
+            
+                // This runs when the speech recognition service starts
+                recognition.onstart = function() {
+                    pi.innerHTML = "<small>listening, please speak...</small>";
+                };
+                
+                recognition.onspeechend = function() {
+                    pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                    recognition.stop();
+                }
+              
+                // This runs when the speech recognition service returns result
+                recognition.onresult = function(event) {
+                    var transcript = event.results[0][0].transcript;
+                    var confidence = event.results[0][0].confidence;
+                    pi.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence*100+"%";
+                  //  output.classList.remove("hide");
+                };
+              
+                 // start recognition
+                 recognition.start();
+              
+	        }
+
+
     </script>
 
 </body>
