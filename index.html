@@ -243,7 +243,7 @@
                     <button onclick="editMesh()">Editor</button>
                     <button onclick="if(blight)blight=false;else blight=true">Light</button>
                     <button onclick="SetVr();">VR</button>
-                    <button id="bcom" onclick="inicSpeech();">Comands</button>
+                    <button id="bcom" onclick="runSpeechRecognition();//inicSpeech();">Comands</button>
                     <button onclick="saveScene()">Save Scene</button>
                     <div id="dparam" name=false>
                         <button onclick="applay(params.value)">Apply</button>
@@ -387,7 +387,7 @@ try{
 
         words.appendChild(p);*/
 		/* JS comes here */
-        runSpeechRecognition();
+      //  runSpeechRecognition();
     }
     catch(e){alert(e)}
   
