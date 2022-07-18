@@ -1424,6 +1424,7 @@ function runSpeechRecognition() {
 	                // new speech recognition object
                 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
                 var recognition = new SpeechRecognition();
+	    recognition.lang = 'es-MX | en-US';
             
                 // This runs when the speech recognition service starts
                 recognition.onstart = function() {
