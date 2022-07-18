@@ -1421,11 +1421,7 @@ function runSpeechRecognition() {
 
     pi.innerHTML="oklll";
     try{
-		        // get output div reference
-		   //     var output = document.getElementById("output");
-		        // get action element reference
-		    //    var action = document.getElementById("action");
-                // new speech recognition object
+	                // new speech recognition object
                 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
                 var recognition = new SpeechRecognition();
             
@@ -1436,7 +1432,18 @@ function runSpeechRecognition() {
                 
                 recognition.onspeechend = function() {
                     pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
-                    recognition.stop();
+                  //  recognition.stop();
+                    if (!bsp) {
+          
+                bcom.style.background = "green";
+                bsp = true;
+                recognition.start();
+            } else {
+             //   alert("ok6")
+                bcom.style.background = "blue"
+                bsp = false;
+                recognition.stop();
+            }
                 }
               
                 // This runs when the speech recognition service returns result
@@ -1455,7 +1462,6 @@ function runSpeechRecognition() {
         
         
         }
-
 
     </script>
 
