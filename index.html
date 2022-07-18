@@ -44,15 +44,13 @@
         #params {
             width: 50%;
             height: 200px;
-         
-           background:white;
-           
+            background: white;
         }
-        tanim{
+        tanim {
             background-color: white;
             width: 50%;
             height: 200px;
-            display:none;
+            display: none;
         }
         #file {
             width: 80px;
@@ -64,9 +62,8 @@
             display: none;
         }
         #smeshes {
-         //   background:red;
-        //    color:white;
-   
+            // background: red;
+            // color: white;
         }
         #words {
             height: 40%;
@@ -110,17 +107,16 @@
         }
         #ilocal {
             padding: 5px;
-            display:none;
+            display: none;
             border-style: groove;
         }
         #iweb {
             padding: 5px;
-            display:none;
+            display: none;
             border-style: groove;
         }
         #accion {
             padding: 5px;
-         
             border-style: groove;
         }
         #dbrec {
@@ -131,7 +127,6 @@
             border-width: .1;
             border-style: solid;
             overflow: auto;
- 
         }
         #dr {
             background-color: red;
@@ -139,7 +134,6 @@
         }
         #drec {
             text-align: right;
- 
             display: none;
             width: 50%;
             height: 40%;
@@ -151,12 +145,11 @@
         #binicrec {
             // display: none;
         }
-        #pi{
+        #pi {
             position: absolute;
-            bottom:0%;
+            bottom: 0%;
             left: 10%;
-                    }
-    
+        }
     </style>
 </head>
 
@@ -176,8 +169,8 @@
                 <video id="Video" onload="binicrec.style.display='block'" controls src="file:///Internal storage/Aaa.mp4"></video>
                 <button id="binicrec" onclick="InicRecording(renderer.domElement)">Once Video es Loaded press to record</button>
                 <button id="bstoprec" onclick="StopRecording(renderer.domElement)">Stop recording</button>
-                 <button id="bscreenshot" onclick="screenShot()">screenShot</button>
-              
+                <button id="bscreenshot" onclick="screenShot()">screenShot</button>
+
 
             </div>
         </div>
@@ -186,12 +179,12 @@
             <button id="bm" onclick="if(ct.style.display==='block')ct.style.display='none';else ct.style.display='block'">M</button>
 
             <div id="ct">
-                     <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>      
-                     <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">L</button>      
-                     <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">A</button>      
-             
-                     <button id="capturea">Capture</button>
-                     <button id="bc" onclick="if(bcast){bcast=false;bc.style.background='red'}else {bcast=true;bc.style.background='green'}" style="background:green;color:white">Cast</button>
+                <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>
+                <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">L</button>
+                <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">A</button>
+
+                <button id="capturea">Capture</button>
+                <button id="bc" onclick="if(bcast){bcast=false;bc.style.background='red'}else {bcast=true;bc.style.background='green'}" style="background:green;color:white">Cast</button>
                 <div id="iweb">
                     <br>Texture URL
                     <input type=text name=filename id=TextureURL class=cte></input>
@@ -204,7 +197,7 @@
                     <br>Texture Specular
                     <input type=text name=filename id=TextureSpecular class=cte></input>
                     <button onclick="test('TextureSpecular')">Apply</button>
-                   
+
                 </div>
                 <br>
                 <div id="ilocal">
@@ -218,7 +211,7 @@
                 </div>
                 <br>
                 <div id="accion">
-                     <select class="csels" id="stextures" onchange="selT(this.value)">
+                    <select class="csels" id="stextures" onchange="selT(this.value)">
                         <option>Choose Texture</option>
                     </select>
                     <select id="meshes" class="csels" onchange="chooseMesh(this.value)">
@@ -231,11 +224,12 @@
                         <option>Label</option>
                         <option>Torus</option>
 
-                    </select><button onclick="chooseMesh(meshes.value)">Cr.</button>
+                    </select>
+                    <button onclick="chooseMesh(meshes.value)">Cr.</button>
                     <select class="csels" id="smeshes" onchange="selMesh(this.value)">
                         <option>Choose Object</option>
                     </select>
-                  
+
                     <select class="csels" id="sproyestos" onchange="selProy(this.value)">
                         <option>Choose Scene</option>
                     </select>
@@ -243,7 +237,7 @@
                     <button onclick="editMesh()">Editor</button>
                     <button onclick="if(blight)blight=false;else blight=true">Light</button>
                     <button onclick="SetVr();">VR</button>
-                    <button id="bcom" onclick="runSpeechRecognition();//inicSpeech();">Comands</button>
+                    <button id="bcom" onclick='runSpeechRecognition();if (!bsp) {bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}//inicSpeech();'>Comands</button>
                     <button onclick="saveScene()">Save Scene</button>
                     <div id="dparam" name=false>
                         <button onclick="applay(params.value)">Apply</button>
@@ -251,8 +245,8 @@
                         <textarea id="params"></textarea>
                         <button onclick="delM()" style="background:red;color:white">Delete</button>
                         <button onclick="alert('Choose Object');addTo=true;" style="background:gray;color:white">Add To</button>
-                        
- 
+
+
                     </div>
 
                 </div>
@@ -274,7 +268,7 @@
 
 
     <script src="textures.js"></script>
- 
+
 
     <script type="text/javascript">
         //
@@ -295,12 +289,12 @@
             dataArray,
             bufferLength,
             vc = false,
-            aranim=[],
-            sobs=[],
-            fromob="",
-            toob="", 
-            addTo=false,
-            bcast=true;
+            aranim = [],
+            sobs = [],
+            fromob = "",
+            toob = "",
+            addTo = false,
+            bcast = true;
 
 
         let clicked = false;
@@ -309,7 +303,7 @@
         let osc;
         let dest;
         let mediaRecorder;
-   
+
 
         var Esenas = [];
          //   Video.onplay=function(){
@@ -350,13 +344,13 @@
         })
             .then(function(stream) {
 
-                
-        //////////////////////////////////
-        
-      
-      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-try{
-   /*       let p = document.createElement('textarea');
+
+                //////////////////////////////////
+
+
+                window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                try {
+                    /*       let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
         recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
@@ -386,19 +380,20 @@ try{
         });
 
         words.appendChild(p);*/
-		/* JS comes here */
-      //  runSpeechRecognition();
-    }
-    catch(e){alert(e)}
-  
-      
+                    /* JS comes here */
+                    //  runSpeechRecognition();
+                } catch (e) {
+                    alert(e)
+                }
+
+
                 /////////////////////////
                 ;
             })
             .
         catch (function(err) {
             alert('No mic for you!');
-           // runSpeechRecognition()
+            // runSpeechRecognition()
         });
 
 
@@ -451,9 +446,17 @@ try{
         eyes.position.x = oy.x;
         eyes.position.y = oy.y;
         eyes.position.z = oy.z;
-        var me={};
-        me.mx=0;me.my=0;me.mz=0;me.esc=1;me.rx=0;me.ry=0;me.rz=0;me.factor=1;me.pos=oy;
-        eyes.name=me;
+        var me = {};
+        me.mx = 0;
+        me.my = 0;
+        me.mz = 0;
+        me.esc = 1;
+        me.rx = 0;
+        me.ry = 0;
+        me.rz = 0;
+        me.factor = 1;
+        me.pos = oy;
+        eyes.name = me;
 
 
         function init() {
@@ -519,7 +522,7 @@ try{
                     pic: "".pic
                 }
                 scene.add(world1);
-                renderer.setClearColor( 0xff0000, .3 );
+                renderer.setClearColor(0xff0000, .3);
             })
 
 
@@ -553,7 +556,7 @@ try{
             });
 
             renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
-        
+
             animate();
             //controls2 = new DeviceOrientationControls(camera);
             //       setupAudio()
@@ -588,31 +591,31 @@ try{
             var s = smeshes.innerHTML;
             for (var i = 0; i < ms.length; i++) {
                 if (ms[i].name != undefined) {
-                   if(ms[i].length>0) s += "<option>" + ms[i].name + "</option>";
+                    if (ms[i].length > 0) s += "<option>" + ms[i].name + "</option>";
                 }
                 smeshes.innerHTML = s;
             }
         }
 
         function chooseMesh(m) {
-            if(m==="Create Object") return;
+            if (m === "Create Object") return;
             var n = prompt("Name");
-            var a=scene.children.length;
-   
+            var a = scene.children.length;
+
             var op = document.createElement("option");
             // op.innerHTML=n;   
             if (m === "Group") {
-                var m=Group(n+a)
+                var m = Group(n + a)
                 scene.add(m);
                 ObSelected = m;
                 selMesh.value = m.name;
                 op.innerHTML = m.name.name;
                 smeshes.appendChild(op);
-            }   
+            }
 
             if (m === "Box") {
 
-                var m = Box(n+a, 10, 10, 10);
+                var m = Box(n + a, 10, 10, 10);
                 scene.add(m);
                 ObSelected = m;
                 selMesh.value = m.name;
@@ -622,7 +625,7 @@ try{
 
             }
             if (m === "Sphere") {
-                var m = Sphere(n+a, 5, 80, 40);
+                var m = Sphere(n + a, 5, 80, 40);
                 scene.add(m);
                 ObSelected = m;
                 selMesh.value = m.name;
@@ -632,7 +635,7 @@ try{
             }
 
             if (m === "Cylinder") {
-                var m = Cylinder(n+a, 5, 5, 20, 64, false);
+                var m = Cylinder(n + a, 5, 5, 20, 64, false);
                 scene.add(m);
                 ObSelected = m;
                 selMesh.value = m.name;
@@ -641,7 +644,7 @@ try{
 
             }
             if (m === "Torus") {
-                var m = Torus(n+a, 10, 3, 16, 100);
+                var m = Torus(n + a, 10, 3, 16, 100);
                 op.innerHTML = m.name.name;
                 smeshes.appendChild(op);
                 scene.add(m);
@@ -705,107 +708,107 @@ try{
             render();
 
         }
-  
+
         function render() {
-            const time = Date.now() * 0.0001 ;
-            var os=scene.children;
-           
-            for(var i=0;i<os.length;i++){
-               var o=os[i].name.anim;
-                    if(o!=undefined){
-                var oo=os[i];
-               if(o.gx!=0) oo.rotateX(o.gx)
-                if(o.gy!=0) oo.rotateY(o.gy)
-                if(o.gz!=0) oo.rotateZ(o.gz)
-             }
-             }
-           if (blight) {
+            const time = Date.now() * 0.0001;
+            var os = scene.children;
+
+            for (var i = 0; i < os.length; i++) {
+                var o = os[i].name.anim;
+                if (o != undefined) {
+                    var oo = os[i];
+                    if (o.gx != 0) oo.rotateX(o.gx)
+                    if (o.gy != 0) oo.rotateY(o.gy)
+                    if (o.gz != 0) oo.rotateZ(o.gz)
+                }
+            }
+            if (blight) {
                 light.position.y += 0.005;
                 light.position.z += 0.0080105;
                 light4.position.x = Math.sin(time * .9101013) * 100.00;
                 light4.position.y = Math.cos(time * .061017) * 100.2;
                 light4.position.z = -Math.sin(time * .052015) * 100.1;
             }
-            if(aranim.length>0){
-                for(var i=2;i<aranim.length;i++){
-                    var o=aranim[i];
+            if (aranim.length > 0) {
+                for (var i = 2; i < aranim.length; i++) {
+                    var o = aranim[i];
                 }
             }
 
             if (!vrmode) {
-       
-                 if (bcast) { //  controls2.update();
-     
-                //   pi.innerHTML=document.activeElement.id     
-                 if (params!=document.activeElement){      
-                    raycaster.setFromCamera(pointer, camera);
 
-                    const intersects = raycaster.intersectObjects(scene.children, false);
+                if (bcast) { //  controls2.update();
 
-                    if (intersects.length > 0) {
+                    //   pi.innerHTML=document.activeElement.id     
+                    if (params != document.activeElement) {
+                        raycaster.setFromCamera(pointer, camera);
 
-                        if (INTERSECTED != intersects[0].object) {
+                        const intersects = raycaster.intersectObjects(scene.children, false);
+
+                        if (intersects.length > 0) {
+
+                            if (INTERSECTED != intersects[0].object) {
 
 
-                            //	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+                                //	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
 
-                            INTERSECTED = intersects[0].object;
-                            if(addTo){
-                                if(confirm("Do you want to Add "+ObSelected.name.name +" To "+INTERSECTED.name.name)){
-                                    INTERSECTED.add(ObSelected);
-                                    alert("All done");
-                                    addTo=false;
+                                INTERSECTED = intersects[0].object;
+                                if (addTo) {
+                                    if (confirm("Do you want to Add " + ObSelected.name.name + " To " + INTERSECTED.name.name)) {
+                                        INTERSECTED.add(ObSelected);
+                                        alert("All done");
+                                        addTo = false;
+
+                                    }
+                                }
+                                ObSelected = INTERSECTED;
+                                params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+                                //params.name=Obselected;
+                                if (INTERSECTED.name.name != "World") {
+                                    if (dparam.style.display === 'none') {
+                                        // byp=false;
+                                        dparam.style.display = 'block';
+                                        params.focus()
+
+                                    }
+                                } else {
+                                    //  byp=true;
+                                    dparam.style.display = "none";
 
                                 }
-                            }
-                            ObSelected = INTERSECTED;
-                            params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
-                            //params.name=Obselected;
-                            if (INTERSECTED.name.name != "World") {
-                                if (dparam.style.display === 'none') {
-                                    // byp=false;
-                                    dparam.style.display = 'block';
-                                  params.focus()
-                                   
-                                }
-                            } else {
-                              //  byp=true;
-                                dparam.style.display = "none";
 
                             }
+
+                        } else {
+
+                            INTERSECTED = null;
 
                         }
 
-                    } else {
+                        //  eyes.position=camera.position;
+                        //  eyes.rotation=camera.rotation;
+                        eyes.position.x = camera.position.x;
+                        eyes.position.y = camera.position.y;
+                        eyes.position.z = camera.position.z;
 
-                        INTERSECTED = null;
+                        //    }
+                        //   else pi.innerHTML="nooooo"          
 
                     }
-
-                    //  eyes.position=camera.position;
-                    //  eyes.rotation=camera.rotation;
-                    eyes.position.x = camera.position.x;
-                    eyes.position.y = camera.position.y;
-                    eyes.position.z = camera.position.z;
-
-          //    }
-        //   else pi.innerHTML="nooooo"          
-              
                 }
-               }
-               
-                        
+
+
                 renderer.render(scene, camera);
 
             } else {
-                eyes.position.x+=eyes.name.mx*eyes.name.factor;
-                eyes.position.y+=eyes.name.my*eyes.name.factor;
-                eyes.position.z+=eyes.name.mz*eyes.name.factor;
-                eyes.rotation.x+=eyes.name.rx*eyes.name.factor;
-                eyes.rotation.y+=eyes.name.ry*eyes.name.factor;
-                eyes.rotation.z+=eyes.name.rz*eyes.name.factor;
+                eyes.position.x += eyes.name.mx * eyes.name.factor;
+                eyes.position.y += eyes.name.my * eyes.name.factor;
+                eyes.position.z += eyes.name.mz * eyes.name.factor;
+                eyes.rotation.x += eyes.name.rx * eyes.name.factor;
+                eyes.rotation.y += eyes.name.ry * eyes.name.factor;
+                eyes.rotation.z += eyes.name.rz * eyes.name.factor;
 
-             //   eyes.position.x+=eyes.name.mx;
+                //   eyes.position.x+=eyes.name.mx;
 
                 // renderer.setScissorTest(true);
                 renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
@@ -886,9 +889,9 @@ try{
             for (var i = 0; i < ar.length; i++) {
                 if (ar[i].name.name === v) {
                     ObSelected = ar[i];
-                    dparam.style.display="block";
+                    dparam.style.display = "block";
                     params.value = JSON.stringify(ObSelected.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
- 
+
                     params.focus();
                     i = ar.length;
                 }
@@ -920,9 +923,12 @@ try{
                 scene.add(ObSelected)
 
             }
-       if(o.name.indexOf("Group")>-1){alert("Grupo estamos trabajando");return}
+            if (o.name.indexOf("Group") > -1) {
+                alert("Grupo estamos trabajando");
+                return
+            }
             ObSelected.position.set(o.x, o.y, o.z);
-        
+
             if (o.rx != undefined && o.ry != undefined && o.rz != undefined) {
                 ObSelected.rotation.x = o.rx;
                 ObSelected.rotation.y = o.ry;
@@ -960,11 +966,11 @@ try{
                 ObSelected.material.specular = new THREE.Color('grey');
 
             }
-            if(o.anim.pvx!=undefined && o.anim.pvy!=undefined && o.anim.pvz!=undefined){
-                ObSelected.geometry.translate(o.anim.pvx, o.anim.pvy, o.anim.pvz )
-                    render()
-                }
-  
+            if (o.anim.pvx != undefined && o.anim.pvy != undefined && o.anim.pvz != undefined) {
+                ObSelected.geometry.translate(o.anim.pvx, o.anim.pvy, o.anim.pvz)
+                render()
+            }
+
             ObSelected.material.map.wrapS = ObSelected.material.map.wrapT = THREE.RepeatWrapping;
 
             ObSelected.material.map.repeat.set(o.rpx, o.rpy);
@@ -973,46 +979,49 @@ try{
             ObSelected.material.map.rotation = o.rot;
             ObSelected.material.needsUpdate = true;
             if (ObSelected.material.color === undefined) ObSelected.material.color = '#ffffff';
-            if(o.transparent != undefined) ObSelected.material.transparent=o.transparent;
-            if(o.opacity!=undefined) ObSelected.material.opacity=o.opacity;
+            if (o.transparent != undefined) ObSelected.material.transparent = o.transparent;
+            if (o.opacity != undefined) ObSelected.material.opacity = o.opacity;
             params.name = o;
 
 
             render();
 
         }
-        function delM(){ 
-   //
-    if(confirm("Are you sure you want to Delete "+ObSelected.name.name)){
-       var a = scene.children;
-       for(var i=0;i<a.length;i++){
-        if(ObSelected.name.name===a[i].name.name){
-            scene.remove(a[i])
+
+        function delM() {
+            //
+            if (confirm("Are you sure you want to Delete " + ObSelected.name.name)) {
+                var a = scene.children;
+                for (var i = 0; i < a.length; i++) {
+                    if (ObSelected.name.name === a[i].name.name) {
+                        scene.remove(a[i])
+                    }
+
+                }
+
+                render();
+            }
         }
 
-       }
-   
-        render(); 
-    }
- }
- function removeObject3D(object3D) {object3D=ObSelected
-    if (!(object3D instanceof THREE.Object3D)) return false;
+        function removeObject3D(object3D) {
+            object3D = ObSelected
+            if (!(object3D instanceof THREE.Object3D)) return false;
 
-    // for better memory management and performance
-    if (object3D.geometry) object3D.geometry.dispose();
+            // for better memory management and performance
+            if (object3D.geometry) object3D.geometry.dispose();
 
-    if (object3D.material) {
-        if (object3D.material instanceof Array) {
-            // for better memory management and performance
-            object3D.material.forEach(material => material.dispose());
-        } else {
-            // for better memory management and performance
-            object3D.material.dispose();
+            if (object3D.material) {
+                if (object3D.material instanceof Array) {
+                    // for better memory management and performance
+                    object3D.material.forEach(material => material.dispose());
+                } else {
+                    // for better memory management and performance
+                    object3D.material.dispose();
+                }
+            }
+            object3D.removeFromParent(); // the parent might be the scene or another Object3D, but it is sure to be removed this way
+            return true;
         }
-    }
-    object3D.removeFromParent(); // the parent might be the scene or another Object3D, but it is sure to be removed this way
-    return true;
-}
 
 
         function setWorld(v) {
@@ -1031,8 +1040,8 @@ try{
                 eyes.position.x = camera.position.x;
                 eyes.position.y = camera.position.y;
                 eyes.position.z = camera.position.z;
-            //    eyes.rotation.x = Math.PI;
-                eyes.rotation=camera.rotation;
+                //    eyes.rotation.x = Math.PI;
+                eyes.rotation = camera.rotation;
                 render()
                 closeFullscreen(renderer.domElement);
                 inicSpeech()
@@ -1077,25 +1086,15 @@ try{
 
 
         function inicSpeech() {
-            alert("ok4")
-            if (!bsp) {
-                alert("ok5")
-                bcom.style.background = "green";
-                bsp = true;
-                recognition.start();
-            } else {
-                alert("ok6")
-                bcom.style.background = "blue"
-                bsp = false;
-                recognition.stop();
-            }
+
+            if (!bsp) {bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
         }
 
         function exComando(cc) {
             var c = cc.split(" ")
             c = c[c.length - 1];
             //   alert(c)
-            c=cc;
+            c = cc;
             if (c.indexOf("salir") > -1) {
                 bsp = false;
                 recognition.stop();
@@ -1106,43 +1105,55 @@ try{
                 else blight = true
             }
             if (c.indexOf("arriba") > -1) {
-                eyes.name.my=0.001
+                eyes.name.my = 0.001
 
             }
             if (c.indexOf("abajo") > -1) {
-                eyes.name.my=-0.001
+                eyes.name.my = -0.001
             }
             if (c.indexOf("hizquierda") > -1) {
-                eyes.name.my=-0.001
+                eyes.name.my = -0.001
             }
             if (c.indexOf("derecha") > -1) {
-                eyes.name.mx=0.001
+                eyes.name.mx = 0.001
             }
             if (c.indexOf("girar hizquierda") > -1) {
-                eyes.name.ry=-0.001
+                eyes.name.ry = -0.001
             }
             if (c.indexOf("girar derecha") > -1) {
-                eyes.name.ry=0.001
+                eyes.name.ry = 0.001
             }
             if (c.indexOf("girar arriba") > -1) {
-                eyes.name.rx=-0.001
+                eyes.name.rx = -0.001
             }
             if (c.indexOf("girar abajo") > -1) {
-                eyes.name.rx=0.001
-            }          
+                eyes.name.rx = 0.001
+            }
             if (c.indexOf("parar") > -1) {
-                eyes.name.my=0;eyes.name.mx=0;eyes.name.mx=0;eyes.name.rx=0;eyes.name.ry=0;eyes.name.rz=0;me.name.factor=1;
+                eyes.name.my = 0;
+                eyes.name.mx = 0;
+                eyes.name.mx = 0;
+                eyes.name.rx = 0;
+                eyes.name.ry = 0;
+                eyes.name.rz = 0;
+                me.name.factor = 1;
             }
             if (c.indexOf("origen") > -1) {
-                eyes.name.my=0;eyes.name.mx=0;eyes.name.mx=0;eyes.name.rx=0;eyes.name.ry=0;eyes.name.rz=0;me.name.factor=1;
-                eyes.position=eyes.name.pos;
-            }         
+                eyes.name.my = 0;
+                eyes.name.mx = 0;
+                eyes.name.mx = 0;
+                eyes.name.rx = 0;
+                eyes.name.ry = 0;
+                eyes.name.rz = 0;
+                me.name.factor = 1;
+                eyes.position = eyes.name.pos;
+            }
             if (c.indexOf("lento") > -1) {
-                eyes.name.factor-=eyes.name.factor/5;
-            }             
+                eyes.name.factor -= eyes.name.factor / 5;
+            }
             if (c.indexOf("rapido") > -1) {
-                eyes.name.factor+=eyes.name.factor/5;
-            }             
+                eyes.name.factor += eyes.name.factor / 5;
+            }
         }
 
         function saveScene() {
@@ -1159,11 +1170,11 @@ try{
             var ar = [];
             for (var i = 0; i < obs.length; i++) {
                 if (obs[i].name != undefined) {
-                    if (obs[i].name.name != undefined){
-                        
-                       // alert(JSON.stringify(obs[i].name))
-                        if(obs[i].name.pic!=undefined){
-                        if(obs[i].name.pic.length<500) obs[i].name.pic="";
+                    if (obs[i].name.name != undefined) {
+
+                        // alert(JSON.stringify(obs[i].name))
+                        if (obs[i].name.pic != undefined) {
+                            if (obs[i].name.pic.length < 500) obs[i].name.pic = "";
                         }
                         ar.push(obs[i].name);
                     }
@@ -1172,7 +1183,7 @@ try{
             os.objects = ar;
 
             GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
-            //    alert(JSON.stringify(ob))
+                //    alert(JSON.stringify(ob))
                 var c = false;
                 for (var i = 0; i < ob.esenas.length; i++) {
                     if (ob.esenas[i].name === os.name) {
@@ -1250,24 +1261,24 @@ try{
         }
 
         function ExtractAudio(el) {
-      
-    var file = el.files[0]
-    var type = file.type
-    var videoNode = document.querySelector('Video')
-    var canPlay = videoNode.canPlayType(type)
-    if (canPlay === '') canPlay = 'no'
-   // var message = 'Can play type "' + type + '": ' + canPlay
-   // var isError = canPlay === 'no'
-  //  displayMessage(message, isError)
 
-  //  if (isError) {
-   //   return
-  //  }
+            var file = el.files[0]
+            var type = file.type
+            var videoNode = document.querySelector('Video')
+            var canPlay = videoNode.canPlayType(type)
+            if (canPlay === '') canPlay = 'no'
+            // var message = 'Can play type "' + type + '": ' + canPlay
+            // var isError = canPlay === 'no'
+            //  displayMessage(message, isError)
 
-    var fileURL = URL.createObjectURL(file)
-    videoNode.src = fileURL
-  }
-  
+            //  if (isError) {
+            //   return
+            //  }
+
+            var fileURL = URL.createObjectURL(file)
+            videoNode.src = fileURL
+        }
+
 
         function ExtractAudio2(el) {
             var file = el.files[0];
@@ -1340,53 +1351,53 @@ try{
             }
         }
 
-function screenShot(){
- //  render();
- //   var cata=renderer.domElement.toDataURL("png");
- // window.open(cata, '_blank');
+        function screenShot() {
+            //  render();
+            //   var cata=renderer.domElement.toDataURL("png");
+            // window.open(cata, '_blank');
 
 
- // this.canvas.toBlob( function( blob ) {
-     render();
-    renderer.domElement.toBlob( function( blob ) {
+            // this.canvas.toBlob( function( blob ) {
+            render();
+            renderer.domElement.toBlob(function(blob) {
 
-var url = URL.createObjectURL(blob);
-//var fileName = 'ScreenShot-' + document.title + '-' + Date.now() + 'jpeg';//png';
-var fileName = 'ScreenShot-' + document.title + '-' + Date.now();//png';
-var anchor = document.createElement( 'a' );
-anchor.href = url;
-anchor.setAttribute("download", fileName);
-anchor.className = "download-js-link";
-anchor.innerHTML = "downloading...";
-anchor.style.display = "none";
-document.body.appendChild(anchor);
-setTimeout(function() {
-    anchor.click();
-    document.body.removeChild(anchor);
-}, 1 );
+                var url = URL.createObjectURL(blob);
+                //var fileName = 'ScreenShot-' + document.title + '-' + Date.now() + 'jpeg';//png';
+                var fileName = 'ScreenShot-' + document.title + '-' + Date.now(); //png';
+                var anchor = document.createElement('a');
+                anchor.href = url;
+                anchor.setAttribute("download", fileName);
+                anchor.className = "download-js-link";
+                anchor.innerHTML = "downloading...";
+                anchor.style.display = "none";
+                document.body.appendChild(anchor);
+                setTimeout(function() {
+                    anchor.click();
+                    document.body.removeChild(anchor);
+                }, 1);
 
-}, 'image/jpeg' );
-
-
+            }, 'image/jpeg');
 
 
 
-}
-
-function add(o){
-    alert('Choose an Object');
-    fromob=o;
 
 
-}
+        }
 
-function getP(){
- //   var loc = window.location.pathname;
-//var dir = loc.substring(0, loc.lastIndexOf('/'));
-//pi.innerHTML=dir;
-//alert(dir)
-}
-/*       let p = document.createElement('textarea');
+        function add(o) {
+            alert('Choose an Object');
+            fromob = o;
+
+
+        }
+
+        function getP() {
+            //   var loc = window.location.pathname;
+            //var dir = loc.substring(0, loc.lastIndexOf('/'));
+            //pi.innerHTML=dir;
+            //alert(dir)
+        }
+        /*       let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
         recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
@@ -1416,54 +1427,44 @@ function getP(){
         });
 
         words.appendChild(p);*/
-function runSpeechRecognition() {
-  
+        function runSpeechRecognition() {
 
-    pi.innerHTML="oklll";
-    try{
-	                // new speech recognition object
+
+            pi.innerHTML = "oklll";
+            try {
+                // new speech recognition object
                 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
                 var recognition = new SpeechRecognition();
-	    recognition.lang = 'es-MX | en-US';
-            
+
                 // This runs when the speech recognition service starts
                 recognition.onstart = function() {
                     pi.innerHTML = "<small>listening, please speak...</small>";
                 };
-                
+
                 recognition.onspeechend = function() {
                     pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
-                  //  recognition.stop();
-                    if (!bsp) {
-          
-                bcom.style.background = "green";
-                bsp = true;
-                recognition.start();
-            } else {
-             //   alert("ok6")
-                bcom.style.background = "blue"
-                bsp = false;
-                recognition.stop();
-            }
+                    recognition.stop();
+ 
                 }
-              
+
                 // This runs when the speech recognition service returns result
                 recognition.onresult = function(event) {
                     var transcript = event.results[0][0].transcript;
                     var confidence = event.results[0][0].confidence;
-                    pi.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence*100+"%";
-                  //  output.classList.remove("hide");
+                    pi.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
+                    //  output.classList.remove("hide");
+                  if(bsp) setTimeout(runSpeechRecognition,2000);
                 };
-              
-                 // start recognition
-                 recognition.start();
-              
-            }
-            catch(e){pi.innerHTML=e}
-        
-        
-        }
 
+                // start recognition
+                recognition.start();
+
+            } catch (e) {
+                pi.innerHTML = e
+            }
+
+
+        }
     </script>
 
 </body>
