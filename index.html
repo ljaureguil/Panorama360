@@ -1435,9 +1435,9 @@
                 // new speech recognition object
                 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
                 var recognition = new SpeechRecognition();
-    //   recognition.interimResults = true;
+                recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
-    //    recognition.continuous = true;
+       // recognition.continuous = true;
 
                 // This runs when the speech recognition service starts
                 recognition.onstart = function() {
@@ -1445,13 +1445,9 @@
                 };
 
                 recognition.onspeechend = function() {
-  
-                     if(bsp) setTimeout(runSpeechRecognition,2000);
-                    else {
-                        pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
-                        recognition.stop();
-                        
-                    }
+                    pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                    if(bsp) setTimeout(runSpeechRecognition,2000);
+                    recognition.stop();
  
                 }
 
@@ -1461,7 +1457,7 @@
                     var confidence = event.results[0][0].confidence;
                     pi.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
                     //  output.classList.remove("hide");
-                  if(bsp) setTimeout(runSpeechRecognition,2000);
+                  if(bsp) setTimeout(runSpeechRecognition,1000);
                 };
 
                 // start recognition
