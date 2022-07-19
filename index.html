@@ -1045,7 +1045,9 @@
                 eyes.rotation = camera.rotation;
                 render()
                 closeFullscreen(renderer.domElement);
-                inicSpeech()
+               // inicSpeech()
+             //  runSpeechRecognition();
+             bsp=false;
             } else {
                 renderer.setScissorTest(true);
                 eyes.position = camera.position;
@@ -1054,8 +1056,9 @@
                 controlsr.desconnect;
                 render();
                 openFullscreen(renderer.domElement);
-                bps = false;
-                inicSpeech()
+                bps = true;
+               // inicSpeech()
+               runSpeechRecognition()
             }
         }
 
@@ -1431,8 +1434,7 @@
         function runSpeechRecognition() {
 
     clearTimeout(spe);
-            pi.innerHTML = "oklll";
-            try {
+                try {
                 // new speech recognition object
                 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
                 var recognition = new SpeechRecognition();
@@ -1456,10 +1458,10 @@
                 // This runs when the speech recognition service returns result
                 recognition.onresult = function(event) {
                     var transcript = event.results[0][0].transcript;
-                    var confidence = event.results[0][0].confidence;
-                    pi.innerHTML = "<b>Text:</b> " + transcript + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
-                    //  output.classList.remove("hide");
-                 // if(bsp) spe=setTimeout(runSpeechRecognition,1500);
+                  //  var confidence = event.results[0][0].confidence;
+                    pi.innerHTML = "<b>Text:</b> " + transcript;// + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
+                    exComando(transcript)
+               //   if(bsp) spe=setTimeout(runSpeechRecognition,1500);
                 };
 
                 // start recognition
