@@ -1095,8 +1095,9 @@
         }
 
         function exComando(cc) {
-            var c = cc.split(" ")
-            c = c[c.length - 1];
+            pi.innerHTML=cc
+         //   var c = cc.split(" ")
+          //  c = c[c.length - 1];
             //   alert(c)
             c = cc;
             if (c.indexOf("salir") > -1) {
@@ -1459,7 +1460,7 @@
                 recognition.onresult = function(event) {
                     var transcript = event.results[0][0].transcript;
                   //  var confidence = event.results[0][0].confidence;
-                    pi.innerHTML = "<b>Text:</b> " + transcript;// + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
+               //     pi.innerHTML = "<b>Text:</b> " + transcript;// + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
                     exComando(transcript)
                //   if(bsp) spe=setTimeout(runSpeechRecognition,1500);
                 };
