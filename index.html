@@ -147,14 +147,14 @@
         }
         #pi {
             position: absolute;
-            bottom: 0%;
-            left: 10%;
+            bottom: 4%;
+            left: 3%;
         }
         #ctm{
             position: absolute;
             bottom: 0%;
            right: 10%; 
-           display:none;   
+         //  display:none;   
         }
     </style>
 </head>
@@ -472,7 +472,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         me.rx = 0;
         me.ry = 0;
         me.rz = 0;
-        me.factor = .5;
+        me.factor = .01;
         me.pos = oy;
         eyes.name = me;
 
@@ -822,15 +822,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 renderer.render(scene, camera);
 
             } else {
-                eyes.position.x += eyes.name.mx * eyes.name.factor;pi.innerHTML=JSON.stringify(eyes.name)
+                eyes.position.x += eyes.name.mx * eyes.name.factor;
                 eyes.position.y += eyes.name.my * eyes.name.factor;
                 eyes.position.z += eyes.name.mz * eyes.name.factor;
                // eyes.rotation.x += eyes.name.rx * eyes.name.factor;
                 eyes.rotation.y += eyes.name.ry;
-              //  eyes.rotation.z += eyes.name.rz * eyes.name.factor;
-
-                //   eyes.position.x+=eyes.name.mx;
-
+    pi.innerHTML=comando+"<br"+JSON.stringify(eyes.name)
                 // renderer.setScissorTest(true);
                 renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
                 renderer.setScissor(0, 0, window.innerWidth / 2, window.innerHeight);
@@ -1116,6 +1113,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         function exComando(cc) {
             pi.innerHTML=cc
+            comando=cc;
             var p=1;
             c = cc;
 
@@ -1129,14 +1127,14 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 if (blight) blight = false;
                 else blight = true
             }
-            if (c.indexOf("arriba") > -1) {
+            if (c.indexOf("rriba") > -1) {
                 eyes.name.my = p
 
             }
-            if (c.indexOf("abajo") > -1) {
+            if (c.indexOf("bajo") > -1) {
                 eyes.name.my = -p
             }
-            if (c.indexOf("hizquierda") > -1) {
+            if (c.indexOf("quierda") > -1) {
                 eyes.name.mx = -p
             }
             if (c.indexOf("derecha") > -1) {
@@ -1154,14 +1152,14 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             if (c.indexOf("girar abajo") > -1) {
                 eyes.name.rx = p
             }
-            if (c.indexOf("parar") > -1) {
+            if (c.indexOf("para") > -1) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
                 eyes.name.mx = 0;
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = .01;
+                me.name.factor = .001;
             }
             if (c.indexOf("origen") > -1) {
                 eyes.name.my = 0;
@@ -1170,7 +1168,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = .01;
+                me.name.factor = .001;
                 eyes.position = eyes.name.pos;
             }
             if (c.indexOf("lento") > -1) {
