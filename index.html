@@ -150,6 +150,12 @@
             bottom: 0%;
             left: 10%;
         }
+        #ctm{
+            position: absolute;
+            bottom: 0%;
+           right: 10%; 
+           display:none;   
+        }
     </style>
 </head>
 
@@ -179,6 +185,7 @@
             <button id="bm" onclick="if(ct.style.display==='block')ct.style.display='none';else ct.style.display='block'">M</button>
 
             <div id="ct">
+
                 <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>
                 <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">L</button>
                 <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">A</button>
@@ -254,6 +261,16 @@
         </div>
     </div>
     <p id="pi">muestra</p>
+    <div id="ctm">
+x <input type="range" id="rax" value=0 min=-5 max=5 oninput="eyes.name.mx=this.value"></input>
+y <input type="range" id="ray" value=0 min=-5 max=5 oninput="eyes.name.my=this.value"></input>
+z <input type="range" id="raz" value=0 min=-5 max=5 oninput="eyes.name.mz=this.value"></input>
+gx <input type="range" id="ragx" value=0 min=-3.1416 max=3.1416 step=.001 oninput="eyes.name.ry=this.value"></input>
+
+
+f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.factor=this.value"></input>
+
+    </div>
 
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
@@ -804,13 +821,13 @@
 
                 renderer.render(scene, camera);
 
-            } else {eyes.name.mz =1;
-                eyes.position.x += eyes.name.mx * eyes.name.factor;pi.innerHTML=eyes.position.x
+            } else {
+                eyes.position.x += eyes.name.mx * eyes.name.factor;pi.innerHTML=JSON.stringify(eyes.name)
                 eyes.position.y += eyes.name.my * eyes.name.factor;
                 eyes.position.z += eyes.name.mz * eyes.name.factor;
-                eyes.rotation.x += eyes.name.rx * eyes.name.factor;
-                eyes.rotation.y += eyes.name.ry * eyes.name.factor;
-                eyes.rotation.z += eyes.name.rz * eyes.name.factor;
+               // eyes.rotation.x += eyes.name.rx * eyes.name.factor;
+                eyes.rotation.y += eyes.name.ry;
+              //  eyes.rotation.z += eyes.name.rz * eyes.name.factor;
 
                 //   eyes.position.x+=eyes.name.mx;
 
@@ -1099,10 +1116,7 @@
 
         function exComando(cc) {
             pi.innerHTML=cc
-         //   var c = cc.split(" ")
-          //  c = c[c.length - 1];
-            //   alert(c)
-            varp=1;
+            var p=1;
             c = cc;
 
             if (c.indexOf("salir") > -1) {
@@ -1147,7 +1161,7 @@
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = .5;
+                me.name.factor = .01;
             }
             if (c.indexOf("origen") > -1) {
                 eyes.name.my = 0;
@@ -1156,14 +1170,16 @@
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = .5;
+                me.name.factor = .01;
                 eyes.position = eyes.name.pos;
             }
             if (c.indexOf("lento") > -1) {
-                eyes.name.factor -= eyes.name.factor / 5;
+              //  eyes.name.factor -= eyes.name.factor / 5;
+                eyes.name.factor -= eyes.name.factor /2;
+                
             }
             if (c.indexOf("rapido") > -1) {
-                eyes.name.factor += eyes.name.factor / 5;
+                eyes.name.factor += eyes.name.factor *2;
             }
             pi.innerHTML=JSON.stringify(eyes.name)
         }
