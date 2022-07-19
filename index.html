@@ -1048,9 +1048,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         }
 
-        function SetVr() {
+ function SetVr() {
+            bsp=vrmode;
             if (vrmode) {
-
+               // if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
                 renderer.setScissorTest(false);
                 vrmode = false;
                 onWindowResize();;
@@ -1060,10 +1061,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 eyes.position.z = camera.position.z;
                 //    eyes.rotation.x = Math.PI;
                 eyes.rotation = camera.rotation;
-                render()
+                render();
                 closeFullscreen(renderer.domElement);
                // inicSpeech()
-             //  runSpeechRecognition();
+               runSpeechRecognition();
              bsp=false;
             } else {
                 renderer.setScissorTest(true);
@@ -1078,7 +1079,6 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                runSpeechRecognition()
             }
         }
-
         function openFullscreen(elem) {
 
             if (elem.requestFullscreen) {
