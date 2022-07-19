@@ -455,7 +455,7 @@
         me.rx = 0;
         me.ry = 0;
         me.rz = 0;
-        me.factor = 1;
+        me.factor = .5;
         me.pos = oy;
         eyes.name = me;
 
@@ -792,12 +792,7 @@
                         eyes.position.y = camera.position.y;
                         eyes.position.z = camera.position.z;
 
-                        eyes.position.x += eyes.name.mx * eyes.name.factor;
-                eyes.position.y += eyes.name.my * eyes.name.factor;
-                eyes.position.z += eyes.name.mz * eyes.name.factor;
-                eyes.rotation.x += eyes.name.rx * eyes.name.factor;
-                eyes.rotation.y += eyes.name.ry * eyes.name.factor;
-                eyes.rotation.z += eyes.name.rz * eyes.name.factor;
+        
 
 
                         //    }
@@ -809,8 +804,8 @@
 
                 renderer.render(scene, camera);
 
-            } else {
-                eyes.position.x += eyes.name.mx * eyes.name.factor;
+            } else {eyes.name.mz =1;
+                eyes.position.x += eyes.name.mx * eyes.name.factor;pi.innerHTML=eyes.position.x
                 eyes.position.y += eyes.name.my * eyes.name.factor;
                 eyes.position.z += eyes.name.mz * eyes.name.factor;
                 eyes.rotation.x += eyes.name.rx * eyes.name.factor;
@@ -1107,7 +1102,9 @@
          //   var c = cc.split(" ")
           //  c = c[c.length - 1];
             //   alert(c)
+            varp=1;
             c = cc;
+
             if (c.indexOf("salir") > -1) {
                 bsp = false;
 
@@ -1119,29 +1116,29 @@
                 else blight = true
             }
             if (c.indexOf("arriba") > -1) {
-                eyes.name.my = 0.001
+                eyes.name.my = p
 
             }
             if (c.indexOf("abajo") > -1) {
-                eyes.name.my = -0.001
+                eyes.name.my = -p
             }
             if (c.indexOf("hizquierda") > -1) {
-                eyes.name.my = -0.001
+                eyes.name.mx = -p
             }
             if (c.indexOf("derecha") > -1) {
-                eyes.name.mx = 0.001
+                eyes.name.mx = p
             }
             if (c.indexOf("girar hizquierda") > -1) {
-                eyes.name.ry = -0.001
+                eyes.name.ry = -p
             }
             if (c.indexOf("girar derecha") > -1) {
-                eyes.name.ry = 0.001
+                eyes.name.ry = p
             }
             if (c.indexOf("girar arriba") > -1) {
-                eyes.name.rx = -0.001
+                eyes.name.rx = -p
             }
             if (c.indexOf("girar abajo") > -1) {
-                eyes.name.rx = 0.001
+                eyes.name.rx = p
             }
             if (c.indexOf("parar") > -1) {
                 eyes.name.my = 0;
@@ -1150,7 +1147,7 @@
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = 1;
+                me.name.factor = .5;
             }
             if (c.indexOf("origen") > -1) {
                 eyes.name.my = 0;
@@ -1159,7 +1156,7 @@
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = 1;
+                me.name.factor = .5;
                 eyes.position = eyes.name.pos;
             }
             if (c.indexOf("lento") > -1) {
