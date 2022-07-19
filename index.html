@@ -153,7 +153,7 @@
         #ctm{
             position: absolute;
             bottom: 0%;
-           right: 10%; 
+           right: 0%; 
          //  display:none;   
         }
     </style>
@@ -243,7 +243,7 @@
 
                     <button onclick="editMesh()">Editor</button>
                     <button onclick="if(blight)blight=false;else blight=true">Light</button>
-                    <button onclick="SetVr();">VR</button>
+                    <button onclick='if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;};SetVr();'>VR</button>
                     <button id="bcom" onclick='if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}//inicSpeech();'>Comands</button>
                     <button onclick="saveScene()">Save Scene</button>
                     <div id="dparam" name=false>
@@ -1048,7 +1048,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         }
 
- function SetVr() {
+        function SetVr() {
             bsp=vrmode;
             if (vrmode) {
                // if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
@@ -1064,8 +1064,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 render();
                 closeFullscreen(renderer.domElement);
                // inicSpeech()
-               runSpeechRecognition();
-             bsp=false;
+           //    runSpeechRecognition();
+          //   bsp=false;
             } else {
                 renderer.setScissorTest(true);
                 eyes.position = camera.position;
@@ -1074,11 +1074,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 controlsr.desconnect;
                 render();
                 openFullscreen(renderer.domElement);
-                bps = true;
+             //   bps = true;
                // inicSpeech()
-               runSpeechRecognition()
+            //   runSpeechRecognition()
             }
         }
+
         function openFullscreen(elem) {
 
             if (elem.requestFullscreen) {
