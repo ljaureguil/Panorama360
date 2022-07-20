@@ -1463,7 +1463,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 var recognition = new SpeechRecognition();
                 recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
-       // recognition.continuous = true;
+        recognition.continuous = true;
 
                 // This runs when the speech recognition service starts
                 recognition.onstart = function() {
