@@ -158,15 +158,16 @@
         }
         #mainEditor{
             width: 100%;
-            height: 90%;
+            height: 85%;
             padding:15px;
-            position:relative;
+          //  position:relative;
 
 
 
 
         }
         #Editor{
+            overflow:auto;
             position:absolute;
             display:none;
             width:100%;
@@ -177,6 +178,20 @@
             position: absolute;
             top:2%;
             right: 1%;
+        }
+        #navo{width: 100%;overflow: auto;}
+        #nav{
+            width:300%;
+      
+      overflow:auto;
+
+    padding: 30px 0px;
+ 
+    background:red;
+
+        }
+        .copcs{    display: flex inline;
+            width: 10%;
         }
     </style>
 </head>
@@ -207,7 +222,6 @@
             <button id="bm" onclick="if(ct.style.display==='block')ct.style.display='none';else ct.style.display='block'">M</button>
 
             <div id="ct">
-
                 <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>
                 <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">L</button>
                 <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">A</button>
@@ -296,7 +310,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     </div>
 <div id="Editor">
     <textarea id="mainEditor"></textarea>
- 
+    <div id="navo">
+    <div id="nav" >
     <select id="selo" oninput="addtxt(this.value)">
         <option>Sel opc.</option>
         <option>Mesh</option>
@@ -315,27 +330,63 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option>Add to esena</option>
         <option></option>
 
-    </select>
-    <select id="shorcuts" oninput="addShorcut(this.value)">
-            <option>//</option>    
-                   <option>;</option>
+    </select>   <button onclick="addShorcuts(solo.value)" class="copcs">Go</button>
+    <select id="shorcuts" oninput="insert(this.value)" style="width: 10%;">
+            
         <option>.geometry</option>
-        <option>.position</option>
+        <option>.material</option>
+        <option>.map</option>
+               <option>.position</option>
+         <option>.rotate</option>
+
+ 
         <option>.x</option>
         <option>.y</option>
+         <option>.y</option>
+         <option>.x</option>
+
+         <option>.side=THREE.DoubleSide</option>
+       
+     
+    </select>   <button onclick="insert(shorcuts.value)" class="copcs">Go</button>
+   <select id="instr" oninput="insert(this.value)" style="width: 10%;" class="copcs">
+            
+        <option>if( ){ };<br>else{ }</option>
+        <option>for(var i=0;i< ;i++){ }</option>
+        <option>Math.</option>
+        <option>function   a(){  }</option>
          <option>.y</option>
          <option>.x</option>
          <option>.rotate</option>
          <option>.side=THREE.DoubleSide</option>
        
      
-    </select>
-    <button onclick="addShorcuts(shorcuts.value)"
+    </select><button onclick="insert(instr.value)" class="copcs">Go</button>
     
-    <button onclick="addtxt(selo.value)">Go</button>
+    <select id="punt" oninput="insert(this.value)" style="width: 10%;"  class="copcs" >
+        <option>=</option>
+          <option>.</option>
+       <option>,</option>
+      
+        <option>;</option>
+        <option>"</option>
+        <option>'</option>
+        <option>:</option>
+        <option>//</option>   
+        <option>{</option>
+        <option>}</option>
+        <option>[</option>
+        <option>]</option>
+
+
+    </select><button onclick="insert(punt.value)" class="copcs">Go</button>
+ 
        <button onclick="applayMainEditor();Editor.style.display='none'">Process</button>
     <button onclick="Editor.style.display='none'">Close</button>
+   </div>
 </div>
+</div>
+
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
     <script src="js/three.min.js"></script>
@@ -650,7 +701,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
      //  el.geometry=g;el.material=m;
     //   scene.add(el)
             animate();
-            setTimeout('scene.add(Body(170,90,90,1/8,12,"","#eeeeee",false,0,false,"body"))',30000)
+    //        setTimeout('scene.add(Body(170,90,90,1/8,12,"","#eeeeee",false,0,false,"body"))',30000)
             //controls2 = new DeviceOrientationControls(camera);
             //       setupAudio()
         }
@@ -1589,6 +1640,14 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     }
 
     }
+    function insert(v){
+        var t=mainEditor.value;
+        var i=mainEditor.selectionStart;
+        var p1=t.slice(0,i);p2=t.slice(mainEditor.selectionEnd,mainEditor.value.length)
+        var e=p1 +v+ p2;
+        mainEditor.value=e
+
+    }
     function addtxt(o){
            var ge="";
         var ge="new THREE.Mesh()";
@@ -1603,25 +1662,25 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         if(o==="Texture Util") ge="new THREE.ImageUtils.loadTexture( 'src' )";
         if(o==="Texture  Loader") ge="new THREE.TextureLoader().load(' src ',function(t){ }";
         if(o==="Add to esena") ge="esena.add( )";
-  
+        insert(ge)
        // alert(mainEditor.selectionEnd);
-        var t=mainEditor.value;
-        var i=mainEditor.selectionStart;
-        var p1=t.slice(0,i);p2=t.slice(mainEditor.selectionEnd,mainEditor.value.length)
-        var e=p1 +" "+ge+" "+ p2;
+   //     var t=mainEditor.value;
+   //     var i=mainEditor.selectionStart;
+  //      var p1=t.slice(0,i);p2=t.slice(mainEditor.selectionEnd,mainEditor.value.length)
+  //      var e=p1 +" "+ge+" "+ p2;
        // alert(e);
-        mainEditor.value=e
+ //       mainEditor.value=e
     }
     function addShorcut(ge){
 
-
+/*
        // alert(mainEditor.selectionEnd);
         var t=mainEditor.value;
         var i=mainEditor.selectionStart;
         var p1=t.slice(0,i);p2=t.slice(mainEditor.selectionEnd,mainEditor.value.length)
         var e=p1 +""+ge+""+ p2;
        // alert(e);
-        mainEditor.value=e        
+        mainEditor.value=e    */    
 
     }
     </script>
