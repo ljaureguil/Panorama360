@@ -307,6 +307,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <textarea id="mainEditor"></textarea>
     <div id="navo">
     <div id="nav" >
+        <select id="sproy" oninput="openProy(this.value)"></select><button onclick="openProy(sproy.value)" class="copcs">></button>
+        <button onclick="addtrycatch()">Add Try Catch</button>
+        <button onclick="mainEditor.value=''">Clear Editor</button> 
     <select id="selo" oninput="addtxt(this.value)" style="width: 5%">
         <option>Sel opc.</option>
         <option>Mesh</option>
@@ -325,7 +328,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option>Add to esena</option>
         <option></option>
 
-    </select>   <button onclick="addShorcuts(solo.value)" class="copcs">></button>
+    </select>   <button onclick="addtxt(solo.value)" class="copcs">></button>
     <select id="shorcuts" oninput="insert(this.value)" style="width: 3%;">
             
         <option>.geometry</option>
@@ -406,6 +409,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
        <button onclick="applayMainEditor();Editor.style.display='none'">Process</button>
+           <button onclick="saveEd()">Save</button>
+   
     <button onclick="Editor.style.display='none'">Close</button>
    </div>
 </div>
@@ -438,6 +443,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>
+        setupProy();
         var cStream,
             aStream,
             vid,
@@ -1687,26 +1693,61 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         if(o==="Texture  Loader") ge="new THREE.TextureLoader().load(' src ',function(t){ }";
         if(o==="Add to esena") ge="esena.add( )";
         insert(ge)
-       // alert(mainEditor.selectionEnd);
-   //     var t=mainEditor.value;
-   //     var i=mainEditor.selectionStart;
-  //      var p1=t.slice(0,i);p2=t.slice(mainEditor.selectionEnd,mainEditor.value.length)
-  //      var e=p1 +" "+ge+" "+ p2;
-       // alert(e);
- //       mainEditor.value=e
-    }
-    function addShorcut(ge){
+      }
 
-/*
-       // alert(mainEditor.selectionEnd);
-        var t=mainEditor.value;
-        var i=mainEditor.selectionStart;
-        var p1=t.slice(0,i);p2=t.slice(mainEditor.selectionEnd,mainEditor.value.length)
-        var e=p1 +""+ge+""+ p2;
-       // alert(e);
-        mainEditor.value=e    */    
+    function addtrycatch(){
+        var t="try{\n"+mainEditor.value+"\n}\ncatch(error){\n\nalert(error)\n\n}";
+        
+        mainEditor.value=t;
 
     }
+    function saveEd(){
+        var n=prompt("Type proyect name");
+        if(n===null){alert("Proyect was not saved, name required");return;}
+        var a=localStorage.getItem("editors");
+        if(a!=null){
+            var ob=JSON.parse(a);
+            ob.proyectos.push("/*\n\n"+n+"\n\n*/"+mainEditor.value);
+            localStorage.setItem("editors",JSON.stringify(ob))
+        }
+        else{
+            ob={};
+            ob.proyectos=[];
+            ob.proyectos.push("/*\n\n"+n+"\n\n*/"+mainEditor.value);
+            localStorage.setItem("editors",JSON.stringify(ob))
+        }
+    }
+    function openProy(n){
+        var a=localStorage.getItem("editors");
+        if(a!=null){
+            ob=JSON.parse(a);
+            for(var i=0;i<ob.proyectos.length;i++){
+                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
+                    mainEditor.value=ob.proyectos[i];
+                }
+            
+            }
+        }
+
+    }
+    function setupProy(){
+        var a=localStorage.getItem("editors");
+        if(a!=null){
+            sproy.innerHTML="";
+            var s="";
+            ob=JSON.parse(a);
+            for(var i=0;i<ob.proyectos.length;i++){
+            var p=ob.proyectos[i];
+            p=p.split("\n\n")[1];
+
+            s+="<option>"+p+"</option>"
+            }
+            sproy.innerHTML=s;
+          
+     //   else alert("No proyects yet")
+    }
+    }
+ 
     </script>
 
 </body>
