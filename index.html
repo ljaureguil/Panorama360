@@ -181,16 +181,11 @@
         }
         #navo{width: 100%;overflow: auto;}
         #nav{
-            width:300%;
-      
+            width:500%;
       overflow:auto;
-
-    padding: 30px 0px;
- 
-    background:red;
-
+   padding: 20px 0px;background:red;
         }
-        .copcs{    display: flex inline;
+        .copcsg{
             width: 10%;
         }
     </style>
@@ -312,7 +307,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <textarea id="mainEditor"></textarea>
     <div id="navo">
     <div id="nav" >
-    <select id="selo" oninput="addtxt(this.value)">
+    <select id="selo" oninput="addtxt(this.value)" style="width: 5%">
         <option>Sel opc.</option>
         <option>Mesh</option>
         <option>Geometry</option>
@@ -330,14 +325,16 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option>Add to esena</option>
         <option></option>
 
-    </select>   <button onclick="addShorcuts(solo.value)" class="copcs">Go</button>
-    <select id="shorcuts" oninput="insert(this.value)" style="width: 10%;">
+    </select>   <button onclick="addShorcuts(solo.value)" class="copcs">></button>
+    <select id="shorcuts" oninput="insert(this.value)" style="width: 3%;">
             
         <option>.geometry</option>
         <option>.material</option>
         <option>.map</option>
                <option>.position</option>
          <option>.rotate</option>
+        <option>THREE.</option>
+        <option>new THREE.</option>
 
  
         <option>.x</option>
@@ -348,27 +345,33 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
          <option>.side=THREE.DoubleSide</option>
        
      
-    </select>   <button onclick="insert(shorcuts.value)" class="copcs">Go</button>
-   <select id="instr" oninput="insert(this.value)" style="width: 10%;" class="copcs">
+    </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button>
+   <select id="instr" oninput="insert(this.value)" style="width: 3%;" class="copcs">
             
         <option>if( ){ };<br>else{ }</option>
         <option>for(var i=0;i< ;i++){ }</option>
+         <option>function   a(){  }</option>       
         <option>Math.</option>
-        <option>function   a(){  }</option>
-         <option>.y</option>
-         <option>.x</option>
-         <option>.rotate</option>
-         <option>.side=THREE.DoubleSide</option>
+        <option>PI</option>
+         <option>.sin</option>
+         <option>.cos</option>
+         <option>.tan</option>
+         <option>.asin</option>
+         <option>.acos</option>
+         <option>.atan</option>
        
      
-    </select><button onclick="insert(instr.value)" class="copcs">Go</button>
+    </select><button onclick="insert(instr.value)" class="copcs">></button>
     
-    <select id="punt" oninput="insert(this.value)" style="width: 10%;"  class="copcs" >
+    <select id="punt" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
         <option>=</option>
-          <option>.</option>
+        <option>+</option>
+       <option>-</option>
+        <option>/</option>
+       <option>*</option>
+       <option>.</option>
        <option>,</option>
-      
-        <option>;</option>
+       <option>;</option>
         <option>"</option>
         <option>'</option>
         <option>:</option>
@@ -379,8 +382,29 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option>]</option>
 
 
-    </select><button onclick="insert(punt.value)" class="copcs">Go</button>
- 
+    </select><button onclick="insert(punt.value)" class="copcs">></button>
+    <select id="structura" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
+        <option>new LJL</option>
+        <option>angle</option>
+       <option>channel</option>
+        <option>flatbar</option>
+       <option>roundedbar</option>
+       <option>tube</option>
+       <option>roudedtube</option>
+       <option>plate</option>
+        <option>"</option>
+        <option>'</option>
+        <option>:</option>
+        <option>//</option>   
+        <option>{</option>
+        <option>}</option>
+        <option>[</option>
+        <option>]</option>
+
+
+    </select><button onclick="insert(structura.value)" class="copcs">></button>
+
+
        <button onclick="applayMainEditor();Editor.style.display='none'">Process</button>
     <button onclick="Editor.style.display='none'">Close</button>
    </div>
