@@ -338,31 +338,31 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
          <option>.rotate</option>
         <option>THREE.</option>
         <option>new THREE.</option>
-
+        <option>scene.add( );</option>
+        <option>esena.add( );</option>
  
         <option>.x</option>
         <option>.y</option>
-         <option>.y</option>
-         <option>.x</option>
+           <option>.x</option>
 
          <option>.side=THREE.DoubleSide</option>
        
      
     </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button>
    <select id="instr" oninput="insert(this.value)" style="width: 3%;" class="copcs">
-            
+            <option>var </option>
         <option>if( ){ };<br>else{ }</option>
         <option>for(var i=0;i< ;i++){ }</option>
          <option>function   a(){  }</option>       
         <option>Math.</option>
         <option>PI</option>
-         <option>.sin</option>
-         <option>.cos</option>
-         <option>.tan</option>
-         <option>.asin</option>
-         <option>.acos</option>
-         <option>.atan</option>
-       
+         <option>Math.sin( )</option>
+         <option>Math.cos( )</option>
+         <option>Math.tan( )</option>
+         <option>Math.asin( )</option>
+         <option>Math.acos( )</option>
+         <option>Math.atan( )</option>
+         <option>Math.rand( )</option>      
      
     </select><button onclick="insert(instr.value)" class="copcs">></button>
     
@@ -1654,12 +1654,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         }
     function applayMainEditor(){
       
-        if(confirm("You have "+esena.children.length+" Objects, do you want to redoit?")){
+        if(confirm("You have "+esena.children.length+" Objects, do you want to replace it?")){
             var ch=esena.children
             for(var i=0;i<ch.length;i++){
                 ch[i].geometry.dispose();
                 ch[i].material.dispose();
-               escene.remove(ch[i])
+               esena.remove(ch[i])
             }
         var c=mainEditor.value;
         try{
