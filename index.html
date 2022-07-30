@@ -158,15 +158,10 @@
         }
         #mainEditor{
             width: 100%;
-            height: 85%;
-            padding:15px;
-          //  position:relative;
-
-
-
-
-        }
-        #Editor{
+            height: 80%;
+   
+         }
+        #Editor{         padding:15px;
             overflow:auto;
             position:absolute;
             display:none;
@@ -183,10 +178,13 @@
         #nav{
             width:400%;
       overflow:auto;
-   padding: 20px 0px;background:red;
+   padding: 10px 0px;background:red;
         }
-        .copcsg{
-            width: 8%;
+        .copcs{
+            background:green;
+        }
+        .cse{
+          width:80px;
         }
     </style>
 </head>
@@ -307,10 +305,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <textarea id="mainEditor"></textarea>
     <div id="navo">
     <div id="nav" >
-        Local<select id="sproy" oninput="openProy(this.value)"></select><button onclick="openProy(sproy.value)" class="copcs">></button>
-         Web<select id="sproyw" oninput="openProyw(this.value)"></select><button onclick="openProyw(sproyw.value)" class="copcs">></button>
+        Local<select id="sproy" oninput="openProy(this.value)" class="cse"></select><button onclick="openProy(sproy.value)" class="copcs">></button>
+         Web<select id="sproyw" oninput="openProyw(this.value)" class="cse"></select><button onclick="openProyw(sproyw.value)" class="copcs">></button>
 
-    Objects<select id="selo" oninput="addtxt(this.value)" style="width: 5%">
+    Objects<select id="selo" oninput="addtxt(this.value)" class="cse">
         <option>Sel opc.</option>
         <option>Mesh</option>
         <option>Geometry</option>
@@ -329,7 +327,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option></option>
 
     </select>   <button onclick="addtxt(solo.value)" class="copcs">></button>
-    Shorcuts<select id="shorcuts" oninput="insert(this.value)" style="width: 3%;">
+    Shorcuts<select id="shorcuts" oninput="insert(this.value)" class="cse">
             
         <option>.geometry</option>
         <option>.material</option>
@@ -349,7 +347,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
        
      
     </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button>
-   Operations<select id="instr" oninput="insert(this.value)" style="width: 3%;" class="copcs">
+   Operations<select id="instr" oninput="insert(this.value)"  class="cse">
             <option>var </option>
         <option>if( ){ };<br>else{ }</option>
         <option>for(var i=0;i< ;i++){ }</option>
@@ -366,7 +364,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
      
     </select><button onclick="insert(instr.value)" class="copcs">></button>
     
-    Char<select id="punt" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
+    Char<select id="punt" oninput="insert(this.value)"  class="cse" >
         <option>=</option>
         <option>+</option>
        <option>-</option>
@@ -386,7 +384,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     </select><button onclick="insert(punt.value)" class="copcs">></button>
-    Structural<select id="structura" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
+    Structural<select id="structura" oninput="insert(this.value)"  class="cse" >
          <option>.flat(w, l, tk, texture, color, center, buffer)</option>
         <option>.plate(w, l, tk, texture, color, center, buffer)</option>
         <option>.anglee(w, l, tk, texture, color, center, buffer)</option>
@@ -424,7 +422,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
        <option></option>
         <option></option>
 
-    </select><button onclick="insert(structura.value)" class="copcs">></button>
+    </select><button onclick="insert(structura.value)" class="copcs">></button><br>
 
     <button onclick="addtrycatch()">Add Try Catch</button>
     <button onclick="mainEditor.value=''">Clear Editor</button> 
