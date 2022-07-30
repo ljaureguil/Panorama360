@@ -181,12 +181,12 @@
         }
         #navo{width: 100%;overflow: auto;}
         #nav{
-            width:500%;
+            width:400%;
       overflow:auto;
    padding: 20px 0px;background:red;
         }
         .copcsg{
-            width: 10%;
+            width: 8%;
         }
     </style>
 </head>
@@ -307,10 +307,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <textarea id="mainEditor"></textarea>
     <div id="navo">
     <div id="nav" >
-        <select id="sproy" oninput="openProy(this.value)"></select><button onclick="openProy(sproy.value)" class="copcs">></button>
-        <button onclick="addtrycatch()">Add Try Catch</button>
-        <button onclick="mainEditor.value=''">Clear Editor</button> 
-    <select id="selo" oninput="addtxt(this.value)" style="width: 5%">
+        Local<select id="sproy" oninput="openProy(this.value)"></select><button onclick="openProy(sproy.value)" class="copcs">></button>
+         Web<select id="sproyw" oninput="openProyw(this.value)"></select><button onclick="openProyw(sproyw.value)" class="copcs">></button>
+
+    Objects<select id="selo" oninput="addtxt(this.value)" style="width: 5%">
         <option>Sel opc.</option>
         <option>Mesh</option>
         <option>Geometry</option>
@@ -329,7 +329,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option></option>
 
     </select>   <button onclick="addtxt(solo.value)" class="copcs">></button>
-    <select id="shorcuts" oninput="insert(this.value)" style="width: 3%;">
+    Shorcuts<select id="shorcuts" oninput="insert(this.value)" style="width: 3%;">
             
         <option>.geometry</option>
         <option>.material</option>
@@ -349,7 +349,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
        
      
     </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button>
-   <select id="instr" oninput="insert(this.value)" style="width: 3%;" class="copcs">
+   Operations<select id="instr" oninput="insert(this.value)" style="width: 3%;" class="copcs">
             <option>var </option>
         <option>if( ){ };<br>else{ }</option>
         <option>for(var i=0;i< ;i++){ }</option>
@@ -366,7 +366,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
      
     </select><button onclick="insert(instr.value)" class="copcs">></button>
     
-    <select id="punt" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
+    Char<select id="punt" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
         <option>=</option>
         <option>+</option>
        <option>-</option>
@@ -386,31 +386,52 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     </select><button onclick="insert(punt.value)" class="copcs">></button>
-    <select id="structura" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
-        <option>new LJL</option>
-        <option>angle</option>
-       <option>channel</option>
-        <option>flatbar</option>
-       <option>roundedbar</option>
-       <option>tube</option>
-       <option>roudedtube</option>
-       <option>plate</option>
-        <option>"</option>
-        <option>'</option>
-        <option>:</option>
-        <option>//</option>   
-        <option>{</option>
-        <option>}</option>
-        <option>[</option>
-        <option>]</option>
-
+    Structural<select id="structura" oninput="insert(this.value)" style="width: 3%;"  class="copcs" >
+         <option>.flat(w, l, tk, texture, color, center, buffer)</option>
+        <option>.plate(w, l, tk, texture, color, center, buffer)</option>
+        <option>.anglee(w, l, tk, texture, color, center, buffer)</option>
+      <option>.angle(l1, l2, lo, tk, texture, color, center, buffer)</option>
+        <option>.plateedged(w, l, tk, radius, texture, color, center, cdf, buffer)<option>
+        <option>.tube(D, l, tk, texture, color, center, cdf, buffer)</option>
+        <option>.pipe(D, l, tk, texture, color, center, cdf, buffer)</option>   
+        <option>.channel(w, l, h, tk, texture, color, center, buffer)</option>
+        <option>.hbeam(w, l, h, tk, texture, color, center, buffer)</option>
+        <option>.bar(D, l, texture, color, center, cdf, buffer)</option>
+        <option>.squaretubing(w, h, l, tk, texture, color, center, buffer)</option>
+<option>.squaretubingedged(l, w, h, tk, rad, texture, color, center, cdf, buffer)</option>
+      <option>=new structura()</option>
+        <option>=new LJL()</option>
+       <option>.gplate(w, l, tk, center, buffer)</option>
+        <option>.gangle(w1, w2, l, tk, center, buffer)</option>
+       <option>.gangle2(l1, l2, lo, tk, center, buffer)</option>
+       <option>.gplateedged(w, l, tk, radius, center, cdf, buffer)</option>
+       <option>.gtube(D, l, tk, center, cdf, buffer)</option>
+       <option>.gpipe(D, l, tk, center, cdf, buffer)</option>
+        <option>.gchannel(w, l, h, tk, center, buffer)</option>
+        <option>.ghbeam = function(w, l, h, tk, center, buffer)</option>
+        <option>.gbar(D, l, center, cdf, buffer)</option>
+        <option>.gsquaretubing(w, h, l, tk, center, buffer)</option>   
+        <option>.gsquaretubingedged(l, w, h, tk, rad, center, cdf, buffer)</option>
+         <option>cutMesh(from, ob)</option>
+        <option>line(points, width, color)</option>
+        <option>t_extura(pic)</option>   
+        <option>adjusttexture(mate, nx, ny, ang, offsetX, offsetY)</option>
+        <option>unionG(ob1, ob2)</option>
+        <option>gsubtract(fromob, ob)</option>
+        <option>gunion(fromob, ob)</option>
+       <option>gintersection(fromob, ob)</option>
+        <option></option>
+       <option></option>
+        <option></option>
 
     </select><button onclick="insert(structura.value)" class="copcs">></button>
 
-
+    <button onclick="addtrycatch()">Add Try Catch</button>
+    <button onclick="mainEditor.value=''">Clear Editor</button> 
        <button onclick="applayMainEditor();Editor.style.display='none'">Process</button>
-           <button onclick="saveEd()">Save</button>
-   
+           <button onclick="saveEd('local')">Save Local</button>
+           <button onclick="saveEd('web')">Save To Web</button>
+               <button onclick="window.location.reload()">Refresh App</button>
     <button onclick="Editor.style.display='none'">Close</button>
    </div>
 </div>
@@ -434,6 +455,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     <script type="text/javascript">
         //
+ 
+        Editor.style.dispose="none";
         function getPaht(file) {
             var path = (window.URL || window.webkitURL).createObjectURL(file);
             alert('path', path);
@@ -443,7 +466,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>
+       var liproj="https://jsonblob.com/api/1002978081803354112"
+        var ObPro={}
         setupProy();
+        setupProyw();
         var cStream,
             aStream,
             vid,
@@ -874,13 +900,13 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         }
 
         function animate() {
-
+            if(Editor.style.dispose==="none"){
             requestAnimationFrame(animate);
             if (vrmode) controlsr.update();
             else controls.update();
 
             render();
-
+}
         }
 
         function render() {
@@ -1701,21 +1727,53 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         mainEditor.value=t;
 
     }
-    function saveEd(){
+    function saveEd(opc){
         var n=prompt("Type proyect name");
         if(n===null){alert("Proyect was not saved, name required");return;}
+        if(opc==="local"){
+       
         var a=localStorage.getItem("editors");
         if(a!=null){
             var ob=JSON.parse(a);
-            ob.proyectos.push("/*\n\n"+n+"\n\n*/"+mainEditor.value);
+          
+            for(var i=0;i<ob.proyectos.length;i++){
+                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
+                   if(confirm("Project "+n+" Exist, do you want to replace it?")){
+                    ob.proyectos[i]=mainEditor.value;
+                     localStorage.setItem("editors",JSON.stringify(ob));
+                     return;
+                   }
+                   else return;
+                   }
+            }
             localStorage.setItem("editors",JSON.stringify(ob))
         }
         else{
             ob={};
             ob.proyectos=[];
-            ob.proyectos.push("/*\n\n"+n+"\n\n*/"+mainEditor.value);
+            ob.proyectos.push("/*\n\n"+n+"\n\n*/\n"+mainEditor.value);
             localStorage.setItem("editors",JSON.stringify(ob))
         }
+    }
+    else{
+ 
+     
+        GetJ(liproj,function(ob){
+            for(var i=0;i<ob.proyectos.length;i++){
+                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
+                   if(confirm("Project "+n+" Exist, do you want to replace it?")){
+                    ob.proyectos[i]=mainEditor.value;
+                    UpdateJ(liproj,ob,function(){alert("Saved in web")})
+                    
+                     return;
+                   }
+                 
+                   }
+            }
+        ob.proyectos.push("/*\n\n"+n+"\n\n*/\n"+mainEditor.value);
+        UpdateJ(liproj,ob,function(){alert("Saved in web")})
+        })
+     }
     }
     function openProy(n){
         var a=localStorage.getItem("editors");
@@ -1724,12 +1782,24 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
                     mainEditor.value=ob.proyectos[i];
+                    return;
                 }
             
             }
         }
 
     }
+    function openProyw(n){
+        GetJ(liproj,function(ob){
+           for(var i=0;i<ob.proyectos.length;i++){
+                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
+                    mainEditor.value=ob.proyectos[i];
+                    return;
+                }
+            
+            }
+        })
+     }   
     function setupProy(){
         var a=localStorage.getItem("editors");
         if(a!=null){
@@ -1747,7 +1817,19 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
      //   else alert("No proyects yet")
     }
     }
+     function setupProyw(){
+         GetJ(liproj,function(ob){
+            for(var i=0;i<ob.proyectos.length;i++){
+            var p=ob.proyectos[i];
+            p=p.split("\n\n")[1];
+
+            s+="<option>"+p+"</option>"
+            }
+            sproyw.innerHTML=s;
+        
+         })
  
+    }
     </script>
 
 </body>
