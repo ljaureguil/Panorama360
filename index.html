@@ -457,7 +457,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <script type="text/javascript">
         //
  
-        Editor.style.dispose="none";
+        Editor.style.display='none';
         function getPaht(file) {
             var path = (window.URL || window.webkitURL).createObjectURL(file);
             alert('path', path);
@@ -901,7 +901,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         }
 
         function animate() {
-            if(Editor.style.dispose==="none"){
+            if(Editor.style.display==="none"){
             requestAnimationFrame(animate);
             if (vrmode) controlsr.update();
             else controls.update();
@@ -1760,19 +1760,25 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
  
      
         GetJ(liproj,function(ob){
+            var e=false;
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
                     ob.proyectos[i]=mainEditor.value;
-                    UpdateJ(liproj,ob,function(){alert("Saved in web")})
-                    
-                     return;
+                    UpdateJ(liproj,ob,function(){alert("Replace it in web")})
+                    e=true;
+                    i=ob.proyectos.length;
+                    // 
                    }
+                   else return;
                  
                    }
             }
+            if(!e){
         ob.proyectos.push("/*\n\n"+n+"\n\n*/\n"+mainEditor.value);
         UpdateJ(liproj,ob,function(){alert("Saved in web")})
+}
+
         })
      }
     }
