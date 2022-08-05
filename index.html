@@ -901,12 +901,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         }
 
         function animate() {
-            if(Editor.style.display==="none"){
+       
             requestAnimationFrame(animate);
             if (vrmode) controlsr.update();
             else controls.update();
 
-            render();
+                if(Editor.style.display==="none"){ render();
 }
         }
 
