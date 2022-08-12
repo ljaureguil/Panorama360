@@ -451,9 +451,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     <button onclick="addtrycatch()">Add Try Catch</button>
     <button onclick="mainEditor.value=''">Clear Editor</button>
+          <button onclick="applayMainEditor();Editor.style.display='none';">Process</button>
         <button onclick="scene.add(axis);Editor.style.display='none'">Add Axis</button>
            <button onclick="scene.remove(axis);Editor.style.display='none'">Remove Axis</button> 
-       <button onclick="applayMainEditor();Editor.style.display='none';">Process</button>
+ 
            <button onclick="saveEd('local')">Save Local</button>
            <button onclick="saveEd('web')">Save To Web</button>
                <button onclick="window.location.reload()">Refresh App</button>
@@ -509,7 +510,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             toob = "",
             addTo = false,
             bcast = true,
-            spe;
+            spe,proyecto;
 
 
         let clicked = false;
@@ -1758,7 +1759,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
 
     }
     function saveEd(opc){
-        var n=prompt("Type proyect name");
+        var n=prompt("Type proyect name",proyecto);
         if(n===null){alert("Proyect was not saved, name required");return;}
         if(opc==="local"){
        
@@ -1814,10 +1815,11 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
     function openProy(n){
         var a=localStorage.getItem("editors");
         if(a!=null){
+           
             ob=JSON.parse(a);
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
-                    mainEditor.value=ob.proyectos[i];
+                    mainEditor.value=ob.proyectos[i]; proyecto=n;
                     return;
                 }
             
@@ -1826,10 +1828,11 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
 
     }
     function openProyw(n){
+       
         GetJ(liproj,function(ob){
            for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
-                    mainEditor.value=ob.proyectos[i];
+                    mainEditor.value=ob.proyectos[i]; proyecto=n;
                     return;
                 }
             
