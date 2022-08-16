@@ -311,9 +311,11 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <div id="navo">
     <div id="nav" >
         Local<select id="sproy" oninput="openProy(this.value)" class="cse"></select><button onclick="openProy(sproy.value)" class="copcs">></button>
-         Web<select id="sproyw" oninput="openProyw(this.value)" class="cse"></select><button onclick="openProyw(sproyw.value)" class="copcs">></button>
-
-    Objects<select id="selo" oninput="insert(this.value)//addtxt(this.value)" class="cse">
+        <button id="bdelpl" onclick="delproyl()"  style="background: blue;" class="copcs">Del</button>
+ 
+        Web<select id="sproyw" oninput="openProyw(this.value)" class="cse"></select><button onclick="openProyw(sproyw.value)" class="copcs">></button>
+         <button id="bdelp" onclick="delproy()"  style="background: blue;" class="copcs">Del</button>
+    Objects<select id="selo" oninput="addtxt(this.value)//addtxt(this.value)" class="cse">
         <option>Sel opc.</option>
         <option>Mesh</option>
         <option>Geometry</option>
@@ -1820,6 +1822,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
                     mainEditor.value=ob.proyectos[i]; proyecto=n;
+                    bdelpl.innerHTML="Del "+proyecto
                     return;
                 }
             
@@ -1833,13 +1836,60 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
            for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
                     mainEditor.value=ob.proyectos[i]; proyecto=n;
+                    bdelp.innerHTML="Del "+proyecto
                     return;
                 }
             
             }
         })
      }   
+     function delproy(){
+         if(proyecto!=""){
+             
+            GetJ(liproj,function(ob){
+            for(var i=0;i<ob.proyectos.length;i++){
+            var p=ob.proyectos[i];
+            p=p.split("\n\n")[1];
+            if(p===proyecto){
+                
+                    if(confirm("Are you sure to delete "+proyecto+" ?")){
+                        ob.proyectos.splice(i,1);
+                        UpdateJ(liproj,ob,function(){alert("project Deleted");
+                    setupProyw();
+                })
+
+                    } 
+                    else return;
+                }
+       
+            }
+        
+        
+         })
+         }
+     }
+     function delproyl(){
+         if(proyecto!=""){
+             
+            var a=localStorage.getItem("editors");
+        if(a!=null){
+            sproy.innerHTML="";
+            var s="";
+            ob=JSON.parse(a);
+            for(var i=0;i<ob.proyectos.length;i++){
+            var p=ob.proyectos[i].proyectos[i];
+            p=p.split("\n\n")[1];
+                if(p===proyecto){
+                    ob.splice(i,1);
+                    if(confirm("Are you sure to delete "+proyectos+" ?")) localStorage.setItem("editors",JSON.stringify(ob))
+                    return;
+                }
+              }
+       }
+         }
+     } 
     function setupProy(){
+        sproy.innerHTML="";
         var a=localStorage.getItem("editors");
         if(a!=null){
             sproy.innerHTML="";
@@ -1852,12 +1902,12 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             s+="<option>"+p+"</option>"
             }
             sproy.innerHTML=s;
-          
-     //   else alert("No proyects yet")
+   
     }
     }
      function setupProyw(){
          GetJ(liproj,function(ob){
+            sproyw.innerHTML="";   
             for(var i=0;i<ob.proyectos.length;i++){
             var p=ob.proyectos[i];
             p=p.split("\n\n")[1];
