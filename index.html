@@ -435,7 +435,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option>str.squaretubing(w, h, l, tk, texture, color, center, buffer)</option>
 <option>str.squaretubingedged(l, w, h, tk, rad, texture, color, center, cdf, buffer)</option>
 <option>str.textLebel(msg, W, H, center, color, toCamera, font, frame)</option>
- 
+<option>str.gShape(ptsV2,1)</option>
+
        <option>str.gplate(w, l, tk, center, buffer)</option>
         <option>str.gangle(w1, w2, l, tk, center, buffer)</option>
        <option>str.gangle2(l1, l2, lo, tk, center, buffer)</option>
@@ -452,10 +453,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option></option>
 
     </select><button onclick="insert(structura.value)" class="copcs">></button><br>
-
+         <button onclick="applayMainEditor();Editor.style.display='none';" style="background: blue;color: white;">Process</button>
     <button onclick="addtrycatch()">Add Try Catch</button>
     <button onclick="mainEditor.value=''">Clear Editor</button>
-          <button onclick="applayMainEditor();Editor.style.display='none';">Process</button>
+ 
         <button onclick="scene.add(axis);Editor.style.display='none'">Add Axis</button>
            <button onclick="scene.remove(axis);Editor.style.display='none'">Remove Axis</button> 
  
@@ -646,7 +647,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         }
         var cubeCamera;
         var textureLoader = new THREE.TextureLoader();
-        var light = new THREE.DirectionalLight(0xaaaaaa, .71);
+        var light = new THREE.DirectionalLight(0x888888, .61);
         camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 1, 10000);
 
 
@@ -704,12 +705,12 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             scene.add(esena)
             //////////////////////////////////
             s = new THREE.Mesh(
-                new THREE.SphereGeometry(1, 16, 16),
+                new THREE.SphereGeometry(.3, 16, 16),
                 new THREE.MeshPhongMaterial({
                       color: "#00ff00"
                 })
             );
-            light4 = new THREE.PointLight(0xffffff, 2, 500);
+            light4 = new THREE.PointLight(0xffffff, 2, 1000);
             light4.add(s);
             scene.add(light4);
               scene.add(eyes);
@@ -1740,8 +1741,8 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
 
     }
     function addtxt(o){
-           var ge="";
-        var ge="new THREE.Mesh()";
+           var ge=o;//"";
+           if(o==="Mesh") ge="new THREE.Mesh()";
         if(o==="Material") ge="new THREE.MeshPhongMaterial()";
         if(o==="gBox") ge="new THREE.CubeGeometry(20, 20, 20, 3, 3, 3)";
         if(o==="gSphere") ge="new Three.SphereGeometry(20, 8, 6)";
@@ -1767,10 +1768,10 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
         if(n===null){alert("Proyect was not saved, name required");return;}
         if(opc==="local"){
        
-        var a=localStorage.getItem("editors");
-        if(a!=null){
+        var a=localStorage.getItem("editors","");
+        if(a!=""){
             var ob=JSON.parse(a);
-          
+          alert("local "+a)
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
@@ -1794,6 +1795,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
  
      
         GetJ(liproj,function(ob){
+            
             var e=false;
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
