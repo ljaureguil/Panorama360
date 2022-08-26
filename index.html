@@ -383,7 +383,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     LJL Object<select id="punt" oninput="insert(this.value)"  class="cse" >
 
         <option>var ljl=new LJL()</option>  
-        <option>ljl.tag({msg:'message',color:"white",background:"rgba(10,130,120,.4)",frame:true,font:"40px Areal Bold"})</option>
+        <option>ljl.tag({msg:'message',color:"white",background:"rgba(10,130,120,.4)",border:false,frame:true,font:"40px Areal Bold"})</option>
   
             <option>ljl.point( x, y, z)</option>
         <option>ljl.lineSegments(points, width, color)</option>
@@ -571,8 +571,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
                 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
                 try {
-///////////
-        let p = document.createElement('textarea');
+                    /*       let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
         recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
@@ -601,10 +600,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         });
 
-        words.appendChild(p);
-
-
-//////////
+        words.appendChild(p);*/
                     /* JS comes here */
                     //  runSpeechRecognition();
                 } catch (e) {
@@ -687,13 +683,15 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         /////
         var _jl=new LJL();
         var axis=new THREE.Group();
+        openProyw("AXIS",false);
+  /*      var axis=new THREE.Group();
 
 axis.add(_jl.line([_jl.point(0,500,0),_jl.point(0,-500,0)],3,0x00FF00));
 
 axis.add(_jl.line([_jl.point(500,0,0),_jl.point(-500,0,0)],3,0x0000FF));
 
 axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
-
+*/
 
 
 
@@ -779,9 +777,9 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             controls = new THREE.TrackballControls(camera, renderer.domElement); //camera
             //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
 
-            controls.rotateSpeed = 1.0;
-            controls.zoomSpeed = 1.2;
-            controls.panSpeed = 0.8;
+            controls.rotateSpeed = .8;//1.0;
+            controls.zoomSpeed = .8;//1.2;
+            controls.panSpeed = .6;//0.8;
 
             controls.keys = ['KeyA', 'KeyS', 'KeyD'];
             window.addEventListener('resize', onWindowResize, false);
@@ -794,7 +792,8 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             });
 
             renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
- 
+          //  openProyw("AXIS",false);
+        //  alert(axis)
             animate();
         }
 
@@ -1799,7 +1798,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
  
      
         GetJ(liproj,function(ob){
-            
+
             var e=false;
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
@@ -1838,14 +1837,17 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
         }
 
     }
-    function openProyw(n){
+    function openProyw(n,ox){
        
         GetJ(liproj,function(ob){
            for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
-                    mainEditor.value=ob.proyectos[i]; proyecto=n;
+                   if(!ox){ mainEditor.value=ob.proyectos[i]; proyecto=n;
                     bdelp.innerHTML="Del "+proyecto
-                    return;
+                    return;}
+                    else {
+                        eval(ob.proyectos[i]);
+                      }
                 }
             
             }
