@@ -310,10 +310,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <textarea id="mainEditor"></textarea>
     <div id="navo">
     <div id="nav" >
-        Local<select id="sproy" oninput="openProy(this.value)" class="cse"></select><button onclick="openProy(sproy.value)" class="copcs">></button>
+        Local<select id="sproy" oninput="openProy(this.value,false)" class="cse"></select><button onclick="openProy(sproy.value,false)" class="copcs">></button>
         <button id="bdelpl" onclick="delproyl()"  style="background: blue;" class="copcs">Del</button>
  
-        Web<select id="sproyw" oninput="openProyw(this.value)" class="cse"></select><button onclick="openProyw(sproyw.value)" class="copcs">></button>
+        Web<select id="sproyw" oninput="openProyw(this.value,false)" class="cse"></select><button onclick="openProyw(sproyw.value,false)" class="copcs">></button>
          <button id="bdelp" onclick="delproy()"  style="background: blue;" class="copcs">Del</button>
     Objects<select id="selo" oninput="addtxt(this.value)//addtxt(this.value)" class="cse">
         <option>Sel opc.</option>
@@ -683,7 +683,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         /////
         var _jl=new LJL();
         var axis=new THREE.Group();
-        openProyw("AXIS",false);
+        
+        openProyw("AXIS",true);
   /*      var axis=new THREE.Group();
 
 axis.add(_jl.line([_jl.point(0,500,0),_jl.point(0,-500,0)],3,0x00FF00));
@@ -1725,7 +1726,6 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             }
         var c=mainEditor.value;
         try{
-
             eval(c)
         }
         catch(e){alert(e)}
@@ -1776,7 +1776,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             var ob=JSON.parse(a);
           alert("local "+a)
             for(var i=0;i<ob.proyectos.length;i++){
-                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
+                if(ob.proyectos[i].indexOf("//"+n)>-1){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
                     ob.proyectos[i]=mainEditor.value;
                      localStorage.setItem("editors",JSON.stringify(ob));
@@ -1790,7 +1790,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
         else{
             ob={};
             ob.proyectos=[];
-            ob.proyectos.push("/*\n\n"+n+"\n\n*/\n"+mainEditor.value);
+            ob.proyectos.push("//"+n+"\n"+mainEditor.value);
             localStorage.setItem("editors",JSON.stringify(ob))
         }
     }
@@ -1801,7 +1801,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
 
             var e=false;
             for(var i=0;i<ob.proyectos.length;i++){
-                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
+                if(ob.proyectos[i].indexOf("//"+n)>-1){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
                     ob.proyectos[i]=mainEditor.value;
                     UpdateJ(liproj,ob,function(){alert("Replace it in web")})
@@ -1814,7 +1814,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
                    }
             }
             if(!e){
-        ob.proyectos.push("/*\n\n"+n+"\n\n*/\n"+mainEditor.value);
+        ob.proyectos.push("//"+n+"\n"+mainEditor.value);
         UpdateJ(liproj,ob,function(){alert("Saved in web")})
 }
 
@@ -1827,7 +1827,9 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
            
             ob=JSON.parse(a);
             for(var i=0;i<ob.proyectos.length;i++){
-                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
+                    var p1=ob.proyectos[i].split("//")[0].split("\n")[1];
+              //  if(ob.proyectos[i].indexOf("//"+n)>-1){
+                        if(p1===n){
                     mainEditor.value=ob.proyectos[i]; proyecto=n;
                     bdelpl.innerHTML="Del "+proyecto
                     return;
@@ -1838,11 +1840,17 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
 
     }
     function openProyw(n,ox){
-       
+    
         GetJ(liproj,function(ob){
            for(var i=0;i<ob.proyectos.length;i++){
-                if(ob.proyectos[i].indexOf("/*\n\n"+n)>-1){
-                   if(!ox){ mainEditor.value=ob.proyectos[i]; proyecto=n;
+               var p1=ob.proyectos[i].split("//")[1].split("\n")[0];
+            //  alert(p1);
+               // if(ob.proyectos[i].indexOf("//"+n)>-1){
+
+              //  alert(n+"\n\n"+ox+"\n\n"+p1+"\n"+n)
+                   if(p1===n){ //  alert(n+"\n\n"+ox)
+                   if(!ox){
+                 mainEditor.value=ob.proyectos[i]; proyecto=n;
                     bdelp.innerHTML="Del "+proyecto
                     return;}
                     else {
@@ -1859,7 +1867,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             GetJ(liproj,function(ob){
             for(var i=0;i<ob.proyectos.length;i++){
             var p=ob.proyectos[i];
-            p=p.split("\n\n")[1];
+            p=p.split("//")[1].split("\n")[0];
             if(p===proyecto){
                 
                     if(confirm("Are you sure to delete "+proyecto+" ?")){
@@ -1887,8 +1895,8 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             var s="";
             ob=JSON.parse(a);
             for(var i=0;i<ob.proyectos.length;i++){
-            var p=ob.proyectos[i].proyectos[i];
-            p=p.split("\n\n")[1];
+            var p=ob.proyectos[i];
+            p=p.split("//")[1].split("/n"[0]);
                 if(p===proyecto){
                     ob.splice(i,1);
                     if(confirm("Are you sure to delete "+proyectos+" ?")) localStorage.setItem("editors",JSON.stringify(ob))
@@ -1907,7 +1915,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             ob=JSON.parse(a);
             for(var i=0;i<ob.proyectos.length;i++){
             var p=ob.proyectos[i];
-            p=p.split("\n\n")[1];
+            p=p.split("//")[1].split("\n")[0];
 
             s+="<option>"+p+"</option>"
             }
@@ -1918,9 +1926,10 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
      function setupProyw(){
          GetJ(liproj,function(ob){
             sproyw.innerHTML="";   
+            var s="";
             for(var i=0;i<ob.proyectos.length;i++){
             var p=ob.proyectos[i];
-            p=p.split("\n\n")[1];
+            p=p.split("//")[1].split("\n")[0];
 
             s+="<option>"+p+"</option>"
             }
