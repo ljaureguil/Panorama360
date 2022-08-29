@@ -458,7 +458,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <button onclick="addtrycatch()">Add Try Catch</button>
     <button onclick="mainEditor.value=''">Clear Editor</button>
  
-        <button onclick="scene.add(axis);Editor.style.display='none'">Add Axis</button>
+         <button onclick="showAxis();">Add Axis</button>
            <button onclick="scene.remove(axis);Editor.style.display='none'">Remove Axis</button> 
  
            <button onclick="saveEd('local')">Save Local</button>
@@ -1939,6 +1939,16 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
          })
  
     }
+        
+     function showAxis(){
+        var sh=confirm("show Tags?");
+        var l=prompt("line length",axis.length);
+        var dt=prompt("Tag Distance",axis.tagDist);
+        axis.setUp(sh,l,dt);
+        
+        scene.add(axis);Editor.style.display='none'
+
+    }     
     </script>
 
 </body>
