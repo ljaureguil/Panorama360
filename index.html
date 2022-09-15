@@ -498,7 +498,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>
-       var liproj="https://jsonblob.com/api/1002978081803354112"
+       var liproj="https://jsonblob.com/api/1020056623695282176";//"https://jsonblob.com/api/1002978081803354112"
         var ObPro={}
         setupProy();
         setupProyw();
@@ -1801,13 +1801,13 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
         GetJ(liproj,function(ob){
 
             var e=false;
-            for(var i=0;i<ob.proyectos.length;i++){
-                if(ob.proyectos[i].indexOf("//"+n)>-1){
+            for(var i=0;i<ob.length;i++){
+                if(ob[i].name===n){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
-                    ob.proyectos[i]=mainEditor.value;
+                    ob[i].content=mainEditor.value;
                     UpdateJ(liproj,ob,function(){alert("Replace it in web")})
                     e=true;
-                    i=ob.proyectos.length;
+                    i=ob.length;
                     // 
                    }
                    else return;
@@ -1815,8 +1815,9 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
                    }
             }
             if(!e){
-        ob.proyectos.push("//"+n+"\n"+mainEditor.value);
-        UpdateJ(liproj,ob,function(){alert("Saved in web")})
+        ob.push({name:n,content:mainEditor.value});
+        UpdateJ(liproj,ob,function(){alert("Saved in web")});
+  
 }
 
         })
@@ -1843,19 +1844,16 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
     function openProyw(n,ox){
     
         GetJ(liproj,function(ob){
-           for(var i=0;i<ob.proyectos.length;i++){
-               var p1=ob.proyectos[i].split("//")[1].split("\n")[0];
-            //  alert(p1);
-               // if(ob.proyectos[i].indexOf("//"+n)>-1){
-
-              //  alert(n+"\n\n"+ox+"\n\n"+p1+"\n"+n)
-                   if(p1===n){ //  alert(n+"\n\n"+ox)
+           for(var i=0;i<ob.length;i++){
+               var p1=ob[i].name;//ob.proyectos[i].split("//")[1].split("\n")[0];
+    
+                   if(p1===n){
                    if(!ox){
-                 mainEditor.value=ob.proyectos[i]; proyecto=n;
+                 mainEditor.value=ob[i].content; proyecto=n;
                     bdelp.innerHTML="Del "+proyecto
                     return;}
                     else {
-                        eval(ob.proyectos[i]);
+                        eval(ob[i].content);
                       }
                 }
             
@@ -1866,13 +1864,13 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
          if(proyecto!=""){
              
             GetJ(liproj,function(ob){
-            for(var i=0;i<ob.proyectos.length;i++){
-            var p=ob.proyectos[i];
-            p=p.split("//")[1].split("\n")[0];
-            if(p===proyecto){
+            for(var i=0;i<ob.length;i++){
+            var p=ob[i];
+           // p=p.split("//")[1].split("\n")[0];
+            if(p[i].name===proyecto){
                 
                     if(confirm("Are you sure to delete "+proyecto+" ?")){
-                        ob.proyectos.splice(i,1);
+                        ob.splice(i,1);
                         UpdateJ(liproj,ob,function(){alert("project Deleted");
                     setupProyw();
                 })
@@ -1925,7 +1923,18 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
     }
     }
      function setupProyw(){
-         GetJ(liproj,function(ob){
+        GetJ(liproj,function(ob){
+            sproyw.innerHTML="";   
+            var s="";
+            for(var i=0;i<ob.length;i++){
+            var p=ob[i].name;
+            s+="<option>"+p+"</option>"
+            }
+            sproyw.innerHTML=s;
+        
+         })
+
+   /*      GetJ(liproj,function(ob){
             sproyw.innerHTML="";   
             var s="";
             for(var i=0;i<ob.proyectos.length;i++){
@@ -1934,10 +1943,10 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
 
             s+="<option>"+p+"</option>"
             }
-            sproyw.innerHTML=s;
+   
         
          })
- 
+ */
     }
         
      function showAxis(){
@@ -1949,6 +1958,49 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
         scene.add(axis);Editor.style.display='none'
 
     }     
+  //  sob2();
+    function sob(){
+        GetJ(liproj,function(ob){
+                var objs=[];
+            
+            for(var i=0;i<ob.proyectos.length;i++){
+     var o={}
+
+            var p=ob.proyectos[i];
+            p=p.split("//")[1].split("\n")[0];
+           o.name=p;
+           o.content=ob.proyectos[i]
+           objs.push(o)
+
+            }
+            UpdateJ("https://jsonblob.com/api/1020056623695282176",objs,function(){alert("chk transfered it in web")}) 
+    
+         })
+ 
+  
+
+
+    }
+    function sob2(){
+        GetJ("https://jsonblob.com/api/1020056623695282176",function(ob){
+            
+            var s="";
+            for(var i=0;i<ob.length;i++){
+  
+            var p=ob[i];
+  
+
+           s+="<option>"+p.name+"</option>"
+
+            }
+            sproyw.innerHTML=s;
+            mainEditor.value=JSON.stringify(ob);
+              alert(JSON.stringify(ob))
+         })
+ 
+
+
+    }
     </script>
 
 </body>
