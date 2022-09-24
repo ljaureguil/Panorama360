@@ -384,7 +384,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     LJL Object<select id="punt" oninput="insert(this.value)"  class="cse" >
 
         <option>var ljl=new LJL()</option>  
-        <option>ljl.tag({msg:'message',color:"white",background:"rgba(10,130,120,.4)",border:"white",frame:true,font:"40px Areal Bold"})</option>
+        <option>ljl.tag({msg:'message',color:"white",background:"rgba(10,130,120,.4)",border:"white",font:"40px Areal Bold"})</option>
   
             <option>ljl.point( x, y, z)</option>
         <option>ljl.lineSegments(points, width, color)</option>
@@ -396,10 +396,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
        <option>ljl.toDeg(ang)</option>
        <option>ljl.chromeMaterial = function(cubeCam, color).</option>
        <option>,</option>
-
-
-
-         
+       
         <option>+</option>
        <option>-</option>
         <option>/</option>
@@ -455,16 +452,17 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     </select><button onclick="insert(structura.value)" class="copcs">></button><br>
          <button onclick="applayMainEditor();Editor.style.display='none';" style="background: blue;color: white;">Process</button>
+         <button onclick="Editor.style.display='none';" style="background: green;">Close</button>     
     <button onclick="addtrycatch()">Add Try Catch</button>
     <button onclick="mainEditor.value=''">Clear Editor</button>
  
          <button onclick="showAxis();">Add Axis</button>
            <button onclick="scene.remove(axis);Editor.style.display='none'">Remove Axis</button> 
  
-           <button onclick="saveEd('local')">Save Local</button>
+           <button onclick="loadLocal()">load Local obj</button>
            <button onclick="saveEd('web')">Save To Web</button>
                <button onclick="window.location.reload()">Refresh App</button>
-    <button onclick="Editor.style.display='none';">Close</button>
+
    </div>
 </div>
 </div>
@@ -516,7 +514,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             toob = "",
             addTo = false,
             bcast = true,
-            spe,proyecto;
+            spe,proyecto,
+            objLocal={};
 
 
         let clicked = false;
@@ -1767,15 +1766,22 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
         mainEditor.value=t;
 
     }
+    function loadLocal(){
+        if(confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?"))
+        var ob=localStorage.getItem("bkProjects")
+        if(ob!=null) objLocal=JSON.parse(ob);
+        mainEditor.value=ob;
+    }
     function saveEd(opc){
         var n=prompt("Type proyect name",proyecto);
         if(n===null){alert("Proyect was not saved, name required");return;}
         if(opc==="local"){
-       
+            mainEditor.value=localStorage.getItem("bkProjects")
+     /*  
         var a=localStorage.getItem("editors","");
         if(a!=""){
             var ob=JSON.parse(a);
-          alert("local "+a)
+         // alert("local "+a);//-----
             for(var i=0;i<ob.proyectos.length;i++){
                 if(ob.proyectos[i].indexOf("//"+n)>-1){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
@@ -1794,7 +1800,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             ob.proyectos.push("//"+n+"\n"+mainEditor.value);
             localStorage.setItem("editors",JSON.stringify(ob))
         }
-    }
+    */ }
     else{
  
      
@@ -1805,7 +1811,14 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
                 if(ob[i].name===n){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
                     ob[i].content=mainEditor.value;
-                    UpdateJ(liproj,ob,function(){alert("Replace it in web")})
+                    UpdateJ(liproj,ob,function(){//alert("Project "+n+"replaced in web")
+                
+                
+                
+                    if(confirm("Project "+n+"replaced in web\n\nDo you want to back it up locally?")) localStorage.setItem("Projects",JSON.stringify(ob))
+                      localStorage.setItem("bkProjects",JSON.stringify(ob))
+                       
+                })
                     e=true;
                     i=ob.length;
                     // 
@@ -1816,8 +1829,17 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             }
             if(!e){
         ob.push({name:n,content:mainEditor.value});
-        UpdateJ(liproj,ob,function(){alert("Saved in web")});
+        UpdateJ(liproj,ob,function(){//alert("Saved in web")
+    
+        if(confirm("Project "+n+"Saved in web\n\nDo you want to back it up locally?")) localStorage.setItem("Projects",JSON.stringify(ob))
+                      localStorage.setItem("bkProjects",JSON.stringify(ob))
+    
+        
+    
+    });
   
+
+
 }
 
         })
@@ -1867,7 +1889,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
             for(var i=0;i<ob.length;i++){
             var p=ob[i];
            // p=p.split("//")[1].split("\n")[0];
-            if(p[i].name===proyecto){
+            if(p.name===proyecto){
                 
                     if(confirm("Are you sure to delete "+proyecto+" ?")){
                         ob.splice(i,1);
