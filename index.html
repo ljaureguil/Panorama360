@@ -244,9 +244,14 @@
                 <br>
                 <div id="ilocal">
                     <br>Texture
+   
                     <input type=file name=filename id=Texture oninput="test('Texture')" class=cte></input>
-                    <br>Bump
+                   ...... Cr. Texture Variable;
+                    <input id = "locf" type=file name=filename id=Texture oninput="addVarTexture(this)" class=cte></input>
+                    <br>
 
+                    <br>Bump
+  
                     <input type=file name=filename id=Bump oninput="test('Bump')" class=cte></input>
                     <br>Specular
                     <input type=file name=filename id=Specular oninput="test('Specular')" class=cte></input>
@@ -311,11 +316,30 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <textarea id="mainEditor"></textarea>
     <div id="navo">
     <div id="nav" >
-        Local<select id="sproy" oninput="openProy(this.value,false)" class="cse"></select><button onclick="openProy(sproy.value,false)" class="copcs">></button>
-        <button id="bdelpl" onclick="delproyl()"  style="background: blue;" class="copcs">Del</button>
- 
+        <select id="eje" oninput="ejecutar(this.value)">
+            <option>Process</option>
+            <option>Add Catch and Try</option>
+            <option>Clear Editor</option>
+            
+            <option>Add Axis</option>
+            <option>Remove Axis</option>
+            <option>Open Local Pics</option>
+            <option>Save Loc Pic to Web</option>
+            <option>Back up Local</option>
+            <option>Save to Web</option>
+            <option>Refresh app</option>
+            <option>Load Local Obj</option>
+ <option></option>
+
+            <option>Close</option>
+        </select><button onclick="ejecutar(eje.value)" class="copcs">></button>
+  
         Web<select id="sproyw" oninput="openProyw(this.value,false)" class="cse"></select><button onclick="openProyw(sproyw.value,false)" class="copcs">></button>
          <button id="bdelp" onclick="delproy()"  style="background: blue;" class="copcs">Del</button>
+       Local<select id="sproy" oninput="openProy(this.value,false)" class="cse"></select><button onclick="openProy(sproy.value,false)" class="copcs">></button>
+        <button id="bdelpl" onclick="delproyl()"  style="background: blue;" class="copcs">Del</button>
+
+
     Objects<select id="selo" oninput="addtxt(this.value)//addtxt(this.value)" class="cse">
         <option>Sel opc.</option>
         <option>Mesh</option>
@@ -451,18 +475,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option></option>
 
     </select><button onclick="insert(structura.value)" class="copcs">></button><br>
-         <button onclick="applayMainEditor();Editor.style.display='none';" style="background: blue;color: white;">Process</button>
-         <button onclick="Editor.style.display='none';" style="background: green;">Close</button>     
-    <button onclick="addtrycatch()">Add Try Catch</button>
-    <button onclick="mainEditor.value=''">Clear Editor</button>
- 
-         <button onclick="showAxis();">Add Axis</button>
-           <button onclick="scene.remove(axis);Editor.style.display='none'">Remove Axis</button> 
- 
-           <button onclick="loadLocal()">load Local obj</button>
-           <button onclick="saveEd('web')">Save To Web</button>
-               <button onclick="window.location.reload()">Refresh App</button>
-
+  
    </div>
 </div>
 </div>
@@ -1108,7 +1121,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
                     if (t === "Bump") ObSelected.name.bump = image.src;
                     if (t === "Specular") ObSelected.name.specular = image.src;
 
-
+               
                     if (ObSelected.name.name === "World" && !confirm("Are you sure you want to set this background?")) return;
                     else dparam.style.display = "block";
                     params.value = JSON.stringify(ObSelected.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
@@ -1117,6 +1130,26 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
                 }
                 reader.readAsDataURL(file);
             }
+        }
+        var arTexture=[];//,arBump,arSpecular;
+        function addVarTexture(v){
+            var vn=prompt("Type Variable name (*end name with _ )");
+ 
+           var stexture=vn+"='"
+            var file = v.files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    stexture+=e.target.result+"'";
+                   if(vn!=null) eval(stexture);
+                   else{
+                       var nn=prompt("Name?");
+                       if(nn===null) return;
+                        savePic(nn,e.target.result)
+                   }
+                  
+                }
+                reader.readAsDataURL(file);
+
         }
 
         function selMesh(v) {
@@ -1956,19 +1989,7 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
         
          })
 
-   /*      GetJ(liproj,function(ob){
-            sproyw.innerHTML="";   
-            var s="";
-            for(var i=0;i<ob.proyectos.length;i++){
-            var p=ob.proyectos[i];
-            p=p.split("//")[1].split("\n")[0];
-
-            s+="<option>"+p+"</option>"
-            }
-   
-        
-         })
- */
+  
     }
         
      function showAxis(){
@@ -2023,6 +2044,60 @@ axis.add(_jl.line([_jl.point(0,0,500),_jl.point(0,0,-500)],3,0xFF0000));
 
 
     }
+    function savePic(name,data){
+        GetJ("https://jsonblob.com/api/1024722888334524416",function(ob){
+            var op={};
+            op.name=name;
+            op.pic=data;
+            ob.arpics.push(op)
+        UpdateJ("https://jsonblob.com/api/1024722888334524416",ob,function(){alert("Pic data has been saved")})
+   }) }
+   function ejecutar(e){
+    if(e==="Process"){
+        applayMainEditor();Editor.style.display='none';
+    }
+  
+if(e==="Add Catch and Try"){
+    addtrycatch()
+}
+if(e==="Clear Editor"){
+    mainEditor.value=''
+}
+
+    if(e==="Add Axis"){
+        showAxis();
+}
+    if(e==="Remove Axis"){
+        scene.remove(axis);Editor.style.display='none'
+}
+    if(e==="Open Local Pics"){
+        locf.click();
+}
+    if(e==="Save Loc Pic to Web"){
+
+       locf.click();
+}
+
+if(e==="Back up Local"){
+  
+}
+
+if(e==="Save to Web"){
+    saveEd('web')
+}
+if(e==="Load Local Obj"){
+loadLocal()
+}
+if(e==="Refresh app"){
+    window.location.reload()
+}
+
+
+
+    if(e==="Close"){
+        Editor.style.display='none';
+}
+   }
     </script>
 
 </body>
