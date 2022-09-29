@@ -176,12 +176,8 @@
             top:2%;
             right: 1%;
         }
-        #navo{width: 100%;overflow: auto;}
-        #nav{
-            width:400%;
-      overflow:auto;
-   padding: 10px 0px;background:red;
-        }
+        #navo{border-style:solid;width: 50%;height:14%;overflow: auto;background:red;padding:5px;margin: 5px;}
+ 
         .copcs{
             background:green;
         }
@@ -189,6 +185,12 @@
           width:80px;
           color:white;
           background-color: teal;
+        }
+        #ejed{
+            position: absolute;
+            bottom:5%;
+            right: 3%;
+            
         }
     </style>
 </head>
@@ -315,29 +317,13 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 <div id="Editor">
     <textarea id="mainEditor"></textarea>
     <div id="navo">
-    <div id="nav" >
-        <select id="eje" oninput="ejecutar(this.value)">
-            <option>Process</option>
-            <option>Add Catch and Try</option>
-            <option>Clear Editor</option>
-            
-            <option>Add Axis</option>
-            <option>Remove Axis</option>
-            <option>Open Local Pics</option>
-            <option>Save Loc Pic to Web</option>
-            <option>Back up Local</option>
-            <option>Save to Web</option>
-            <option>Refresh app</option>
-            <option>Load Local Obj</option>
- <option></option>
+ 
 
-            <option>Close</option>
-        </select><button onclick="ejecutar(eje.value)" class="copcs">></button>
   
-        Web<select id="sproyw" oninput="openProyw(this.value,false)" class="cse"></select><button onclick="openProyw(sproyw.value,false)" class="copcs">></button>
-         <button id="bdelp" onclick="delproy()"  style="background: blue;" class="copcs">Del</button>
-       Local<select id="sproy" oninput="openProy(this.value,false)" class="cse"></select><button onclick="openProy(sproy.value,false)" class="copcs">></button>
-        <button id="bdelpl" onclick="delproyl()"  style="background: blue;" class="copcs">Del</button>
+        Web<select id="sproyw" oninput="openProyw(this.value,false)" class="cse"></select><button onclick="openProyw(sproyw.value,false)" class="copcs">></button><br>
+         <button id="bdelp" onclick="delproy()"  style="background: blue;" class="copcs">Del</button><br>
+       Local<select id="sproy" oninput="openProy(this.value,false)" class="cse"></select><button onclick="openProy(sproy.value,false)" class="copcs">></button><br>
+        <button id="bdelpl" onclick="delproyl()"  style="background: blue;" class="copcs">Del</button><br>
 
 
     Objects<select id="selo" oninput="addtxt(this.value)//addtxt(this.value)" class="cse">
@@ -367,7 +353,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
        <option>gintersection(fromob, ob)</option>
 
 
-    </select>   <button onclick="addtxt(selo.value)" class="copcs">></button>
+    </select>   <button onclick="addtxt(selo.value)" class="copcs">></button><br>
     Shorcuts<select id="shorcuts" oninput="insert(this.value)" class="cse">
             
         <option>.geometry</option>
@@ -387,7 +373,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
          <option>.side=THREE.DoubleSide</option>
        
      
-    </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button>
+    </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button><br>
    Operations<select id="instr" oninput="insert(this.value)"  class="cse">
             <option>var </option>
         <option>if( ){ };<br>else{ }</option>
@@ -403,7 +389,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
          <option>Math.atan( )</option>
          <option>Math.rand( )</option>      
      
-    </select><button onclick="insert(instr.value)" class="copcs">></button>
+    </select><button onclick="insert(instr.value)" class="copcs">></button><br>
     
     LJL Object<select id="punt" oninput="insert(this.value)"  class="cse" >
 
@@ -438,7 +424,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option>]</option>
 
 
-    </select><button onclick="insert(punt.value)" class="copcs">></button>
+    </select><button onclick="insert(punt.value)" class="copcs">></button><br>
     Structural<select id="structura" oninput="insert(this.value)"  class="cse" >
 
         <option>var str=new structural()</option>
@@ -476,7 +462,27 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     </select><button onclick="insert(structura.value)" class="copcs">></button><br>
   
-   </div>
+ 
+</div>
+<div id="ejed">
+<select id="eje" oninput="ejecutar(this.value)">
+    <option>Process</option>
+    <option>Add Catch and Try</option>
+    <option>Clear Editor</option>
+    
+    <option>Add Axis</option>
+    <option>Remove Axis</option>
+    <option>Open Local Pics</option>
+    <option>Save Loc Pic to Web</option>
+    <option>Back up Local</option>
+    <option>Save to Web</option>
+    <option>Refresh app</option>
+    <option>Load Local Obj</option>
+<option></option>
+
+    <option>Close</option>
+</select>
+<button onclick="ejecutar(eje.value)" class="copcs">></button><br>
 </div>
 </div>
  <script src="https://cdn.jsdelivr.net/npm/three@0.119.1/build/three.js"></script>
