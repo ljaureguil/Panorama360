@@ -176,7 +176,7 @@
             top:2%;
             right: 1%;
         }
-        #navo{border-style:solid;width: 45%;height:14%;overflow: auto;background:rgb(17, 0, 255);padding:2px;margin: 5px;}
+        #navo{position: absolute;right:3%;border-style:solid;width: 45%;height:14%;overflow: auto;background:rgb(17, 0, 255);padding:2px;margin: 5px;}
  
         .copcs{
             background:green;
@@ -189,7 +189,7 @@
         #ejed{
             position: absolute;
             bottom:8%;
-            right: 5%;
+         left: 3%;
             
         }
         #dca{
@@ -324,6 +324,25 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     </div>
 <div id="Editor">
     <textarea id="mainEditor"></textarea>
+    <div id="ejed">
+        <select id="eje" oninput="ejecutar(this.value)">
+            <option>Process</option>
+            <option>Add Catch and Try</option>
+            <option>Clear Editor</option>
+            
+            <option>Add Axis</option>
+            <option>Remove Axis</option>
+            <option>Open Local Pics</option>
+            <option>Save Loc Pic to Web</option>
+            <option>Back up Local</option>
+            <option>Save to Web</option>
+            <option>Refresh app</option>
+            <option>Load Local Obj</option>
+        <option></option>
+            <option>Close</option>
+        </select><br>
+        <button onclick="ejecutar(eje.value)" style="width: 100%;" class="copcs">Go</button><br>
+        </div>
     <div id="navo">
  
 
@@ -465,28 +484,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
          <option>Math.rand( )</option>      
      
     </select><button onclick="insert(instr.value)" class="copcs">></button><br>
+    Pics<select id="spics" oninput="insertPic(this.value)"  class="cse"></select><button onclick="insertPic(spics.value)" class="copcs">></button>
+    <button style="background: red;" onclick="delPic(spics.value)" class="copcs">X</button><br>
 
  
 </div>
-<div id="ejed">
-<select id="eje" oninput="ejecutar(this.value)">
-    <option>Process</option>
-    <option>Add Catch and Try</option>
-    <option>Clear Editor</option>
-    
-    <option>Add Axis</option>
-    <option>Remove Axis</option>
-    <option>Open Local Pics</option>
-    <option>Save Loc Pic to Web</option>
-    <option>Back up Local</option>
-    <option>Save to Web</option>
-    <option>Refresh app</option>
-    <option>Load Local Obj</option>
-<option></option>
-    <option>Close</option>
-</select><br>
-<button onclick="ejecutar(eje.value)" style="width: 100%;" class="copcs">Go</button><br>
-</div>
+
 </div>
 <div id="dca">
     <canvas id="cim"></canvas>
@@ -519,8 +522,11 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>
+        var obPic={};spics.innerHTML="";
+ 
         cim.width=300;
         cim.height=200;
+        var linkpic="https://jsonblob.com/api/1025540657741316096"
        var liproj="https://jsonblob.com/api/1020056623695282176";//"https://jsonblob.com/api/1002978081803354112"
         var ObPro={}
         setupProy();
@@ -710,7 +716,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         var axis=new THREE.Group();
         
         openProyw("AXIS",true);
- 
+        GetJ(linkpic,function(ob){
+            obPic=ob;
+            setupPics(ob)
+
+        
+        })
         function init() {
 
             container = document.createElement('div');
@@ -1134,30 +1145,40 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             }
         }
         var arTexture=[];//,arBump,arSpecular;
+
         function addVarTexture(v){
             var vn=prompt("Type Variable name (*end name with _ )");
  
            var stexture=vn+"='"
-            var file = v.files[0];
+            var file = v.files[0];     var image = document.createElement("img");
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    var image = document.createElement("img");
-                    image.src = e.target.result;
-                    var ctx=cim.getContext("2d");
-                  //  image.onload=function(){ctx.drawImage(image, 3, 1, 104, 124, 21, 20, 87, 104);}
-                    image.onload=function(){ctx.drawImage(image, 3, 1, image.naturalWidth, image.naturalHeight, 0, 0, 200, 180);}
+         
+                   // image.onload=function(){ctx.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight, 0, 0, 400, 180);}
 
                     stexture+=e.target.result+"'";
                    if(vn!=null) eval(stexture);
                    else{
                      
-                       var nn=prompt("Name?");
+                       var nn=prompt("Pic Name?");
                        if(nn===null) return;
-                       savePic(nn,cim.toDataURL("png"));
+                       var es=prompt("Set Up scale, from 0 to 1")*1;
+                       if(es===null || isNaN(es)) es=.1;
+                       image.src = e.target.result;//alert(image.src)
+     
+               
+                    image.onload=function(){ 
+                    cim.width=image.naturalWidth*es;
+                    cim.height=image.naturalHeight*es;
+                         var ctx=cim.getContext("2d");
+                     ctx.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight, 0, 0, cim.width, cim.height);
+                        var url=cim.toDataURL("png")
+                     
 
-                       // savePic(nn,e.target.result)
-                   }
-                  
+                       savePic(nn,url);//   alert(url)
+                    
+                    }
+                }
                 }
                 reader.readAsDataURL(file);
 
@@ -2056,13 +2077,23 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     }
     function savePic(name,data){
-        GetJ("https://jsonblob.com/api/1024722888334524416",function(ob){
+        GetJ(linkpic,function(ob){
             var op={};
             op.name=name;
             op.pic=data;
-            ob.arpics.push(op)
-        UpdateJ("https://jsonblob.com/api/1024722888334524416",ob,function(){alert("Pic data has been saved")})
+            ob.arpics.push(op);
+            obPic=ob;
+          //  alert("----------------\n\n\n"+data)
+        UpdateJ(linkpic,ob,function(ob){alert("Pic data has been saved");setupPics(ob)})
    }) }
+   function setupPics(ob){
+       spics.innerHTML="";
+    for(var i=0;i<ob.arpics.length;i++){
+                spics.innerHTML+="<option>"+ob.arpics[i].name+"</option>"
+            }
+
+
+   }
    function ejecutar(e){
     if(e==="Process"){
         applayMainEditor();Editor.style.display='none';
@@ -2108,6 +2139,33 @@ if(e==="Refresh app"){
     if(e==="Close"){
         Editor.style.display='none';
 }
+   }
+   function insertPic(v){
+       var ar=obPic.arpics;
+       for(var i=0;i<ar.length;i++){
+           var o=ar[i];
+           if(v===o.name){
+               insert("obPic.arpics["+i+"].pic");
+               return;
+           }
+       }
+   }
+   function delPic(v){
+    var ar=obPic.arpics;
+       for(var i=0;i<ar.length;i++){
+           var o=ar[i];
+           if(v===o.name){
+              // insert("obPic.arpics["+i+"].pic");
+              if(confirm("Are you sure you want to delete "+v+"?")){
+                ar.splice(i,1);
+                        UpdateJ(linkpic,obPic,function(){alert(v+" Has been Deleted");
+                    setupPics(obPic);  
+              }); 
+
+              }
+              else return;
+           }
+       }
    }
     </script>
 
