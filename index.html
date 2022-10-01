@@ -199,6 +199,7 @@
             
         }
         #dca{
+            overflow:auto;
             display: none;
             position: absolute;
             left: 5px;
@@ -499,7 +500,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
      
     </select><button onclick="insert(instr.value)" class="copcs">></button><br></div>
     <div style="border-style: solid;border-width: .1px;">
-    Pics<select id="spics" oninput="insertPic(this.value)"  class="cse"></select><button onclick="insertPic(spics.value)" class="copcs">></button>
+    Pics<select id="spics" oninput="if(confirm('Insert it to Editor?')) insertPic(this.value)"  class="cse"></select>
+        <button onclick="insertPic(spics.value)" class="copcs">></button>
     <button style="background: red;" onclick="delPic(spics.value)" class="copcs">X</button>
     <button style="background: red;" onclick="showPic(spics.value)" class="copcs">Show</button>
 </div><br>
