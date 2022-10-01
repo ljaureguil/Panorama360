@@ -176,7 +176,13 @@
             top:2%;
             right: 1%;
         }
-        #navo{position: absolute;right:3%;border-style:solid;width: 45%;height:14%;overflow: auto;background:rgb(17, 0, 255);padding:2px;margin: 5px;}
+        #navo{
+            position: absolute;
+            right:1%;border-style:solid;
+            width: 50%;height:14%;
+            overflow: auto;
+            background:rgb(17, 0, 255);
+            padding:2px;margin: 5px;}
  
         .copcs{
             background:green;
@@ -188,14 +194,17 @@
         }
         #ejed{
             position: absolute;
-            bottom:8%;
+            bottom:3%;
          left: 3%;
             
         }
         #dca{
             display: none;
-            position: relative;
+            position: absolute;
+            left: 5px;
+            top:5px;
 background: red;
+z-index: 100;
         }
         #cim{
             background: greenyellow;
@@ -341,16 +350,18 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <option></option>
             <option>Close</option>
         </select><br>
-        <button onclick="ejecutar(eje.value)" style="width: 100%;" class="copcs">Go</button><br>
+        <button onclick="ejecutar(eje.value)" style="width: 100%;" class="copcs">Go</button><br><br>
+        <button onclick="mainEditor.style.display='none'" style="width: 100%;" class="copcs">Close</button><br>
         </div>
     <div id="navo">
  
 
-  
+        <div style="border-style: solid;border-width: .1px;">
         Web<select id="sproyw" oninput="openProyw(this.value,false)" class="cse"></select><button onclick="openProyw(sproyw.value,false)" class="copcs">></button>
-         <button id="bdelp" onclick="delproy()"  style="background: red;" class="copcs">D</button><br>
-       Loc<select id="sproy" oninput="openProy(this.value,false)" class="cse"></select><button onclick="openProy(sproy.value,false)" class="copcs">></button><br>
- 
+         <button id="bdelp" onclick="delproy()"  style="background: red;" class="copcs">X</button></div><br>
+         <div style="border-style: solid;border-width: .1px;">
+         Loc<select id="sproy" oninput="openProy(this.value,false)" class="cse"></select><button onclick="openProy(sproy.value,false)" class="copcs">></button></div><br>
+       <div style="border-style: solid;border-width: .1px;">
         LJL<select id="punt" oninput="insert(this.value)"  class="cse" >
 
             <option>var ljl=new LJL()</option>  
@@ -384,7 +395,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>]</option>
     
     
-        </select><button onclick="insert(punt.value)" class="copcs">></button><br>
+        </select><button onclick="insert(punt.value)" class="copcs">></button></div><br>
+        <div style="border-style: solid;border-width: .1px;">
         Str<select id="structura" oninput="insert(this.value)"  class="cse" >
            <option>var str=new structural()</option>
              <option>str.flat(w, l, tk, texture, color, center, buffer)</option>
@@ -417,9 +429,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
            <option></option>
             <option></option>
     
-        </select><button onclick="insert(structura.value)" class="copcs">></button><br>
+        </select><button onclick="insert(structura.value)" class="copcs">></button></div><br>
       
-
+        <div style="border-style: solid;border-width: .1px;">
     Obj<select id="selo" oninput="addtxt(this.value)//addtxt(this.value)" class="cse">
         <option>Sel opc.</option>
         <option>Mesh</option>
@@ -447,7 +459,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
        <option>gintersection(fromob, ob)</option>
 
 
-    </select>   <button onclick="addtxt(selo.value)" class="copcs">></button><br>
+    </select>   <button onclick="addtxt(selo.value)" class="copcs">></button></div><br>
+    <div style="border-style: solid;border-width: .1px;">
     Shr<select id="shorcuts" oninput="insert(this.value)" class="cse">
             
         <option>.geometry</option>
@@ -467,7 +480,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
          <option>.side=THREE.DoubleSide</option>
        
      
-    </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button><br>
+    </select>   <button onclick="insert(shorcuts.value)" class="copcs">></button></div><br>
+    <div style="border-style: solid;border-width: .1px;">
    Ops<select id="instr" oninput="insert(this.value)"  class="cse">
             <option>var </option>
         <option>if( ){ };<br>else{ }</option>
@@ -483,16 +497,20 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
          <option>Math.atan( )</option>
          <option>Math.rand( )</option>      
      
-    </select><button onclick="insert(instr.value)" class="copcs">></button><br>
+    </select><button onclick="insert(instr.value)" class="copcs">></button><br></div>
+    <div style="border-style: solid;border-width: .1px;">
     Pics<select id="spics" oninput="insertPic(this.value)"  class="cse"></select><button onclick="insertPic(spics.value)" class="copcs">></button>
-    <button style="background: red;" onclick="delPic(spics.value)" class="copcs">X</button><br>
-
+    <button style="background: red;" onclick="delPic(spics.value)" class="copcs">X</button>
+    <button style="background: red;" onclick="showPic(spics.value)" class="copcs">Show</button>
+</div><br>
  
 </div>
 
 </div>
 <div id="dca">
-    <canvas id="cim"></canvas>
+    <img id="imsh">
+    <canvas id="cim" style="display: none;"></canvas>
+    <button style="background: red;" onclick="dca.style.display='none'" class="copcs">Close</button>
 </div>
  <script src="https://cdn.jsdelivr.net/npm/three@0.119.1/build/three.js"></script>
     <script src="js/ImageData-polyfill.js"></script>
@@ -1147,6 +1165,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         var arTexture=[];//,arBump,arSpecular;
 
         function addVarTexture(v){
+            dca.style.display="none";
             var vn=prompt("Type Variable name (*end name with _ )");
  
            var stexture=vn+"='"
@@ -1165,18 +1184,21 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                        var es=prompt("Set Up scale, from 0 to 1")*1;
                        if(es===null || isNaN(es)) es=.1;
                        image.src = e.target.result;//alert(image.src)
-     
-               
+              
                     image.onload=function(){ 
                     cim.width=image.naturalWidth*es;
                     cim.height=image.naturalHeight*es;
                          var ctx=cim.getContext("2d");
                      ctx.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight, 0, 0, cim.width, cim.height);
-                        var url=cim.toDataURL("png")
+                        var url=cim.toDataURL("png");
+
+                        imsh.src=url;
+                        dca.style.display="block";
                      
 
-                       savePic(nn,url);//   alert(url)
-                    
+                    setTimeout(function(){ if(confirm("Ready to Save it?"))  savePic(nn,url);//   alert(url)
+                     else addVarTexture(v)
+                    },3000)
                     }
                 }
                 }
@@ -2167,6 +2189,18 @@ if(e==="Refresh app"){
            }
        }
    }
+   function showPic(v){
+    dca.style.display='block';
+    var ar=obPic.arpics;
+       for(var i=0;i<ar.length;i++){
+           var o=ar[i];
+           if(v===o.name){
+
+            imsh.src=ar[i].pic;
+
+       }
+   }
+}
     </script>
 
 </body>
