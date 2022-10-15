@@ -365,18 +365,18 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
        <div style="border-style: solid;border-width: .1px;">
         LJL<select id="punt" oninput="insert(this.value)"  class="cse" >
 
-            <option>var ljl=new LJL()</option>  
+            <option>var ljl=new LJL();</option>  
             <option>ljl.tag({msg:'message',color:"white",background:"rgba(10,130,120,.4)",border:"white",font:"40px Areal Bold"})</option>
-      
-                <option>ljl.point( x, y, z)</option>
+          
             <option>ljl.lineSegments(points, width, color)</option>
              <option>ljl.line(points, width, color)</option>
          <option>ljl.dashedLine(points, width, color, size, gap)</option>
-      
-          <option>ljl.Tag(msg, W, color, params)</option>
-            <option>ljl.toRadians(ang)</option>
-           <option>ljl.toDeg(ang)</option>
-           <option>ljl.chromeMaterial = function(cubeCam, color).</option>
+            <option>ljl.arrayToV3( array3 )</option>
+           <option>ljl.arrayToV2( array2 )</option>
+             <option>ljl.toRadians( ang )</option>
+           <option>ljl.toDeg( ang )</option>
+           <option>ljl.chromeMaterial( cubeCam, color )</option>
+                <option>ljl.point( x, y, z)</option>
            <option>,</option>
            
             <option>+</option>
@@ -399,7 +399,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         </select><button onclick="insert(punt.value)" class="copcs">></button></div><br>
         <div style="border-style: solid;border-width: .1px;">
         Str<select id="structura" oninput="insert(this.value)"  class="cse" >
-           <option>var str=new structural()</option>
+           <option>var str=new structural();</option>
              <option>str.flat(w, l, tk, texture, color, center, buffer)</option>
             <option>str.plate(w, l, tk, texture, color, center, buffer)</option>
             <option>str.anglee(w, l, tk, texture, color, center, buffer)</option>
@@ -824,9 +824,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             controls = new THREE.TrackballControls(camera, renderer.domElement); //camera
             //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
 
-            controls.rotateSpeed = .8;//1.0;
-            controls.zoomSpeed = .8;//1.2;
-            controls.panSpeed = .6;//0.8;
+            controls.rotateSpeed = .48;//1.0;
+            controls.zoomSpeed = .48;//1.2;
+            controls.panSpeed = .36;//0.8;
 
             controls.keys = ['KeyA', 'KeyS', 'KeyD'];
             window.addEventListener('resize', onWindowResize, false);
