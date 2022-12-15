@@ -1421,7 +1421,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         }
 
         function exComando(cc) {
-            pi.innerHTML=cc
+         //   pi.innerHTML=cc
             comando=cc;
             var p=1;
             c = cc;
@@ -1436,14 +1436,14 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 if (blight) blight = false;
                 else blight = true
             }
-            if (c.indexOf("rriba") > -1) {
+            if (c.indexOf("ariba") > -1) {
                 eyes.name.my = p
 
             }
-            if (c.indexOf("bajo") > -1) {
+            if (c.indexOf("abajo") > -1) {
                 eyes.name.my = -p
             }
-            if (c.indexOf("quierda") > -1) {
+            if (c.indexOf("hizquierda") > -1) {
                 eyes.name.mx = -p
             }
             if (c.indexOf("derecha") > -1) {
@@ -1488,7 +1488,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             if (c.indexOf("rapido") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
-            pi.innerHTML=c;//JSON.stringify(eyes.name)
+            pi.innerHTML=c+"\n\n"+JSON.stringify(eyes.name)
         }
 
         function saveScene() {
@@ -1780,8 +1780,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
                 recognition.onspeechend = function() {
                     pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
-                    if(bsp) spe=setTimeout(runSpeechRecognition,500);
-                    else recognition.stop();
+                 //   if(bsp) spe=setTimeout(runSpeechRecognition,500);
+                    else 
+                 //   recognition.stop();
  
                 }
 
