@@ -1779,10 +1779,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 };
 
                 recognition.onspeechend = function() {
-                    pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
-                 //   if(bsp) spe=setTimeout(runSpeechRecognition,500);
-                 //   else 
-                 //   recognition.stop();
+                //    pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                    if(bsp) spe=setTimeout(runSpeechRecognition,500);
+                    else 
+                   recognition.stop();
  
                 }
 
@@ -1792,7 +1792,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                   //  var confidence = event.results[0][0].confidence;
                //     pi.innerHTML = "<b>Text:</b> " + transcript;// + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
                     exComando(transcript)
-               //   if(bsp) spe=setTimeout(runSpeechRecognition,1500);
+                  if(bsp) spe=setTimeout(runSpeechRecognition,1500);
                 };
 
                 // start recognition
