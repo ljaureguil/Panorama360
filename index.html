@@ -1488,7 +1488,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             if (c.indexOf("rapido") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
-            pi.innerHTML=c+"\n\n"+JSON.stringify(eyes.name)
+                 pi.innerHTML=cc+"\n\n"+JSON.stringify(eyes.name)
+            if(bsp) spe=setTimeout(runSpeechRecognition,1500);
         }
 
         function saveScene() {
@@ -1775,14 +1776,13 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
                 // This runs when the speech recognition service starts
                 recognition.onstart = function() {
-                    pi.innerHTML = "<small>listening, please speak...</small>";
+              //      pi.innerHTML = "<small>listening, please speak...</small>";
                 };
 
                 recognition.onspeechend = function() {
                 //    pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
                     if(bsp) spe=setTimeout(runSpeechRecognition,500);
-                    else 
-                   recognition.stop();
+                    else recognition.stop();
  
                 }
 
@@ -1792,7 +1792,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                   //  var confidence = event.results[0][0].confidence;
                //     pi.innerHTML = "<b>Text:</b> " + transcript;// + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
                     exComando(transcript)
-                  if(bsp) spe=setTimeout(runSpeechRecognition,1500);
+              //    if(bsp) spe=setTimeout(runSpeechRecognition,1500);
                 };
 
                 // start recognition
