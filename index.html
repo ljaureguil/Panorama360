@@ -523,7 +523,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <script src="js/CubemapToEquirectangular.js"></script>
     <script src="DeviceOrientationControls.js"></script>
     <script src="OBJLoader.js"></script>
-
+<script src="OBJExporter.js"></script>
 
     <script src="textures.js"></script>
   <script src="Split Body.js"></script>
@@ -567,7 +567,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             bcast = true,
             spe,proyecto,
             objLocal={};
-
+       var exporter = new THREE.OBJExporter();
 
         let clicked = false;
         let chunks = [];
