@@ -338,6 +338,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <select id="eje" oninput="ejecutar(this.value)">
             <option>Process</option>
             <option>Add Catch and Try</option>
+            <option>Create Object</option>
+ 
             <option>Clear Editor</option>
             
             <option>Add Axis</option>
@@ -1852,10 +1854,15 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     function addtrycatch(){
         var t="try{\n"+mainEditor.value+"\n}\ncatch(error){\n\nalert(error)\n\n}";
-        
-        mainEditor.value=t;
-
+         mainEditor.value=t;
     }
+    function addObj(){
+         var n=prompt("Type Name");
+         if(n!=null && n!=""){
+              mainEditor.value="try{\nvar "+n+" = create();\n\nfunction create(){\nvar Obj=new THREE.Group();\nObj.name=this;\n\n\n\nObj.add( );//Add Objects to it\nreturn Obj"+n+"\n}\n}\ncatch(error){\n\nalert(error)\n\n}";
+         }
+    }
+   
     function loadLocal(){
         if(confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?"))
         var ob=localStorage.getItem("bkProjects")
@@ -2127,6 +2134,11 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 if(e==="Add Catch and Try"){
     addtrycatch()
 }
+if(e==="Create Object"){
+    addObj()
+}
+
+
 if(e==="Clear Editor"){
     mainEditor.value=''
 }
