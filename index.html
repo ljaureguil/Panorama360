@@ -1862,7 +1862,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
               mainEditor.value="try{\nvar "+n+" = create();\n\nfunction create(){\nvar Obj=new THREE.Group();\nObj.name=this;\n\n\n\nObj.add( );//Add Objects to it\nreturn Obj"+n+"\n}\n}\ncatch(error){\n\nalert(error)\n\n}";
          }
     }
-   
+     function insertObj(name){
+        openProyw(name,true);
+     }
     function loadLocal(){
         if(confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?"))
         var ob=localStorage.getItem("bkProjects")
