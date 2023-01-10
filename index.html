@@ -1856,10 +1856,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         var t="try{\n"+mainEditor.value+"\n}\ncatch(error){\n\nalert(error)\n\n}";
          mainEditor.value=t;
     }
-    function addObj(){
+   function addObj(){
          var n=prompt("Type Name");
          if(n!=null && n!=""){
-              mainEditor.value="try{\nvar "+n+" = create();\n\nfunction create(){\nvar Obj=new THREE.Group();\nObj.name=this;\n\n\n\nObj.add( );//Add Objects to it\nreturn Obj"+n+"\n}\n}\ncatch(error){\n\nalert(error)\n\n}";
+              mainEditor.value="try{\nvar "+n+" = new THREE.Group();\nesena.add("+n+");\ncreate();\nfunction create(){\n"+
+              n+".name=this;\n//Add your codes here\n\n\n\n//"+n+
+              ".add( );//Add Objects to it\n}\n}\ncatch(error){\n\nalert(error)\n\n}";
          }
     }
      function insertObj(name,callback){
