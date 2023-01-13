@@ -775,6 +775,11 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
                 texture.mapping = THREE.UVMapping;
 
+textureEquirec = textureLoader.load( 'https://c.tadst.com/gfx/1200x630/sunset-refraction.jpg?1' );
+textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
+textureEquirec.encoding = THREE.sRGBEncoding;
+
+scene.background = textureEquirec;
                 matworld1 = new THREE.MeshBasicMaterial({
                     side: THREE.DoubleSide,
                     map: texture,
