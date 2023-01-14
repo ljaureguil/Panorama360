@@ -771,10 +771,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             alight = new THREE.AmbientLight(0x888888);
             scene.add(alight)
 
-            textureLoader.load(art[0].pic, function(texture) {
-
-                texture.mapping = THREE.UVMapping;
-          textureLoader.load("https://www.shutterstock.com/image-photo/beautiful-sunset-tropical-beach-palm-260nw-1716193708.jpg", function(texture) {//art[0].pic
+            textureLoader.load("https://www.shutterstock.com/image-photo/beautiful-sunset-tropical-beach-palm-260nw-1716193708.jpg", function(texture) {//art[0].pic
                 const textureLoader = new THREE.TextureLoader();
 
 textureEquirec = textureLoader.load( 'http://www.textures4photoshop.com/tex/thumbs/blueprint-texture-background-free-download-50.jpg' );
@@ -782,12 +779,19 @@ textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
 textureEquirec.encoding = THREE.sRGBEncoding;
 
 scene.background = textureEquirec;
+
                 matworld1 = new THREE.MeshBasicMaterial({
                     side: THREE.DoubleSide,
                     map: texture,
                     transparent: true,
                     opacity: 1 //.450
                 });
+
+
+ 
+//scene.background =texture; //renderTarget;
+
+
                 world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
                 world1.name = "world";
@@ -810,8 +814,8 @@ scene.background = textureEquirec;
                     piv: "",
                     pic: "".pic
                 }
-             //   scene.add(world1); //scene.add(world1);
-                renderer.setClearColor(0xff0000, .3);
+              //  scene.add(world1); //scene.add(world1);
+               // renderer.setClearColor(0xff0000, .3);
 
                 
             })
@@ -1863,7 +1867,7 @@ scene.background = textureEquirec;
         var t="try{\n"+mainEditor.value+"\n}\ncatch(error){\n\nalert(error)\n\n}";
          mainEditor.value=t;
     }
-   function addObj(){
+    function addObj(){
          var n=prompt("Type Name");
          if(n!=null && n!=""){
               mainEditor.value="try{\nvar "+n+" = new THREE.Group();\nesena.add("+n+");\ncreate();\nfunction create(){\n"+
@@ -1871,9 +1875,10 @@ scene.background = textureEquirec;
               ".add( );//Add Objects to it\n}\n}\ncatch(error){\n\nalert(error)\n\n}";
          }
     }
-     function insertObj(name,callback){
+    function insertObj(name,callback){
         openProyw(name,true,callback);
      }
+   
     function loadLocal(){
         if(confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?"))
         var ob=localStorage.getItem("bkProjects")
@@ -1953,7 +1958,7 @@ scene.background = textureEquirec;
         })
      }
     }
-    function openProy(n){
+    function openProy(n,callback){
         var a=localStorage.getItem("editors");
         if(a!=null){
            
@@ -1972,18 +1977,19 @@ scene.background = textureEquirec;
 
     }
     function openProyw(n,ox,callback){
-    
+  
         GetJ(liproj,function(ob){
            for(var i=0;i<ob.length;i++){
                var p1=ob[i].name;//ob.proyectos[i].split("//")[1].split("\n")[0];
-    
-                   if(p1===n){
+            
+                   if(p1===n){  
                    if(!ox){
+                     
                  mainEditor.value=ob[i].content; proyecto=n;
                     bdelp.innerHTML="Del "+proyecto
                     return;}
                     else {
-                       if(callback!=undefined){eval(ob[i].content);callback();}//
+                        if(callback!=undefined){eval(ob[i].content);callback();}//
                         else eval(ob[i].content);
                       }
                 }
