@@ -354,6 +354,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>Close</option>
         </select><br>
         <button onclick="ejecutar(eje.value)" style="width: 100%;" class="copcs">Go</button><br><br>
+                <input type="file" oninput="openf(this)"></input>
         <button onclick="ejecutar('Close')" style="width: 100%;" class="copcs">Close</button><br>
         </div>
     <div id="navo">
@@ -545,7 +546,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     <script>
         var obPic={};spics.innerHTML="";
- 
+         _ObImg={images:[]};
+        _ObText={texts:[]}
         cim.width=300;
         cim.height=200;
         var linkpic="https://jsonblob.com/api/1025540657741316096"
@@ -2235,6 +2237,23 @@ if(e==="Refresh app"){
        }
    }
 }
+        
+     
+
+function openf(v) {
+
+var t=prompt("1 a text or 2 as Image",1)
+var fr=new FileReader();
+fr.onload=function(){
+if(t==null || t==1) {_ObText.texts.push(fr.result);alert("Text is in _ObText.texts[last] variable")}
+else {_ObImg.images.push(fr.result);alert("Data Image is in _OnImg.images[last] variable")}
+}
+
+if(t==null || t==1) fr.readAsText(v.files[0]);
+else fr.readAsDataURL(v.files[0]);
+
+}
+   
     </script>
 
 </body>
