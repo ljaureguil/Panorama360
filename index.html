@@ -795,6 +795,12 @@ scene.background = textureEquirec;
  
 //scene.background =texture; //renderTarget;
 
+var options = {
+					generateMipmaps: true,
+					minFilter: THREE.LinearMipmapLinearFilter,
+					magFilter: THREE.LinearFilter
+				};
+
 scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
 
 
