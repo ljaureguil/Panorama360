@@ -518,10 +518,10 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <canvas id="cim" style="display: none;"></canvas>
     <button style="background: red;" onclick="dca.style.display='none'" class="copcs">Close</button>
 </div>
- <script src="https://cdn.jsdelivr.net/npm/three@0.119.1/build/three.js"></script>
+ <script src="three.js"></script>
     <script src="js/ImageData-polyfill.js"></script>
     <script src="js/canvas.toBlob-polyfill.js"></script>
-    <script src="js/three.min.js"></script>
+
     <script src="js/OrbitControls.js"></script>
     <script src="TrackballControls.js"></script>
     <script src="js/CubemapToEquirectangular.js"></script>
@@ -534,7 +534,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
  
 
     <script type="text/javascript">
-        //
+        //https://cdn.jsdelivr.net/npm/three@0.119.1/build/three.js
  
         Editor.style.display='none';
         function getPaht(file) {
@@ -795,6 +795,8 @@ scene.background = textureEquirec;
  
 //scene.background =texture; //renderTarget;
 
+scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
+
 
                 world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
@@ -818,7 +820,7 @@ scene.background = textureEquirec;
                     piv: "",
                     pic: "".pic
                 }
-                scene.add(world1); //scene.add(world1);
+     //           scene.add(world1); //scene.add(world1);
                // renderer.setClearColor(0xff0000, .3);
 
                 
