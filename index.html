@@ -551,8 +551,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         _ObText={texts:[]}
         cim.width=300;
         cim.height=200;
-        var linkpic="https://jsonblob.com/api/1025540657741316096"
-       var liproj="https://jsonblob.com/api/1020056623695282176";//"https://jsonblob.com/api/1002978081803354112"
+        var linkpic="https://jsonblob.com/api/1025540657741316096";
+    var liproj="https://jsonblob.com/api/1080903273044787200";//"https://jsonblob.com/api/1002978081803354112"
         var ObPro={}
         setupProy();
         setupProyw();
@@ -2110,8 +2110,8 @@ scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEq
            objs.push(o)
 
             }
-            UpdateJ("https://jsonblob.com/api/1020056623695282176",objs,function(){alert("chk transfered it in web")}) 
-    
+          //  UpdateJ("https://jsonblob.com/api/1020056623695282176",objs,function(){alert("chk transfered it in web")}) 
+              UpdateJ(liproj,objs,function(){alert("chk transfered it in web")})  
          })
  
   
@@ -2119,8 +2119,8 @@ scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEq
 
     }
     function sob2(){
-        GetJ("https://jsonblob.com/api/1020056623695282176",function(ob){
-            
+   //     GetJ("https://jsonblob.com/api/1020056623695282176",function(ob){
+          GetJ(liproj,function(ob){        
             var s="";
             for(var i=0;i<ob.length;i++){
   
