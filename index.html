@@ -781,7 +781,7 @@ textureEquirec = textureLoader2.load( 'https://previews.123rf.com/images/jegas/j
 textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
 textureEquirec.encoding = THREE.sRGBEncoding;
 
-scene.background = textureEquirec;
+//scene.background = textureEquirec;
 
 
                 matworld1 = new THREE.MeshBasicMaterial({
@@ -802,7 +802,7 @@ var options = {
 				};
 
 scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
-
+scene.ttexture=texture;
 
                 world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
                 world1.scale.x = -1;
