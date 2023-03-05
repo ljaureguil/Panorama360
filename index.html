@@ -676,7 +676,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         var pr1, pr2, pr3, blight = false,
             vrmode = false,
-            gap = .75
+            _gap = .75
         var equi;
         var ObSelected = null;
 
@@ -712,15 +712,14 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         cameral = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
         camerar = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 10000);
 
-        cameral.position.x = -gap;
-        camerar.position.x = gap;
-        camerar.lookAt(0, =100, 0);
+        cameral.position.x = -_gap;
+        camerar.position.x = _gap;
+        camerar.lookAt(0, -100, 0);
        cameral.lookAt(0, -100, 0);
-//cameral.lookAt(camera.position);
-	   // camerar.lookAt(camera.position);
+
         eyes.add(cameral);
         eyes.add(camerar);
-         //   eyes.add(new THREE.Vector3( 0, 0, 0 ))
+            eyes.add(new THREE.Vector3( 0, 0, -100 ))
         eyes.position.x = oy.x;
         eyes.position.y = oy.y;
         eyes.position.z = oy.z;
