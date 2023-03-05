@@ -296,7 +296,7 @@ z-index: 100;
                     <select class="csels" id="smeshes" onchange="selMesh(this.value)">
                         <option>Choose Object</option>
                     </select>
-
+                    
                     <select class="csels" id="sproyestos" onchange="selProy(this.value)">
                         <option>Choose Scene</option>
                     </select>
@@ -304,7 +304,7 @@ z-index: 100;
                     <button onclick="editMesh()">Editor</button>
                     <button onclick="if(blight)blight=false;else blight=true">Light</button>
                     <button onclick='if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;};SetVr();'>VR</button>
-                    <button id="bcom" onclick='if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}//inicSpeech();'>Comands</button>
+                    <button id="bcom" onclick='if (!bsp) {startvoice();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;stopvoice()}//inicSpeech();'>Comands</button>
                     <button onclick="saveScene()">Save Scene</button>
                     <div id="dparam" name=false>
                         <button onclick="applay(params.value)">Apply</button>
@@ -615,7 +615,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         }
         var bsp = false,
             comando = "";
-        var nota = ""
+        var nota = "";
+        function recc(){
         navigator.mediaDevices.getUserMedia({
             audio: true
         })
@@ -626,6 +627,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
                 window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                alert(window.SpeechRecognition)
                 try {
                            let p = document.createElement('textarea');
         const recognition = new SpeechRecognition();
@@ -672,7 +674,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             alert('No mic for you!');
             // runSpeechRecognition()
         });
-
+        }
 
         var pr1, pr2, pr3, blight = false,
             vrmode = false,
@@ -747,6 +749,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         
         })
+
+
+
         function init() {
 
             container = document.createElement('div');
@@ -868,6 +873,51 @@ scene.ttexture=texture;
         //  alert(axis)
             animate();
         }
+
+
+      var speechRecognizer,instuccion="";
+            function startvoice(){
+              
+             //   var r = document.getElementById("result");
+            if( "window.SpeechRecognition" in window || "webkitSpeechRecognition" in window  ){
+                speechRecognizer = new webkitSpeechRecognition();
+                speechRecognizer.continuous = true;
+                speechRecognizer.interimResults = true;
+                speechRecognizer.lang = "es-MX | en-US";
+                speechRecognizer.start();
+                
+                var finalTranscripts = "";
+                speechRecognizer.onresult = function(event){
+                    var interimTranscripts = "";
+                    for(var i=event.resultIndex; i<event.results.length; i++){
+                        var transcript = event.results[i][0].transcript;
+                        transcript.replace("\n", "<br>");
+                        if(event.results[i].isFinal){
+                            finalTranscripts += transcript;
+                        }
+                        else{
+                            interimTranscripts += transcript;
+                        }
+                        instruccion=interimTranscripts;
+                      pi.innerHTML = finalTranscripts + '<span style="color: #999;">' + interimTranscripts + '</span>';
+                     //   txar.value=finalTranscripts;
+                    }
+                };
+                speechRecognizer.onerror = function(event){
+                };
+
+            }
+            else{
+               // r.innerHTML = "Your browser does not support that.";
+               alert("your browser does not support tgat.")
+            }
+       
+            }
+            function stopvoice(){
+
+            speechRecognizer.stop();
+
+            }
 
         function selT(v) {
 
