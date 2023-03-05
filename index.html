@@ -714,17 +714,17 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         cameral.position.x = -gap;
         camerar.position.x = gap;
-       // camerar.lookAt(0, 0, -100);
-       // cameral.lookAt(0, 0, -100);
-cameral.lookAt(camera.position);
-	    camerar.lookAt(camera.position);
+        camerar.lookAt(0, =100, 0);
+       cameral.lookAt(0, -100, 0);
+//cameral.lookAt(camera.position);
+	   // camerar.lookAt(camera.position);
         eyes.add(cameral);
         eyes.add(camerar);
          //   eyes.add(new THREE.Vector3( 0, 0, 0 ))
         eyes.position.x = oy.x;
         eyes.position.y = oy.y;
         eyes.position.z = oy.z;
-        eyes.lookAt(camera.position)
+      //  eyes.lookAt(camera.position)
         var me = {};
         me.mx = 0;
         me.my = 0;
