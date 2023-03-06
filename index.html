@@ -241,6 +241,9 @@ z-index: 100;
               <button onclick="Editor.style.display='block'">Main Editor</button>
 
             <div id="ct">
+                Sel Bkg<select id="selbkg" oninput="setbkg(bkgs[this.selectedIndex-1])">
+                <option>Add new</option>
+            </select>
                 <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>
                 <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">L</button>
                 <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">A</button>
@@ -571,7 +574,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             addTo = false,
             bcast = true,
             spe,proyecto,
-            objLocal={};
+            objLocal={},
+            bkgs=[];
        var exporter = new THREE.OBJExporter();
 
         let clicked = false;
@@ -592,6 +596,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
          // output to our headphones
         sourceNode.connect(ac.destination)
+
+
 
          //      }
          GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
@@ -691,9 +697,47 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             theta = 0;
 
         window.addEventListener('load', function() {
-            init();
+
+//1082346052228759552
+  
+GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
+  
+          for(var i=0;i<ob.length;i++)
+          { 
+            
+              var n=ob[i].split("https");
+  
+              bkgs.push("https"+n[1]);
+              
+              selbkg.innerHTML+="<option>"+n[0]+"</option"
+ 
+          }
+         init();
+    
+      });
+ 
+          
 
         });
+        obmove = {
+                    name: "esena",
+                    r: 900,
+                    sx: 312,
+                    sy: 116,
+                    x: 0,
+                    y: 0,
+                    z: 0,
+                    rx: 0,
+                    ry: 0,
+                    rz: 0,
+                    rpx: 1,
+                    rpy: 1,
+                    ofx: 0,
+                    ofy: 0,
+                    rot: 0,
+                    piv: "",
+                    pic: "".pic
+                }
         var eyes = new THREE.Group();
         controlsr = new THREE.DeviceOrientationControls(eyes);
         const raycaster = new THREE.Raycaster();
@@ -716,16 +760,13 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         cameral.position.x = -_gap;
         camerar.position.x = _gap;
-    //    camerar.lookAt(0, -100, 0);
-    //   cameral.lookAt(0, -100, 0);
-
-        eyes.add(cameral);
+            eyes.add(cameral);
         eyes.add(camerar);
             eyes.add(new THREE.Vector3( 0, 0, -100 ))
         eyes.position.x = oy.x;
         eyes.position.y = oy.y;
         eyes.position.z = oy.z;
-      //  eyes.lookAt(camera.position)
+ 
         var me = {};
         me.mx = 0;
         me.my = 0;
@@ -736,6 +777,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         me.rz = 0;
         me.factor = .01;
         me.pos = oy;
+        me.gx=0;me.gy=0;me.gz=0;
+        me.r=0;
+        me.move=false;
         eyes.name = me,
         esena=null;
         /////
@@ -779,64 +823,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             alight = new THREE.AmbientLight(0x888888);
             scene.add(alight)
 
-            textureLoader.load("https://as1.ftcdn.net/v2/jpg/01/89/50/16/1000_F_189501658_IzzOFxLFgfrZNn1NlIfzWE8fnfW6s8y1.jpg", function(texture) {//art[0].pic
-                const textureLoader2 = new THREE.TextureLoader();
-
-textureEquirec = textureLoader2.load( 'https://previews.123rf.com/images/jegas/jegas1708/jegas170800614/84971375-old-blueprint-background-texture-technical-backdrop-paper-outline-silhouettes-on-concrete-textured-b.jpg' );
-textureEquirec.mapping = THREE.EquirectangularReflectionMapping;
-textureEquirec.encoding = THREE.sRGBEncoding;
-
-//scene.background = textureEquirec;
-
-
-                matworld1 = new THREE.MeshBasicMaterial({
-                    side: THREE.DoubleSide,
-                    map: texture,
-                    transparent: true,
-                    opacity: 1 //.450
-                });
-
-
- 
-//scene.background =texture; //renderTarget;
-
-var options = {
-					generateMipmaps: true,
-					minFilter: THREE.LinearMipmapLinearFilter,
-					magFilter: THREE.LinearFilter
-				};
-
-scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
-scene.ttexture=texture;
-
-                world1 = new THREE.Mesh(new THREE.SphereBufferGeometry(900, 312, 116), matworld1);
-                world1.scale.x = -1;
-                world1.name = "world";
-                world1.name = {
-                    name: "World",
-                    r: 900,
-                    sx: 312,
-                    sy: 116,
-                    x: 0,
-                    y: 0,
-                    z: 0,
-                    rx: 0,
-                    ry: 0,
-                    rz: 0,
-                    rpx: 1,
-                    rpy: 1,
-                    ofx: 0,
-                    ofy: 0,
-                    rot: 0,
-                    piv: "",
-                    pic: "".pic
-                }
-     //           scene.add(world1); //scene.add(world1);
-               // renderer.setClearColor(0xff0000, .3);
-
-                
-            })
-
+ //alert(bkgs)
+        setbkg(bkgs[1])
 
 
             renderer = new THREE.WebGLRenderer({
@@ -1068,6 +1056,116 @@ scene.ttexture=texture;
 
         function render() {
             const time = Date.now() * 0.0001;
+   
+            for (var i = 0; i < aranim.length; i++) {
+                var o = aranim[i].name;
+                    var oo = aranim[i];
+                    if (o.gx != 0) oo.rotateX(o.gx)
+                    if (o.gy != 0) oo.rotateY(o.gy)
+                    if (o.gz != 0) oo.rotateZ(o.gz)
+               
+            }
+            if (blight) {
+                light4.position.x = Math.sin(time * 1.9101013) * 400.00;
+                light4.position.y = Math.cos(time * 1.561017) * 400.2;
+                light4.position.z = -Math.sin(time * -1.252015) * 400.1;
+            }
+            if (aranim.length > 0) {
+                for (var i = 2; i < aranim.length; i++) {
+                    var o = aranim[i];
+                }
+            }
+
+            if (!vrmode) {
+
+                if (bcast) { //  controls2.update();
+
+                    //   pi.innerHTML=document.activeElement.id     
+                    if (params != document.activeElement) {
+                        raycaster.setFromCamera(pointer, camera);
+
+                        const intersects = raycaster.intersectObjects(scene.children, false);
+
+                        if (intersects.length > 0) {
+
+                            if (INTERSECTED != intersects[0].object) {
+
+
+                                //	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
+
+                                INTERSECTED = intersects[0].object;
+                                if (addTo) {
+                                    if (confirm("Do you want to Add " + ObSelected.name.name + " To " + INTERSECTED.name.name)) {
+                                        INTERSECTED.add(ObSelected);
+                                        alert("All done");
+                                        addTo = false;
+
+                                    }
+                                }
+                                ObSelected = INTERSECTED;
+                                params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+                                //params.name=Obselected;
+                                if (INTERSECTED.name.name != "World") {
+                                    if (dparam.style.display === 'none') {
+                                        // byp=false;
+                                        dparam.style.display = 'block';
+                                        params.focus()
+
+                                    }
+                                } else {
+                                    //  byp=true;
+                                    dparam.style.display = "none";
+
+                                }
+
+                            }
+
+                        } else {
+
+                            INTERSECTED = null;
+
+                        }
+                        eyes.position.x = camera.position.x;
+                        eyes.position.y = camera.position.y;
+                        eyes.position.z = camera.position.z;
+
+                    }
+                }
+
+
+                renderer.render(scene, camera);
+
+            } else {
+                eyes.position.x += eyes.name.mx * eyes.name.factor;
+                eyes.position.y += eyes.name.my * eyes.name.factor;
+                eyes.position.z += eyes.name.mz * eyes.name.factor;
+               // eyes.rotation.x += eyes.name.rx * eyes.name.factor;
+                eyes.rotation.y += eyes.name.ry;
+    pi.innerHTML=comando+"<br"+JSON.stringify(eyes.name)
+                // renderer.setScissorTest(true);
+                renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissor(0, 0, window.innerWidth / 2, window.innerHeight);
+
+                cameral.aspect = (window.innerWidth / 2) / window.innerHeight;
+                cameral.updateProjectionMatrix();
+                renderer.render(scene, cameral);
+
+                // renderer.setScissorTest(true);
+                renderer.setViewport(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissor(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+
+                camerar.aspect = (window.innerWidth / 2) / window.innerHeight;
+                camerar.updateProjectionMatrix();
+                renderer.render(scene, camerar);
+
+
+            }
+        }
+/*
+
+
+        function render() {
+            const time = Date.now() * 0.0001;
             var os = scene.children;
 
             for (var i = 0; i < os.length; i++) {
@@ -1141,18 +1239,9 @@ scene.ttexture=texture;
                             INTERSECTED = null;
 
                         }
-
-                        //  eyes.position=camera.position;
-                        //  eyes.rotation=camera.rotation;
                         eyes.position.x = camera.position.x;
                         eyes.position.y = camera.position.y;
                         eyes.position.z = camera.position.z;
-
-        
-
-
-                        //    }
-                        //   else pi.innerHTML="nooooo"          
 
                     }
                 }
@@ -1187,6 +1276,7 @@ scene.ttexture=texture;
             }
         }
 
+*/
         function test(t) {
             // alert(t)
             if (t === "TextureSpecular") {
@@ -1842,9 +1932,7 @@ scene.ttexture=texture;
 
     clearTimeout(spe);
                 try {
-                // new speech recognition object
-             //   var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-                var recognition = new SpeechRecognition();
+                 var recognition = new SpeechRecognition();
                 recognition.interimResults = true;
         recognition.lang = 'es-MX | en-US';
         recognition.continuous = true;
@@ -1864,14 +1952,9 @@ scene.ttexture=texture;
                 // This runs when the speech recognition service returns result
                 recognition.onresult = function(event) {
                     var transcript = event.results[0][0].transcript;
-                  //  var confidence = event.results[0][0].confidence;
-               //     pi.innerHTML = "<b>Text:</b> " + transcript;// + "<br/> <b>Confidence:</b> " + confidence * 100 + "%";
-                    exComando(transcript)
-              //    if(bsp) spe=setTimeout(runSpeechRecognition,1500);
+                     exComando(transcript)
                 };
-
-                // start recognition
-            
+          
                 recognition.start();
 
             } catch (e) {
@@ -1881,22 +1964,38 @@ scene.ttexture=texture;
 
         }
     function applayMainEditor(){
-      
-    //    if(confirm("You have "+esena.children.length+" Objects, do you want to replace it?")){  
-            ;
+  
             while (esena.children.length > 0) {
                 removeObject3D(esena.children[esena.children.length-1],function(){;});
                 esena.remove(esena.children[esena.children.length-1])
            
             }
+            while (aranim.length > 0) {
+                aranim.pop();
+           
+            }
+
+    
         var c=mainEditor.value;
         try{
-            eval(c)
+
+            eval(c);
+
+            
         }
         catch(e){alert(e)}
-  //  }
-  //  else ;
 
+        var os = scene.children;
+alert(os.length)
+for (var i = 0; i < os.length; i++) {
+    if(os[i].name!=undefined){
+ 
+        aranim.push(os[i])
+  
+}
+}
+alert(aranim.length);
+alert(esena.name.gx)
     }
     function insert(v){
         var t=mainEditor.value;
@@ -2313,6 +2412,25 @@ else fr.readAsDataURL(v.files[0]);
 
 }
    
+
+function setbkg(bkg){
+    //https://thumbs.dreamstime.com/b/environment-map-hdri-map-equirectangular-projection-landscape-spherical-panorama-76597879.jpg
+    textureLoader.load(bkg,
+             function(texture) {
+ 
+var options = {
+					generateMipmaps: true,
+					minFilter: THREE.LinearMipmapLinearFilter,
+					magFilter: THREE.LinearFilter
+				};
+
+scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
+scene.ttexture=texture;
+ 
+                
+            })
+
+}
     </script>
 
 </body>
