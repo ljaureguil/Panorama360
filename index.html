@@ -549,6 +549,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>
+    var intrec;
         var obPic={};spics.innerHTML="";
          _ObImg={images:[]};
         _ObText={texts:[]}
@@ -872,6 +873,7 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
                 speechRecognizer.continuous = true;
                 speechRecognizer.interimResults = true;
                 speechRecognizer.lang = "es-MX | en-US";
+                intrec=   setInterval(function(){pi.innerHTML+=speechRecognizer.continuous},15000)
                 speechRecognizer.start();
                 
                 var finalTranscripts = "";
@@ -902,7 +904,7 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
        
             }
             function stopvoice(){
-
+                clearInterval(intrec)
             speechRecognizer.stop();
 
             }
