@@ -1060,12 +1060,19 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
             const time = Date.now() * 0.0001;
  //  if(aranim.length>0)
             for (var i = 0; i < aranim.length; i++) {
-                var o = aranim[i].name;
-                    var oo = aranim[i];
+		    var oo = aranim[i];
+                var o = oo.name;
+                  
                     if (o.gx!=undefined && o.gx != 0) oo.rotateX(o.gx)
                     if (o.gy!=undefined && o.gy != 0) oo.rotateY(o.gy)
                     if (o.gz!=undefined && o.gz != 0) oo.rotateZ(o.gz)
-                   if (o.r!=undefined && o.r != 0) oo.rotateZ(o.gz);
+                        if (o.r!=undefined && o.r != 0){
+                   if (o.pivot===undefined ) o.pivot=oo.position;
+                  if (o.vgx!=undefined ) oo.position.x=o.pivot.x*1+o.r*Math.sin(o.vgx*time);
+                  if (o.vgy!=undefined)  oo.position.y=o.pivot.y+o.r*Math.sin(o.vgy*time);
+                   if (o.vgz!=undefined ) oo.position.z=o.pivot.z+o.r*Math.sin(o.vgz*time);
+              pi.innerHTML=JSON.stringify(oo.position)
+                }                 
                 
                
             }
