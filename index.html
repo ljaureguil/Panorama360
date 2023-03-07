@@ -762,7 +762,7 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
         camerar.position.x = _gap;
             eyes.add(cameral);
         eyes.add(camerar);
-            eyes.add(new THREE.Vector3( 0, 0, -100 ))
+     
         eyes.position.x = oy.x;
         eyes.position.y = oy.y;
         eyes.position.z = oy.z;
@@ -1056,13 +1056,15 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
 
         function render() {
             const time = Date.now() * 0.0001;
-   
+ //  if(aranim.length>0)
             for (var i = 0; i < aranim.length; i++) {
                 var o = aranim[i].name;
                     var oo = aranim[i];
-                    if (o.gx != 0) oo.rotateX(o.gx)
-                    if (o.gy != 0) oo.rotateY(o.gy)
-                    if (o.gz != 0) oo.rotateZ(o.gz)
+                    if (o.gx!=undefined && o.gx != 0) oo.rotateX(o.gx)
+                    if (o.gy!=undefined && o.gy != 0) oo.rotateY(o.gy)
+                    if (o.gz!=undefined && o.gz != 0) oo.rotateZ(o.gz)
+                   if (o.r!=undefined && o.r != 0) oo.rotateZ(o.gz);
+                
                
             }
             if (blight) {
@@ -1985,17 +1987,6 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
         }
         catch(e){alert(e)}
 
-        var os = scene.children;
-alert(os.length)
-for (var i = 0; i < os.length; i++) {
-    if(os[i].name!=undefined){
- 
-        aranim.push(os[i])
-  
-}
-}
-alert(aranim.length);
-alert(esena.name.gx)
     }
     function insert(v){
         var t=mainEditor.value;
