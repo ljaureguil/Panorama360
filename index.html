@@ -1071,9 +1071,27 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
                   if (o.vgx!=undefined ) oo.position.x=o.pivot.x*1+o.r*Math.sin(o.vgx*time);
                   if (o.vgy!=undefined)  oo.position.y=o.pivot.y+o.r*Math.sin(o.vgy*time);
                    if (o.vgz!=undefined ) oo.position.z=o.pivot.z+o.r*Math.sin(o.vgz*time);
-              pi.innerHTML=JSON.stringify(oo.position)
+ 
+          //     
                 }                 
-                
+                         if(o.angtravel!=undefined){
+                             o.inic=0;
+                           if(o.inic===undefined)  o.inic=0; if(o.s===undefined)  o.s=1;
+                           
+                           if(o.inic>o.angtravel && o.s>0){
+                               o.s=-1;
+                           }
+                           if(o.inic<0 && o.s<0){
+                              o.s=1;
+                           }
+                           
+                           o.inic+=.02*o.s;
+                          
+              
+                           oo.rotateZ(o.inic)
+
+                       pi.innerHTML=o.inic;
+                   }        
                
             }
             if (blight) {
