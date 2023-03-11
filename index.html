@@ -55,7 +55,9 @@
         }
         #file {
             width: 80px;
-    
+            // background: url(https://icons-for-free.com/iconfiles/png/512/folder+open+icon-1320161390409087972.png);
+            // background-size: 100% 100%;
+            ;
         }
         #ct {
             display: none;
@@ -239,7 +241,7 @@ z-index: 100;
               <button onclick="Editor.style.display='block'">Main Editor</button>
 
             <div id="ct">
-                Sel Bkg<select id="selbkg" oninput="setbkg(bkgs[this.selectedIndex-1])">
+                Sel Bkg<select id="selbkg" oninput="setbkg(this.selectedIndex,this.value)">
                 <option>Add new</option>
             </select>
                 <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>
@@ -823,7 +825,7 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
             scene.add(alight)
 
  //alert(bkgs)
-        setbkg(bkgs[1])
+        setbkg(2)
 
 
             renderer = new THREE.WebGLRenderer({
@@ -1058,7 +1060,7 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
             const time = Date.now() * 0.0001;
  //  if(aranim.length>0)
             for (var i = 0; i < aranim.length; i++) {
-                 var oo = aranim[i];
+                  var oo = aranim[i];
                 var o = oo.name;
                       if(o.rendercod!=undefined){ eval(o.rendercod) }   
                     if (o.gx!=undefined && o.gx != 0) oo.rotateX(o.gx)
@@ -1074,7 +1076,6 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
                          
               
             }
-      
             if (blight) {
                 light4.position.x = Math.sin(time * 1.9101013) * 400.00;
                 light4.position.y = Math.cos(time * 1.561017) * 400.2;
@@ -2411,8 +2412,35 @@ else fr.readAsDataURL(v.files[0]);
 
 }
    
+function setbkg(index, n) {
+    //https://thumbs.dreamstime.com/b/environment-map-hdri-map-equirectangular-projection-landscape-spherical-panorama-76597879.jpg
+    if(n!=undefined){
+        if(n==="Add New"){
+                alert("add new")
+        }
+        if(n==="Remove"){
+            alert("Remove")
+        }
+    }
+    var bkg=bkgs[index-2];
+    setbkg2(bkg);
+ /*   textureLoader.load(bkg,
+        function(texture) {
 
-function setbkg(bkg){
+            var options = {
+                generateMipmaps: true,
+                minFilter: THREE.LinearMipmapLinearFilter,
+                magFilter: THREE.LinearFilter
+            };
+             scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );   
+         scene.textura = texture;
+            scene.urltextura=bkgs(index);
+            if(n!=undefined && index>1) scene.name.textura=n;alert(texture)
+          })*/
+
+}
+
+function setbkg2(bkg){
     //https://thumbs.dreamstime.com/b/environment-map-hdri-map-equirectangular-projection-landscape-spherical-panorama-76597879.jpg
     textureLoader.load(bkg,
              function(texture) {
@@ -2424,12 +2452,17 @@ var options = {
 				};
 
 scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
-scene.ttexture=texture;
+scene.textura=texture;
+
  
                 
             })
 
 }
+
+
+
+
     </script>
 
 </body>
