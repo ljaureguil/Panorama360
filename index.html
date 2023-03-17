@@ -240,10 +240,14 @@ z-index: 100;
             <button id="bm" onclick="if(ct.style.display==='block')ct.style.display='none';else ct.style.display='block'">M</button>
               <button onclick="Editor.style.display='block'">Main Editor</button>
 
-            <div id="ct">
-                Sel Bkg<select id="selbkg" oninput="setbkg(this.selectedIndex,this.value)">
+            <div id="ct"> 
+                Sel Bkg<select id="selbkg" selectedIndex=0  oninput="setbkg(this.selectedIndex,this.value)"></select>
+
+                action <select id="selact"  oninput="selaccion()">
                 <option>Add new</option>
+                <option>Remove</option>
             </select>
+            <button onclick="selaccion(this.value);//setbkg(selbkg.selectedIndex,selbkg.value)">Go</button>
                 <button id="" onclick="if(iweb.style.display=='block' || iweb.style.display=='')iweb.style.display='none';else iweb.style.display='block'">W</button>
                 <button id="" onclick="getP();if(ilocal.style.display=='block' || ilocal.style.display=='')ilocal.style.display='none';else ilocal.style.display='block'">L</button>
                 <button id="" onclick="if(accion.style.display=='block' || accion.style.display=='')accion.style.display='none';else accion.style.display='block'">A</button>
@@ -549,6 +553,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>
+   
     var intrec;
         var obPic={};spics.innerHTML="";
          _ObImg={images:[]};
@@ -556,7 +561,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         cim.width=300;
         cim.height=200;
         var linkpic="https://jsonblob.com/api/1025540657741316096";
-    var liproj="https://jsonblob.com/api/1080903273044787200";//"https://jsonblob.com/api/1002978081803354112"
+    var liproj="https://jsonblob.com/api/1080903273044787200";//"https://jsonblob.com/api/1002978081803354112";
+    var linkbkgs="https://jsonblob.com/api/1082346052228759552";
         var ObPro={}
         setupProy();
         setupProyw();
@@ -576,7 +582,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             bcast = true,
             spe,proyecto,
             objLocal={},
-            bkgs=[];
+            bkgs=[],
+            wbkgs;
        var exporter = new THREE.OBJExporter();
 
         let clicked = false;
@@ -696,26 +703,18 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         var radius = 100,
             INTERSECTED,
             theta = 0;
-
+      var arn=[];
         window.addEventListener('load', function() {
 
 //1082346052228759552
-  
-GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
-  
-          for(var i=0;i<ob.length;i++)
-          { 
-            
-              var n=ob[i].split("https");
-  
-              bkgs.push("https"+n[1]);
-              
-              selbkg.innerHTML+="<option>"+n[0]+"</option"
  
-          }
-         init();
-    
-      });
+GetJ(linkbkgs, function(ob) {
+ 
+            wbkgs=ob;
+  
+      
+          init();
+            });
  
           
 
@@ -798,7 +797,7 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
 
 
         function init() {
-
+           
             container = document.createElement('div');
             document.body.appendChild(container);
 
@@ -823,11 +822,11 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
 
             alight = new THREE.AmbientLight(0x888888);
             scene.add(alight)
-
+            
  //alert(bkgs)
-        setbkg(2)
+       
 
-
+//alert(remove.innerHTML)
             renderer = new THREE.WebGLRenderer({
                 antialias: true
             });
@@ -838,7 +837,7 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
             container.appendChild(renderer.domElement);
             renderer.setScissorTest(false);
             equi = new CubemapToEquirectangular(renderer, true);
-            setUpSels();
+            setUpSels(); 
             //     controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls = new THREE.TrackballControls(camera, renderer.domElement); //camera
             //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
@@ -856,11 +855,15 @@ GetJ("https://jsonblob.com/api/1082346052228759552", function(ob) {
                 equi.update(camera, scene);
 
             });
-
+         
             renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
           //  openProyw("AXIS",false);
         //  alert(axis)
+        setselbkgs(wbkgs);
+      
+
             animate();
+
         }
 
 
@@ -2413,36 +2416,50 @@ else fr.readAsDataURL(v.files[0]);
 }
    
 function setbkg(index, n) {
-    //https://thumbs.dreamstime.com/b/environment-map-hdri-map-equirectangular-projection-landscape-spherical-panorama-76597879.jpg
-    if(n!=undefined){
-        if(n==="Add New"){
-                alert("add new")
-        }
-        if(n==="Remove"){
-            alert("Remove")
-        }
+   
+     if(n!=undefined){
+         var n,link;
+
     }
-    var bkg=bkgs[index-2];
-    setbkg2(bkg);
- /*   textureLoader.load(bkg,
-        function(texture) {
-
-            var options = {
-                generateMipmaps: true,
-                minFilter: THREE.LinearMipmapLinearFilter,
-                magFilter: THREE.LinearFilter
-            };
-             scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );   
-         scene.textura = texture;
-            scene.urltextura=bkgs(index);
-            if(n!=undefined && index>1) scene.name.textura=n;alert(texture)
-          })*/
-
+  
+   // 
+    var bkg=bkgs[index];
+    setBackground(bkg,n);
+ }
+ function setselbkgs(ob){
+  
+ //   selbkg.innerHTML='<option>Add new</option><option id="remove">Remove '+ob[0].split('https')[0]+'</option>' ;
+for(var i=0;i<selbkg.children;i++){
+    selbkg.remove(selbkg[i])
 }
+ selbkg.innerHTML='';
 
-function setbkg2(bkg){
-    //https://thumbs.dreamstime.com/b/environment-map-hdri-map-equirectangular-projection-landscape-spherical-panorama-76597879.jpg
-    textureLoader.load(bkg,
+//alert(selbkg.innerHTML)
+        for(var i=0;i<ob.length;i++)
+          { 
+   
+              var n=ob[i].split("https");
+  
+              bkgs.push("https"+n[1]);
+              
+              selbkg.innerHTML+="<option>"+n[0]+"</option>";
+              arn.push(n[0])
+ 
+          }
+       //   selbkg.innerHTML='<option>Add new</option><option id="remove">Remove '+ob[0].split('https')[0]+'</option>' +selbkg.innerHTML ;
+
+
+            setbkg(0,arn[0]);
+      //  remove.innerHTML="Remove "+arn[0];
+  //      alert("fin\n"+selbkg.innerHTML)
+  
+  //  selact.children[0].innerHTML="Remove "+selbkg.children[0].innerHTML;
+
+
+
+    }  
+function setBackground(bkg,n){
+     textureLoader.load(bkg,
              function(texture) {
  
 var options = {
@@ -2453,13 +2470,60 @@ var options = {
 
 scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
 scene.textura=texture;
+scene.urlbkg=bkg;
+scene.bkgname=n;
+selact.children[1].innerHTML="Remove "+n;
 
- 
-                
             })
 
 }
 
+function selaccion(){
+   var o=selact.value;
+
+    c=selbkg.children;
+  //  alert(c.length);
+
+    v=selbkg.value;
+   //  alert("............"+v)
+    if(o==="Add new"){
+            n=prompt("Name?");
+           if(n===null) return;
+           else {
+               link=prompt("Paste Link")
+               if(link===null) return
+               else {
+                   var nl=n+link;
+                   wbkgs.push(nl);
+                   bkgs.push(link)
+                   selbkg.innerHTML+="<option>"+n+"</option>";
+                   setBackground(bkgs[bkgs.length-1],n)
+                   if(confirm("Do you want to save it to web?")){
+                     
+                       UpdateJ(linkbkgs,wbkgs,function(){alert("Backgrounds saved in web")});
+                   }
+               }
+           }
+        }
+        if(o.indexOf("Remove")>-1){
+            if(confirm("Are you sure you want to Delete "+selbkg.value+"?")){
+                 var i=wbkgs.indexOf(scene.bkgname+scene.urlbkg);
+             wbkgs.splice(i,1);
+             bkgs.splice(i,1);
+    for(var i=0;i<c.length;i++){
+        if(c[i].innerHTML===v){
+            selbkg.remove(i);
+            setBackground(bkgs[0],c[0].innerHTML)
+        
+            UpdateJ(linkbkgs,wbkgs,function(){alert(v+" Has been deleted")});
+             return
+        }
+    }
+            }
+            else return;
+        }
+
+}
 
 
 
