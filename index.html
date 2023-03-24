@@ -149,7 +149,9 @@
         #pi {
             position: absolute;
             bottom: 4%;
-            left: 3%;
+            left: 1%;
+            width:90%;
+            overflow:auto;
         }
         #ctm{
             position: absolute;
@@ -702,6 +704,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
         var radius = 100,
             INTERSECTED,
+            raycasterFrom=[],
+            arcast=[],
             theta = 0;
       var arn=[];
         window.addEventListener('load', function() {
@@ -742,11 +746,13 @@ GetJ(linkbkgs, function(ob) {
         controlsr = new THREE.DeviceOrientationControls(eyes);
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
-
+          obclicked=false;
         function fraycast(event) {
+            obclicked=true;
             pointer.x = (event.clientX / window.innerWidth) * 2 - 1;
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
         }
+
         var cubeCamera;
         var textureLoader = new THREE.TextureLoader();
         var light = new THREE.DirectionalLight(0x888888, .61);
@@ -805,6 +811,7 @@ GetJ(linkbkgs, function(ob) {
             camera.position.set(0, 0, 10);
             esena = new THREE.Group();
             scene = new THREE.Scene();
+        
             scene.add(esena)
             //////////////////////////////////
             s = new THREE.Mesh(
@@ -855,13 +862,14 @@ GetJ(linkbkgs, function(ob) {
                 equi.update(camera, scene);
 
             });
-         
-            renderer.domElement.addEventListener('click', fraycast); // document.addEventListener("click", onPointerMove );//, false
+     //    document.addEventListener("click", onPointerMove );//, false
+   //  renderer.domElement.addEventListener("mousemove", mousemove);
+            renderer.domElement.addEventListener('click', fraycast); // 
           //  openProyw("AXIS",false);
         //  alert(axis)
         setselbkgs(wbkgs);
       
-
+        raycasterFrom=scene.children;
             animate();
 
         }
@@ -1061,10 +1069,21 @@ GetJ(linkbkgs, function(ob) {
 
         function render() {
             const time = Date.now() * 0.0001;
- //  if(aranim.length>0)
-            for (var i = 0; i < aranim.length; i++) {
+              for (var i = 0; i < aranim.length; i++) {
                   var oo = aranim[i];
                 var o = oo.name;
+                if(o.cast!=undefined && obclicked){
+                  
+                        raycaster.setFromCamera( pointer, camera );
+                        const intersects = raycaster.intersectObjects([aranim[i]]);//
+                        if(intersects && intersects[0]!=undefined){
+                          //  pi.innerHTML=JSON.stringify(intersects[0].object.name.desc)}//+JSON.stringify(intersects[0])
+                   //  pi.innerHTML=intersects[0].object.name.cast+time;
+                   eval(o.cast)
+                     obclicked=false;
+                        }
+                
+                }
                       if(o.rendercod!=undefined){ eval(o.rendercod) }   
                     if (o.gx!=undefined && o.gx != 0) oo.rotateX(o.gx)
                     if (o.gy!=undefined && o.gy != 0) oo.rotateY(o.gy)
@@ -1092,21 +1111,16 @@ GetJ(linkbkgs, function(ob) {
 
             if (!vrmode) {
 
-                if (bcast) { //  controls2.update();
-
-                    //   pi.innerHTML=document.activeElement.id     
+                if (bcast) { 
                     if (params != document.activeElement) {
                         raycaster.setFromCamera(pointer, camera);
+    // const intersects = raycaster.intersectObjects(scene.children, false);
 
-                        const intersects = raycaster.intersectObjects(scene.children, false);
+                        const intersects = raycaster.intersectObjects(raycasterFrom, false);
 
                         if (intersects.length > 0) {
 
                             if (INTERSECTED != intersects[0].object) {
-
-
-                                //	if ( INTERSECTED ) INTERSECTED.material.color.setHex( INTERSECTED.currentHex );
-
                                 INTERSECTED = intersects[0].object;
                                 if (addTo) {
                                     if (confirm("Do you want to Add " + ObSelected.name.name + " To " + INTERSECTED.name.name)) {
@@ -1117,8 +1131,8 @@ GetJ(linkbkgs, function(ob) {
                                     }
                                 }
                                 ObSelected = INTERSECTED;
+                                pi.innerHTML=ObSelected.uuid;//JSON.stringify(ObSelected)
                                 params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
-                                //params.name=Obselected;
                                 if (INTERSECTED.name.name != "World") {
                                     if (dparam.style.display === 'none') {
                                         // byp=false;
@@ -1176,6 +1190,119 @@ GetJ(linkbkgs, function(ob) {
             }
         }
 /*
+
+//v2
+       function render() {
+            const time = Date.now() * 0.0001;
+ //  if(aranim.length>0)
+            for (var i = 0; i < aranim.length; i++) {
+                  var oo = aranim[i];
+                var o = oo.name;
+                      if(o.rendercod!=undefined){ eval(o.rendercod) }   
+                    if (o.gx!=undefined && o.gx != 0) oo.rotateX(o.gx)
+                    if (o.gy!=undefined && o.gy != 0) oo.rotateY(o.gy)
+                    if (o.gz!=undefined && o.gz != 0) oo.rotateZ(o.gz)
+                   if (o.r!=undefined && o.r != 0){
+                  if (o.pivot===undefined ) o.pivot=oo.position;
+                  if (o.vgx!=undefined ) oo.position.x=o.pivot.x*1+o.r*Math.sin(o.vgx*time);
+                  if (o.vgy!=undefined)  oo.position.y=o.pivot.y+o.r*Math.sin(o.vgy*time);
+                   if (o.vgz!=undefined ) oo.position.z=o.pivot.z+o.r*Math.sin(o.vgz*time);
+           //   pi.innerHTML=JSON.stringify(oo.position)
+                } 
+                         
+              
+            }
+            if (blight) {
+                light4.position.x = Math.sin(time * 1.9101013) * 400.00;
+                light4.position.y = Math.cos(time * 1.561017) * 400.2;
+                light4.position.z = -Math.sin(time * -1.252015) * 400.1;
+            }
+            if (aranim.length > 0) {
+                for (var i = 2; i < aranim.length; i++) {
+                    var o = aranim[i];
+                }
+            }
+
+            if (!vrmode) {
+
+                if (bcast) { 
+                    if (params != document.activeElement) {
+                        raycaster.setFromCamera(pointer, camera);
+    // const intersects = raycaster.intersectObjects(scene.children, false);
+
+                        const intersects = raycaster.intersectObjects(raycasterFrom.children, false);
+
+                        if (intersects.length > 0) {
+
+                            if (INTERSECTED != intersects[0].object) {
+                                INTERSECTED = intersects[0].object;
+                                if (addTo) {
+                                    if (confirm("Do you want to Add " + ObSelected.name.name + " To " + INTERSECTED.name.name)) {
+                                        INTERSECTED.add(ObSelected);
+                                        alert("All done");
+                                        addTo = false;
+
+                                    }
+                                }
+                                ObSelected = INTERSECTED;
+                                pi.innerHTML=ObSelected.uuid;//JSON.stringify(ObSelected)
+                                params.value = JSON.stringify(INTERSECTED.name).replace(/{/g, "{\n").replace(/}/g, "\n}").replace(/,/g, "\n");
+                                if (INTERSECTED.name.name != "World") {
+                                    if (dparam.style.display === 'none') {
+                                        // byp=false;
+                                        dparam.style.display = 'block';
+                                        params.focus()
+
+                                    }
+                                } else {
+                                    //  byp=true;
+                                    dparam.style.display = "none";
+
+                                }
+
+                            }
+
+                        } else {
+
+                            INTERSECTED = null;
+
+                        }
+                        eyes.position.x = camera.position.x;
+                        eyes.position.y = camera.position.y;
+                        eyes.position.z = camera.position.z;
+
+                    }
+                }
+
+
+                renderer.render(scene, camera);
+
+            } else {
+                eyes.position.x += eyes.name.mx * eyes.name.factor;
+                eyes.position.y += eyes.name.my * eyes.name.factor;
+                eyes.position.z += eyes.name.mz * eyes.name.factor;
+               // eyes.rotation.x += eyes.name.rx * eyes.name.factor;
+                eyes.rotation.y += eyes.name.ry;
+    pi.innerHTML=comando+"<br"+JSON.stringify(eyes.name)
+                // renderer.setScissorTest(true);
+                renderer.setViewport(0, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissor(0, 0, window.innerWidth / 2, window.innerHeight);
+
+                cameral.aspect = (window.innerWidth / 2) / window.innerHeight;
+                cameral.updateProjectionMatrix();
+                renderer.render(scene, cameral);
+
+                // renderer.setScissorTest(true);
+                renderer.setViewport(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+                renderer.setScissor(window.innerWidth / 2, 0, window.innerWidth / 2, window.innerHeight);
+
+                camerar.aspect = (window.innerWidth / 2) / window.innerHeight;
+                camerar.updateProjectionMatrix();
+                renderer.render(scene, camerar);
+
+
+            }
+        }
 
 
         function render() {
