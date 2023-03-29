@@ -1668,6 +1668,7 @@ GetJ(linkbkgs, function(ob) {
         function SetVr() {
             bsp=vrmode;
             if (vrmode) {
+	               window.removeEventListener("devicemotion", motionE)	    
                // if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
                 renderer.setScissorTest(false);
                 vrmode = false;
@@ -1684,6 +1685,7 @@ GetJ(linkbkgs, function(ob) {
            //    runSpeechRecognition();
           //   bsp=false;
             } else {
+          if(confirm("Use Motion?")) window.addEventListener("devicemotion", motionE, true);		    
                 renderer.setScissorTest(true);
                 eyes.position = camera.position;
                 vrmode = true;
@@ -2655,6 +2657,17 @@ function selaccion(){
 
 }
 
+
+function motionE(event){
+    const x = event.accelerationIncludingGravity.x.toFixed(3);
+  const y = event.accelerationIncludingGravity.y.toFixed(3);
+  const z = event.accelerationIncludingGravity.z.toFixed(3);
+      eyes.name.mx=event.accelerationIncludingGravity.x;
+      eyes.name.my=event.accelerationIncludingGravity.y;
+      eyes.name.mz=event.accelerationIncludingGravity.z
+  // Do something awesome.
+pi.innerHTML="x="+x+"<br>y="+y+"<br>z="+z
+}
 
 
     </script>
