@@ -2659,17 +2659,16 @@ function selaccion(){
 
 
 function motionE(event){
-	eval( eyes.name.motion);
-	/*
-    const x = event.accelerationIncludingGravity.x.toFixed(3);
-  const y = event.accelerationIncludingGravity.y.toFixed(3);
-  const z = event.accelerationIncludingGravity.z.toFixed(3);
-      eyes.name.mx=event.accelerationIncludingGravity.x;
-      eyes.name.my=event.accelerationIncludingGravity.y;
-      eyes.name.mz=event.accelerationIncludingGravity.z
-  // Do something awesome.
-pi.innerHTML="x="+x+"<br>y="+y+"<br>z="+z
-*/
+  if(eyes.name.motion===undefined){
+        eyes.name.motion="var x = event.accelerationIncludingGravity.x;var y = event.accelerationIncludingGravity.y;var z = event.accelerationIncludingGravity.z;"+
+"if( y>-2 && y<2) y=0;if(z>-5 && z<5) z=0;"+
+"eyes.name.mx=y*Math.sin(controlsr.alpha);"+
+"eyes.name.my=-z*Math.cos(controlsr.gamma);"+
+"eyes.name.mz=y*Math.cos(controlsr.alpha);"
+
+    }
+    else eval( eyes.name.motion);
+    
 }
 
 
