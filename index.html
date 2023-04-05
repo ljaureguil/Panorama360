@@ -923,8 +923,7 @@ else recognition.stop();
                         }
                         
                         exComando(finalTranscripts)
-                        instruccion=interimTranscripts;//
-                      pi.innerHTML = finalTranscripts;// + '<span style="color: #ff0;">' + interimTranscripts + '</span>';
+     
                    
                     }
                 };
@@ -1793,48 +1792,47 @@ else recognition.stop();
             if (!bsp) {bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
         }
 
-        function exComando(cc) {
-         //   pi.innerHTML=cc
+       function exComando(cc) {
             comando=cc;
             var p=1;
-            c = cc;
-
-            if (c.indexOf("salir") > -1) {
+            c = cc.toUppercase();;
+            pi.innerHTML = c;
+            if (c.indexOf("SALIR") > -1  || c.indexOf("EXIT") > -1) {
                 bsp = false;
 
               //  recognition.stop();
                 SetVr();
             }
-            if (c.indexOf("luz") > -1) {
+            if (c.indexOf("LUZ") > -1  || c.indexOf("LIGHT") > -1 ) {
                 if (blight) blight = false;
                 else blight = true
             }
-            if (c.indexOf("ariba") > -1) {
+            if (c.indexOf("ARRIBA") > -1  || c.indexOf("UP") > -1) {
                 eyes.name.my = p
 
             }
-            if (c.indexOf("abajo") > -1) {
+            if (c.indexOf("ABAJO") > -1  || c.indexOf("DOWN") > -1 ) {
                 eyes.name.my = -p
             }
-            if (c.indexOf("hizquierda") > -1) {
+            if (c.indexOf("HIZQUIERDA") > -1  || c.indexOf("LEFT") > -1) {
                 eyes.name.mx = -p
             }
-            if (c.indexOf("derecha") > -1) {
+            if (c.indexOf("DERECHA") > -1 || c.indexOf("RIGHT") > -1) {
                 eyes.name.mx = p
             }
-            if (c.indexOf("girar hizquierda") > -1) {
+            if (c.indexOf("GIRAR HIZQUIERDA") > -1) {
                 eyes.name.ry = -p
             }
-            if (c.indexOf("girar derecha") > -1) {
+            if (c.indexOf("GIRAR DERECHA") > -1) {
                 eyes.name.ry = p
             }
-            if (c.indexOf("girar arriba") > -1) {
+          /*  if (c.indexOf("girar arriba") > -1) {
                 eyes.name.rx = -p
             }
             if (c.indexOf("girar abajo") > -1) {
                 eyes.name.rx = p
-            }
-            if (c.indexOf("para") > -1) {
+            }*/
+            if (c.indexOf("PARA") > -1 || c.indexOf("ALTO") || c.indexOf("STOP")) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
                 eyes.name.mx = 0;
@@ -1843,7 +1841,7 @@ else recognition.stop();
                 eyes.name.rz = 0;
                 me.name.factor = .001;
             }
-            if (c.indexOf("origen") > -1) {
+            if (c.indexOf("ORIGEN") > -1) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
                 eyes.name.mx = 0;
@@ -1853,12 +1851,12 @@ else recognition.stop();
                 me.name.factor = .001;
                 eyes.position = eyes.name.pos;
             }
-            if (c.indexOf("lento") > -1) {
+            if (c.indexOf("LENTO") > -1) {
               //  eyes.name.factor -= eyes.name.factor / 5;
                 eyes.name.factor -= eyes.name.factor /2;
                 
             }
-            if (c.indexOf("rapido") > -1) {
+            if (c.indexOf("RAPIDO") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
                //  pi.innerHTML=cc+"\n\n"+JSON.stringify(eyes.name)
