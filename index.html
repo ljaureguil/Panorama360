@@ -877,7 +877,62 @@ GetJ(linkbkgs, function(ob) {
 
 
       var speechRecognizer,instuccion="";
+
             function startvoice(){
+ 
+            if( "window.SpeechRecognition" in window || "webkitSpeechRecognition" in window  ){
+                speechRecognizer = new webkitSpeechRecognition();
+                speechRecognizer.continuous = true;
+                speechRecognizer.interimResults = true;
+                speechRecognizer.lang = "es-MX | en-US";
+   
+                speechRecognizer.start();
+                
+                var finalTranscripts = "";
+                speechRecognizer.onspeechend = function() {
+                    pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                    
+setTimeout(function(){
+if(Editor.style.display === "none") {finalTranscripts = ""; speechRecognizer.start();}
+else recognition.stop();
+},10)
+   }
+
+speechRecognizer.onend = function(){
+
+setTimeout(function(){
+if(Editor.style.display === "none"){finalTranscripts = ""; speechRecognizer.start();}
+else recognition.stop();
+
+},100)
+};		
+
+                speechRecognizer.onresult = function(event){
+                    var interimTranscripts = "";
+                    for(var i=event.resultIndex; i<event.results.length; i++){
+                        var transcript = event.results[i][0].transcript;
+                        transcript.replace("\n", "<br>");
+                        if(event.results[i].isFinal){
+                            finalTranscripts += transcript;
+                        }
+                        else{
+                            interimTranscripts += transcript;
+                        }
+                        instruccion=interimTranscripts;//
+                      pi.innerHTML = finalTranscripts;// + '<span style="color: #ff0;">' + interimTranscripts + '</span>';
+                   
+                    }
+                };
+                speechRecognizer.onerror = function(event){
+                };
+
+            }
+            else{
+                 alert("your browser does not support tgat.")
+            }
+       
+            }    
+            function startvoice2(){
               
              //   var r = document.getElementById("result");
             if( "window.SpeechRecognition" in window || "webkitSpeechRecognition" in window  ){
