@@ -897,7 +897,7 @@ GetJ(linkbkgs, function(ob) {
                     
 setTimeout(function(){
 if(Editor.style.display === "none") {finalTranscripts = ""; speechRecognizer.start();}
-else recognition.stop();
+else speechRecognizer.stop();
 },10)
    }
 
@@ -905,7 +905,7 @@ speechRecognizer.onend = function(){
 
 setTimeout(function(){
 if(Editor.style.display === "none"){finalTranscripts = ""; speechRecognizer.start();}
-else recognition.stop();
+else speechRecognizer.stop();
 
 },100)
 };		
