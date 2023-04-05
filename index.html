@@ -1795,7 +1795,7 @@ else recognition.stop();
        function exComando(cc) {
             comando=cc;
             var p=1;
-            c = cc.toUppercase();;
+            c = cc.toUpperCase();
             pi.innerHTML = c;
             if (c.indexOf("SALIR") > -1  || c.indexOf("EXIT") > -1) {
                 bsp = false;
@@ -1814,24 +1814,28 @@ else recognition.stop();
             if (c.indexOf("ABAJO") > -1  || c.indexOf("DOWN") > -1 ) {
                 eyes.name.my = -p
             }
-            if (c.indexOf("HIZQUIERDA") > -1  || c.indexOf("LEFT") > -1) {
+            if (c.indexOf("IZQUIERDA") > -1  || c.indexOf("LEFT") > -1) {
                 eyes.name.mx = -p
             }
             if (c.indexOf("DERECHA") > -1 || c.indexOf("RIGHT") > -1) {
                 eyes.name.mx = p
             }
-            if (c.indexOf("GIRAR HIZQUIERDA") > -1) {
+            if (c.indexOf("GIRAR IZQUIERDA") > -1) {
                 eyes.name.ry = -p
             }
             if (c.indexOf("GIRAR DERECHA") > -1) {
                 eyes.name.ry = p
             }
-          /*  if (c.indexOf("girar arriba") > -1) {
-                eyes.name.rx = -p
+           if (c.indexOf("ADELANTE") > -1) {
+                eyes.name.mx = -p*Math.cos(controlsr.alpha);
+                eyes.name.my = -p*Math.cos(controlsr.gamma);
+                 
             }
-            if (c.indexOf("girar abajo") > -1) {
-                eyes.name.rx = p
-            }*/
+            if (c.indexOf("ATRAS") > -1) {
+                eyes.name.mz = p*Math.sin(controlsr.alpha)
+                eyes.name.my = -p*Math.cos(controlsr.gamma);
+     
+            }
             if (c.indexOf("PARA") > -1 || c.indexOf("ALTO") || c.indexOf("STOP")) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
@@ -1839,7 +1843,7 @@ else recognition.stop();
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = .001;
+                me.name.factor = .01;
             }
             if (c.indexOf("ORIGEN") > -1) {
                 eyes.name.my = 0;
@@ -1848,21 +1852,19 @@ else recognition.stop();
                 eyes.name.rx = 0;
                 eyes.name.ry = 0;
                 eyes.name.rz = 0;
-                me.name.factor = .001;
+                me.name.factor = .01;
                 eyes.position = eyes.name.pos;
             }
             if (c.indexOf("LENTO") > -1) {
-              //  eyes.name.factor -= eyes.name.factor / 5;
+             
                 eyes.name.factor -= eyes.name.factor /2;
                 
             }
             if (c.indexOf("RAPIDO") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
-               //  pi.innerHTML=cc+"\n\n"+JSON.stringify(eyes.name)
-           // if(bsp) spe=setTimeout(runSpeechRecognition,1500);
+   
         }
-
         function saveScene() {
             var obs = scene.children;
             var n = prompt("Type scene name...", sproyestos.value);
