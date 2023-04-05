@@ -312,7 +312,7 @@ z-index: 100;
 
                     <button onclick="editMesh()">Editor</button>
                     <button onclick="if(blight)blight=false;else blight=true">Light</button>
-                    <button onclick='if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;};SetVr();'>VR</button>
+                    <button onclick='if (!bsp) {startvoice();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;};SetVr();'>VR</button>
                     <button id="bcom" onclick='if (!bsp) {startvoice();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;stopvoice()}//inicSpeech();'>Comands</button>
                     <button onclick="saveScene()">Save Scene</button>
                     <div id="dparam" name=false>
@@ -554,7 +554,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     </script>
 
 
-    <script>
+    <script>//runSpeechRecognition();
    INTERSECTED={}
     var intrec;
         var obPic={};spics.innerHTML="";
@@ -633,7 +633,11 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         var bsp = false,
             comando = "";
         var nota = "";
-        function recc(){
+
+
+
+/*
+        function recc2(){
         navigator.mediaDevices.getUserMedia({
             audio: true
         })
@@ -661,7 +665,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
                 if (comando != "") {
                     p.value = comando + "\n";
                     nota = comando;
-                    exComando(comando)
+              //      exComando(comando)
 
                 }
             }
@@ -676,7 +680,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         });
 
         words.appendChild(p);
-                    /* JS comes here */
+                
                     //  runSpeechRecognition();
                 } catch (e) {
                     alert(e)
@@ -692,7 +696,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             // runSpeechRecognition()
         });
         }
-
+*/
         var pr1, pr2, pr3, blight = false,
             vrmode = false,
             _gap = .75
@@ -877,7 +881,6 @@ GetJ(linkbkgs, function(ob) {
 
 
       var speechRecognizer,instuccion="";
-
             function startvoice(){
  
             if( "window.SpeechRecognition" in window || "webkitSpeechRecognition" in window  ){
@@ -918,6 +921,8 @@ else recognition.stop();
                         else{
                             interimTranscripts += transcript;
                         }
+                        
+                        exComando(finalTranscripts)
                         instruccion=interimTranscripts;//
                       pi.innerHTML = finalTranscripts;// + '<span style="color: #ff0;">' + interimTranscripts + '</span>';
                    
@@ -931,7 +936,10 @@ else recognition.stop();
                  alert("your browser does not support tgat.")
             }
        
-            }    
+            }
+
+
+
             function startvoice2(){
               
              //   var r = document.getElementById("result");
@@ -1723,7 +1731,8 @@ else recognition.stop();
         function SetVr() {
             bsp=vrmode;
             if (vrmode) {
-	               window.removeEventListener("devicemotion", motionE)	    
+                   window.removeEventListener("devicemotion", motionE)	 ;
+                   stopvoice()  
                // if (!bsp) {runSpeechRecognition();bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
                 renderer.setScissorTest(false);
                 vrmode = false;
@@ -1748,9 +1757,7 @@ else recognition.stop();
                 controlsr.desconnect;
                 render();
                 openFullscreen(renderer.domElement);
-             //   bps = true;
-               // inicSpeech()
-            //   runSpeechRecognition()
+    
             }
         }
 
@@ -1768,7 +1775,7 @@ else recognition.stop();
         }
 
         function closeFullscreen(elem) {
-
+          //  stopvoice()
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             } else if (document.webkitExitFullscreen) { /* Safari */
@@ -1795,7 +1802,7 @@ else recognition.stop();
             if (c.indexOf("salir") > -1) {
                 bsp = false;
 
-                recognition.stop();
+              //  recognition.stop();
                 SetVr();
             }
             if (c.indexOf("luz") > -1) {
@@ -1854,8 +1861,8 @@ else recognition.stop();
             if (c.indexOf("rapido") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
-                 pi.innerHTML=cc+"\n\n"+JSON.stringify(eyes.name)
-            if(bsp) spe=setTimeout(runSpeechRecognition,1500);
+               //  pi.innerHTML=cc+"\n\n"+JSON.stringify(eyes.name)
+           // if(bsp) spe=setTimeout(runSpeechRecognition,1500);
         }
 
         function saveScene() {
@@ -2129,7 +2136,7 @@ else recognition.stop();
         });
 
         words.appendChild(p);*/
-        function runSpeechRecognition() {
+        function runSpeechRecognition2() {
 
     clearTimeout(spe);
                 try {
