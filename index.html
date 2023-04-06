@@ -969,7 +969,7 @@ else speechRecognizer.stop();
      speechRecognizer.continuous = true;
      speechRecognizer.interimResults = true;
      speechRecognizer.lang = "es-MX | en-US";
-
+speechRecognizer.maxAlternatives = 1;
      speechRecognizer.start();
      
      var finalTranscripts = "";
