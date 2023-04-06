@@ -922,7 +922,7 @@ else speechRecognizer.stop();
                             interimTranscripts += transcript;
                         }
                         
-                        exComando(finalTranscripts.toUpperCase())
+                        exComando(finalTranscripts)
      
                    
                     }
@@ -1795,7 +1795,7 @@ else speechRecognizer.stop();
        function exComando(cc) {
             comando=cc;
             var p=1;
-           var c = cc.toUpperCase();
+           var c = cc;
             pi.innerHTML = c;
             if (c.indexOf("SALIR") > -1  || c.indexOf("EXIT") > -1) {
                 bsp = false;
@@ -1803,40 +1803,40 @@ else speechRecognizer.stop();
               //  recognition.stop();
                 SetVr();
             }
-            if (c.indexOf("LUZ") > -1  || c.indexOf("LIGHT") > -1 ) {
+            if (c.indexOf("luz") > -1  || c.indexOf("light") > -1 ) {
                 if (blight) blight = false;
                 else blight = true
             }
-            if (c.indexOf("ARRIBA") > -1  || c.indexOf("UP") > -1) {
+            if (c.indexOf("arriba") > -1  || c.indexOf("up") > -1) {
                 eyes.name.my = p
 
             }
-            if (c.indexOf("ABAJO") > -1  || c.indexOf("DOWN") > -1 ) {
+            if (c.indexOf("abajo") > -1  || c.indexOf("down") > -1 ) {
                 eyes.name.my = -p
             }
-            if (c.indexOf("IZQUIERDA") > -1  || c.indexOf("LEFT") > -1) {
+            if (c.indexOf("izquierda") > -1  || c.indexOf("left") > -1) {
                 eyes.name.mx = -p
             }
-            if (c.indexOf("DERECHA") > -1 || c.indexOf("RIGHT") > -1) {
+            if (c.indexOf("derecha") > -1 || c.indexOf("right") > -1) {
                 eyes.name.mx = p
             }
-            if (c.indexOf("GIRAR IZQUIERDA") > -1) {
+            if (c.indexOf("giro izquierda") > -1) {
                 eyes.name.ry = -p
             }
             if (c.indexOf("GIRAR DERECHA") > -1) {
                 eyes.name.ry = p
             }
-           if (c.indexOf("ADELANTE") > -1) {
+           if (c.indexOf("adelante") > -1) {
                 eyes.name.mx = -p*Math.cos(controlsr.alpha);
                 eyes.name.my = -p*Math.cos(controlsr.gamma);
                  
             }
-            if (c.indexOf("ATRAS") > -1) {
+            if (c.indexOf("atras") > -1) {
                 eyes.name.mz = p*Math.sin(controlsr.alpha)
                 eyes.name.my = -p*Math.cos(controlsr.gamma);
      
             }
-            if (c.indexOf("PARA") > -1 || c.indexOf("ALTO") || c.indexOf("STOP")) {
+            if (c.indexOf("parar") > -1 || c.indexOf("alto") || c.indexOf("stop")) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
                 eyes.name.mx = 0;
@@ -1845,7 +1845,7 @@ else speechRecognizer.stop();
                 eyes.name.rz = 0;
                 me.name.factor = .01;
             }
-            if (c.indexOf("ORIGEN") > -1) {
+            if (c.indexOf("origen") > -1) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
                 eyes.name.mx = 0;
@@ -1855,12 +1855,12 @@ else speechRecognizer.stop();
                 me.name.factor = .01;
                 eyes.position = eyes.name.pos;
             }
-            if (c.indexOf("LENTO") > -1) {
+            if (c.indexOf("lento") > -1) {
              
                 eyes.name.factor -= eyes.name.factor /2;
                 
             }
-            if (c.indexOf("RAPIDO") > -1) {
+            if (c.indexOf("rapido") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
    
