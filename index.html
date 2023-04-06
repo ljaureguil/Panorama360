@@ -1839,11 +1839,11 @@ else speechRecognizer.stop();
             var p=1;
               
             if (c.indexOf("salir") > -1  || c.indexOf("exit") > -1) {
-           
+           bsp = false;
 
               //  recognition.stop();
                 SetVr();
-                     bsp = false;
+                     
             }
             if (c.indexOf("luz") > -1  || c.indexOf("light") > -1 ) {
                 if (blight) blight = false;
@@ -1902,10 +1902,10 @@ else speechRecognizer.stop();
                 eyes.name.factor -= eyes.name.factor /2;
                 
             }
-            if (c.indexOf("rapido") > -1 || c.indexOf("fast") > -1) {
+            if (c.indexOf("rápido") > -1 || c.indexOf("fast") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
-            pi.innerHTML = 'Result received: ' + comando +"<br><br>"+JSON.stringify(eyes.name);  
+          // pi.innerHTML = 'Result received: ' + comando /+"<br><br>"+JSON.stringify(eyes.name);  
    
         }
         function saveScene() {
