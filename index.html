@@ -879,91 +879,64 @@ GetJ(linkbkgs, function(ob) {
 
         }
 
-
-      var speechRecognizer,instuccion="";
-	    
-	    
-	    function startvoice() {
-
-       if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
-           speechRecognizer = new webkitSpeechRecognition();
+     var speechRecognizer, instuccion = "";
+     var grammar = "#JSGF V1.0; grammar comands; public <comands> = arriba | up | abajo | down | atras | back | izquierda | left | derecha | right | salir | exit | seleccionar | select  ;";
+     var bexcomando = false;
 
 
+     function startvoice() {
+try{
+         if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+             speechRecognizer = new webkitSpeechRecognition();
+             speechRecognizer.continuous = false;
+             speechRecognizer.interimResults = true;
+             speechRecognizer.lang = "es-MX | en-US";
+             speechRecognizer.maxAlternatives = 1;
 
-           speechRecognizer.continuous = false;
-           speechRecognizer.interimResults = true;
-           speechRecognizer.lang = "es-MX | en-US";
-           speechRecognizer.maxAlternatives = 1;
+             var speechRecognitionList = new webkitSpeechGrammarList();;
+             speechRecognitionList.addFromString(grammar, 1);
+             speechRecognizer.grammars = speechRecognitionList;
 
-           var speechRecognitionList = new webkitSpeechGrammarList();;
-           speechRecognitionList.addFromString(grammar, 1);
-           speechRecognizer.grammars = speechRecognitionList;
+             speechRecognizer.start();
 
+             var finalTranscripts = "";
+             speechRecognizer.onspeechend = function() {
+                 setTimeout(function() {
+                     if (Editor.style.display === "none") {
 
-           speechRecognizer.start();
+                         bexcomando = false;
+                         speechRecognizer.start();
 
-           var finalTranscripts = "";
-           speechRecognizer.onspeechend = function() {
-               //  pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                     } else speechRecognizer.stop();
+                 }, 10)
+             }
 
-               setTimeout(function() {
-                   if (Editor.style.display === "none") {
-                      
-bexcomando=false;
-                       speechRecognizer.start();
-                      
-                   } else speechRecognizer.stop();
-               }, 10)
-           }
-
-           speechRecognizer.onend = function() {
-
-
-               setTimeout(function() {
-                   if (Editor.style.display === "none") {
-                    bexcomando=false;
-                       speechRecognizer.start();
-
-                    
-                   } else speechRecognizer.stop();
-
-               }, 100)
-           };
-
-           speechRecognizer.onresult = function() {  
-               comando  =  event.results[0][0].transcript;  
-
-            if(!bexcomando) exComando(comando)  
-           }
+             speechRecognizer.onend = function() {
+                 setTimeout(function() {
+                     if (Editor.style.display === "none") {
+                         bexcomando = false;
+                         speechRecognizer.start();
 
 
+                     } else speechRecognizer.stop();
 
-          speechRecognizer.onnomatch  =   function(event)  {  }
+                 }, 100)
+             };
 
+             speechRecognizer.onresult = function() {  
+                 comando  =  event.results[0][0].transcript;  
 
+                 if (!bexcomando) exComando(comando)  
+             }
+             speechRecognizer.onerror = function(event) {};
 
-           speechRecognizer.onresult2 = function(event) {
-               var interimTranscripts = "";
-               for (var i = event.resultIndex; i < event.results.length; i++) {
-                   var transcript = event.results[i][0].transcript;
-                   transcript.replace("\n", "<br>");
-                   if (event.results[i].isFinal) {
-                       finalTranscripts += transcript;
-                   } else {
-                       interimTranscripts += transcript;
-                   }
-                   instruccion = interimTranscripts; //
-                   pi.innerHTML = finalTranscripts.toUpperCase(); // + '<span style="color: #ff0;">' + interimTranscripts + '</span>';
+         } else {
+             alert("your browser does not support speech recognition")
+         }
+}
+	     catch(e){alert(e);
 
-               }
-           };
-           speechRecognizer.onerror = function(event) {};
-
-       } else {
-           alert("your browser does not support tgat.")
-       }
-
-   }
+     }
 
 	    
             function startvoice3(){
