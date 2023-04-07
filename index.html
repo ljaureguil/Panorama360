@@ -1850,7 +1850,99 @@ else speechRecognizer.stop();
             if (!bsp) {bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
         }
 
-      function exComando(c) {
+	    
+	      function exComando(c) {
+
+           bexcomando=true;
+            comando=c;
+            var p=1;
+ 
+            if (c.indexOf("salir") > -1  || c.indexOf("exit") > -1) {
+         bsp = false;
+
+              SetVr();
+
+speechRecognizer.stop();
+      
+            }
+
+            if (c.indexOf("luz") > -1  || c.indexOf("light") > -1 ) {
+                if (blight) blight = false;
+                else blight = true
+            }
+            if (c.indexOf("arriba") > -1  || c.indexOf("up") > -1) {
+                eyes.name.my = p
+
+            }
+            if (c.indexOf("abajo") > -1  || c.indexOf("down") > -1 ) {
+                eyes.name.my = -p
+            }
+            if (c.indexOf("izquierda") > -1  || c.indexOf("left") > -1) {
+               // eyes.name.mx = -p;
+               eyes.name.mx=-p*Math.sin(controlsr.alpha);eyes.name.mz=-p*Math.cos(controlsr.alpha);
+
+            }
+            if (c.indexOf("derecha") > -1 || c.indexOf("right") > -1) {
+               // eyes.name.mx = p
+                eyes.name.mx=p*Math.sin(controlsr.alpha);eyes.name.mz=p*Math.cos(controlsr.alpha);
+            }
+            if (c.indexOf("girar izquierda") > -1 || c.indexOf("spin left") > -1) {
+                eyes.name.ry = -p
+             }
+            if (c.indexOf("girar derecha") > -1 || c.indexOf("spin right") > -1) {
+                eyes.name.ry = p
+            }
+           if (c.indexOf("adelante") > -1  || c.indexOf("forward") > -1  || c.indexOf("go") > -1) {
+               // eyes.name.mx = -p*Math.cos(controlsr.alpha);
+              //  eyes.name.my = -p*Math.cos(controlsr.gamma);
+                eyes.name.mx=-p*Math.sin(controlsr.alpha-Math.PI/2);eyes.name.my=-p*Math.cos(controlsr.gamma);
+                eyes.name.mz=-p*Math.cos(controlsr.alpha-Math.PI/2);
+                 
+            }
+            if (c.indexOf("atras") > -1 || c.indexOf("back") > -1) {
+               // eyes.name.mz = p*Math.sin(controlsr.alpha)
+               // eyes.name.my = -p*Math.cos(controlsr.gamma);
+               eyes.name.mx=p*Math.sin(controlsr.alpha+Math.PI/2);eyes.name.my=p*Math.cos(controlsr.gamma);
+               eyes.name.mz=p*Math.cos(controlsr.alpha+Math.PI/2);
+     
+            }
+
+            if (c.indexOf("parar") >-1 || c.indexOf("ok") > -1 || c.indexOf("alto") >-1 || c.indexOf("stop") >-1) {
+                eyes.name.my = 0;
+                eyes.name.mx = 0;
+                eyes.name.mx = 0;
+                eyes.name.rx = 0;
+                eyes.name.ry = 0;
+                eyes.name.rz = 0;
+                me.name.factor = .01;
+            }
+
+            if (c.indexOf("origen") > -1) {
+                eyes.name.my = 0;
+                eyes.name.mx = 0;
+                eyes.name.mx = 0;
+                eyes.name.rx = 0;
+                eyes.name.ry = 0;
+                eyes.name.rz = 0;
+                me.name.factor = .01;
+                eyes.position = eyes.name.pos;
+            } 
+  
+   
+            if (c.indexOf("lento") > -1 || c.indexOf("slow") > -1) {
+             
+                eyes.name.factor -= eyes.name.factor /2;
+                
+            }
+            if (c.indexOf("rápido") > -1 || c.indexOf("fast") > -1) {
+                eyes.name.factor += eyes.name.factor *2;
+            }
+     
+     pi.innerHTML = 'Result: ' + c +"<br><br>"+JSON.stringify(eyes.name);  
+        }
+    
+	    
+      function exComando2(c) {
            bexcomando=true;
             comando=c;
             var p=1;
