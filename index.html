@@ -881,7 +881,92 @@ GetJ(linkbkgs, function(ob) {
 
 
       var speechRecognizer,instuccion="";
-            function startvoice(){
+	    
+	    
+	    function startvoice() {
+
+       if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
+           speechRecognizer = new webkitSpeechRecognition();
+
+
+
+           speechRecognizer.continuous = false;
+           speechRecognizer.interimResults = true;
+           speechRecognizer.lang = "es-MX | en-US";
+           speechRecognizer.maxAlternatives = 1;
+
+           var speechRecognitionList = new webkitSpeechGrammarList();;
+           speechRecognitionList.addFromString(grammar, 1);
+           speechRecognizer.grammars = speechRecognitionList;
+
+
+           speechRecognizer.start();
+
+           var finalTranscripts = "";
+           speechRecognizer.onspeechend = function() {
+               //  pi.innerHTML = "<small>stopped listening, hope you are done...</small>";
+
+               setTimeout(function() {
+                   if (Editor.style.display === "none") {
+                      
+bexcomando=false;
+                       speechRecognizer.start();
+                      
+                   } else speechRecognizer.stop();
+               }, 10)
+           }
+
+           speechRecognizer.onend = function() {
+
+
+               setTimeout(function() {
+                   if (Editor.style.display === "none") {
+                    bexcomando=false;
+                       speechRecognizer.start();
+
+                    
+                   } else speechRecognizer.stop();
+
+               }, 100)
+           };
+
+           speechRecognizer.onresult = function() {  
+               comando  =  event.results[0][0].transcript;  
+
+            if(!bexcomando) exComando(comando)  
+           }
+
+
+
+           recognition.onnomatch  =   function(event)  {  }
+
+
+
+           speechRecognizer.onresult2 = function(event) {
+               var interimTranscripts = "";
+               for (var i = event.resultIndex; i < event.results.length; i++) {
+                   var transcript = event.results[i][0].transcript;
+                   transcript.replace("\n", "<br>");
+                   if (event.results[i].isFinal) {
+                       finalTranscripts += transcript;
+                   } else {
+                       interimTranscripts += transcript;
+                   }
+                   instruccion = interimTranscripts; //
+                   pi.innerHTML = finalTranscripts.toUpperCase(); // + '<span style="color: #ff0;">' + interimTranscripts + '</span>';
+
+               }
+           };
+           speechRecognizer.onerror = function(event) {};
+
+       } else {
+           alert("your browser does not support tgat.")
+       }
+
+   }
+
+	    
+            function startvoice3(){
  
             if( "window.SpeechRecognition" in window || "webkitSpeechRecognition" in window  ){
                 speechRecognizer = new webkitSpeechRecognition();
@@ -1792,17 +1877,20 @@ else speechRecognizer.stop();
             if (!bsp) {bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
         }
 
-       function exComando(cc) {
-            comando=cc;
+      function exComando(c) {
+           bexcomando=true;
+            comando=c;
             var p=1;
-           var c = cc;
-            pi.innerHTML = c;
-            if (c.indexOf("SALIR") > -1  || c.indexOf("EXIT") > -1) {
-                bsp = false;
+ 
+            if (c.indexOf("salir") > -1  || c.indexOf("exit") > -1) {
+         bsp = false;
 
-              //  recognition.stop();
-                SetVr();
+              SetVr();
+
+speechRecognizer.stop();
+      
             }
+
             if (c.indexOf("luz") > -1  || c.indexOf("light") > -1 ) {
                 if (blight) blight = false;
                 else blight = true
@@ -1820,23 +1908,24 @@ else speechRecognizer.stop();
             if (c.indexOf("derecha") > -1 || c.indexOf("right") > -1) {
                 eyes.name.mx = p
             }
-            if (c.indexOf("giro izquierda") > -1) {
+            if (c.indexOf("girar izquierda") > -1 || c.indexOf("spin left") > -1) {
                 eyes.name.ry = -p
             }
-            if (c.indexOf("GIRAR DERECHA") > -1) {
+            if (c.indexOf("girar derecha") > -1 || c.indexOf("spin right") > -1) {
                 eyes.name.ry = p
             }
-           if (c.indexOf("adelante") > -1) {
+           if (c.indexOf("adelante") > -1  || c.indexOf("forward") > -1) {
                 eyes.name.mx = -p*Math.cos(controlsr.alpha);
                 eyes.name.my = -p*Math.cos(controlsr.gamma);
                  
             }
-            if (c.indexOf("atras") > -1) {
+            if (c.indexOf("atras") > -1 || c.indexOf("back") > -1) {
                 eyes.name.mz = p*Math.sin(controlsr.alpha)
                 eyes.name.my = -p*Math.cos(controlsr.gamma);
      
             }
-            if (c.indexOf("parar") > -1 || c.indexOf("alto") || c.indexOf("stop")) {
+
+            if (c.indexOf("parar") >-1 || c.indexOf("ok") > -1 || c.indexOf("alto") >-1 || c.indexOf("stop") >-1) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
                 eyes.name.mx = 0;
@@ -1845,6 +1934,7 @@ else speechRecognizer.stop();
                 eyes.name.rz = 0;
                 me.name.factor = .01;
             }
+
             if (c.indexOf("origen") > -1) {
                 eyes.name.my = 0;
                 eyes.name.mx = 0;
@@ -1854,17 +1944,23 @@ else speechRecognizer.stop();
                 eyes.name.rz = 0;
                 me.name.factor = .01;
                 eyes.position = eyes.name.pos;
-            }
-            if (c.indexOf("lento") > -1) {
+            } 
+  
+   
+            if (c.indexOf("lento") > -1 || c.indexOf("slow") > -1) {
              
                 eyes.name.factor -= eyes.name.factor /2;
                 
             }
-            if (c.indexOf("rapido") > -1) {
+            if (c.indexOf("rápido") > -1 || c.indexOf("fast") > -1) {
                 eyes.name.factor += eyes.name.factor *2;
             }
-   
+     
+     pi.innerHTML = 'Result: ' + c +"<br><br>"+JSON.stringify(eyes.name);  
         }
+
+
+
         function saveScene() {
             var obs = scene.children;
             var n = prompt("Type scene name...", sproyestos.value);
