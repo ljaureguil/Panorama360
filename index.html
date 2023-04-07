@@ -883,7 +883,7 @@ GetJ(linkbkgs, function(ob) {
       var speechRecognizer,instuccion="";
 	    
 	    
-	    function startvoice3() {
+	    function startvoice() {
 
        if ("window.SpeechRecognition" in window || "webkitSpeechRecognition" in window) {
            speechRecognizer = new webkitSpeechRecognition();
@@ -938,7 +938,7 @@ bexcomando=false;
 
 
 
-           recognition.onnomatch  =   function(event)  {  }
+          speechRecognizer.onnomatch  =   function(event)  {  }
 
 
 
@@ -966,7 +966,7 @@ bexcomando=false;
    }
 
 	    
-            function startvoice(){
+            function startvoice3(){
  
             if( "window.SpeechRecognition" in window || "webkitSpeechRecognition" in window  ){
                 speechRecognizer = new webkitSpeechRecognition();
