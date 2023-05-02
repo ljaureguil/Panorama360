@@ -540,9 +540,11 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     <script src="textures.js"></script>
   <script src="Split Body.js"></script>
- 
+ <script src="https://unpkg.com/three@0.118.0/examples/js/renderers/CSS3DRenderer.js"></script>
+ <script src=""></script>
 
     <script type="text/javascript">
+    coderender="";//https://unpkg.com/three@0.118.0/examples/js/renderers/CSS3DRenderer.js
         //https://cdn.jsdelivr.net/npm/three@0.119.1/build/three.js
  
         Editor.style.display='none';
@@ -555,6 +557,15 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>//runSpeechRecognition();
+    var renderer2;
+
+container2 = document.createElement('div');
+            document.body.appendChild(container2);
+            container2.style.pointerEvents="none";
+           container = document.createElement('div');
+           container.style.zIndex=1;
+            document.body.appendChild(container);
+  
    INTERSECTED={}
     var intrec;
         var obPic={};spics.innerHTML="";
@@ -758,6 +769,12 @@ GetJ(linkbkgs, function(ob) {
             pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
         }
 
+//<script src="https://unpkg.com/three@0.118.0/examples/js/renderers/CSS3DRenderer.js"></dcript>
+  
+ 
+
+ /**/
+
         var cubeCamera;
         var textureLoader = new THREE.TextureLoader();
         var light = new THREE.DirectionalLight(0x888888, .61);
@@ -809,8 +826,7 @@ GetJ(linkbkgs, function(ob) {
 
         function init() {
            
-            container = document.createElement('div');
-            document.body.appendChild(container);
+ 
 
             camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
             camera.position.set(0, 0, 10);
@@ -848,24 +864,43 @@ GetJ(linkbkgs, function(ob) {
             renderer.sortObjects = false;
             container.appendChild(renderer.domElement);
             renderer.setScissorTest(false);
+
+///////////////////////////
+renderer2 = new THREE.CSS3DRenderer();
+    renderer2.domElement.style.position = 'absolute';
+    renderer2.domElement.style.top = 0;
+    container2.appendChild(renderer2.domElement);
+
+ /*   renderer2 = new THREE.CSS3DRenderer();
+ // renderer2.setSize(window.innerWidth, window.innerHeight);
+  renderer2.domElement.style.position = 'absolute';
+  renderer2.domElement.style.top = 0;
+ // document.body.appendChild(renderer2.domElement);
+container2.appendChild(renderer2.domElement);
+*/
+
+
+
+////////////////////////
             equi = new CubemapToEquirectangular(renderer, true);
             setUpSels(); 
             //     controls = new THREE.OrbitControls(camera, renderer.domElement);
+    
             controls = new THREE.TrackballControls(camera, renderer.domElement); //camera
             //  setTimeout(function(){  controls = new THREE.TrackballControls( camera, renderer.domElement );},5000);
-
-            controls.rotateSpeed = .48;//1.0;
+      //              controls = new THREE.TrackballControls(camera, renderer.domElement); //camera
+    
             controls.zoomSpeed = .48;//1.2;
             controls.panSpeed = .36;//0.8;
 
             controls.keys = ['KeyA', 'KeyS', 'KeyD'];
             window.addEventListener('resize', onWindowResize, false);
-            onWindowResize();
+            setTimeout(function(){ onWindowResize();},100) 
 
             document.getElementById('capturea').addEventListener('click', function(e) {
 
                 equi.update(camera, scene);
-
+     //   renderer2.setSize( window.innerWidth, window.innerHeight);
             });
      //    document.addEventListener("click", onPointerMove );//, false
    //  renderer.domElement.addEventListener("mousemove", mousemove);
@@ -1157,16 +1192,18 @@ else speechRecognizer.stop();
         }
 
         function onWindowResize() {
-
+ 
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             camerar.aspect = window.innerWidth / window.innerHeight;
             camerar.updateProjectionMatrix();
             cameral.aspect = window.innerWidth / window.innerHeight;
             cameral.updateProjectionMatrix();
-
+       renderer2.setSize( window.innerWidth, window.innerHeight);      
             renderer.setSize(window.innerWidth, window.innerHeight);
-
+        // 
+        render();
+    
         }
 
         function WindowResize(x, y, cam, rend) {
@@ -1182,7 +1219,7 @@ else speechRecognizer.stop();
         
             requestAnimationFrame(animate);
             if (vrmode) controlsr.update();
-            else controls.update();
+            else {controls.update();}
 
                if(Editor.style.display==="none"){ render();
 }
@@ -1200,9 +1237,7 @@ else speechRecognizer.stop();
                         
                         if(intersects && intersects[0]!=undefined){
                             INTERSECTED = intersects[0].object;
-                          //  pi.innerHTML=JSON.stringify(intersects[0].object.name.desc)}//+JSON.stringify(intersects[0])
-                   //  pi.innerHTML=intersects[0].object.name.cast+time;
-                   eval(o.cast)
+                    eval(o.cast)
                      obclicked=false;
                         }
                 
@@ -1216,7 +1251,6 @@ else speechRecognizer.stop();
                   if (o.vgx!=undefined ) oo.position.x=o.pivot.x*1+o.r*Math.sin(o.vgx*time);
                   if (o.vgy!=undefined)  oo.position.y=o.pivot.y+o.r*Math.sin(o.vgy*time);
                    if (o.vgz!=undefined ) oo.position.z=o.pivot.z+o.r*Math.sin(o.vgz*time);
-           //   pi.innerHTML=JSON.stringify(oo.position)
                 } 
                          
               
@@ -1231,6 +1265,8 @@ else speechRecognizer.stop();
                     var o = aranim[i];
                 }
             }
+
+            if(coderender!="") setTimeout(coderender,1);// eval(coderender);
 
             if (!vrmode) {
 
@@ -1285,6 +1321,7 @@ else speechRecognizer.stop();
 
 
                 renderer.render(scene, camera);
+                renderer2.render(scene, camera);
 
             } else {
                 eyes.position.x += eyes.name.mx * eyes.name.factor;
@@ -1850,8 +1887,7 @@ else speechRecognizer.stop();
             if (!bsp) {bcom.style.background = "green";bsp = true;} else {bcom.style.background = "blue";bsp = false;}
         }
 
-	    
-	      function exComando(c) {
+      function exComando(c) {
 
            bexcomando=true;
             comando=c;
@@ -1892,7 +1928,7 @@ speechRecognizer.stop();
             if (c.indexOf("girar derecha") > -1 || c.indexOf("spin right") > -1) {
                 eyes.name.ry = p
             }
-           if (c.indexOf("adelante") > -1  || c.indexOf("forward") > -1  || c.indexOf("go") > -1) {
+           if (c.indexOf("adelante") > -1  || c.indexOf("forward") > -1) {
                // eyes.name.mx = -p*Math.cos(controlsr.alpha);
               //  eyes.name.my = -p*Math.cos(controlsr.gamma);
                 eyes.name.mx=-p*Math.sin(controlsr.alpha-Math.PI/2);eyes.name.my=-p*Math.cos(controlsr.gamma);
@@ -1904,89 +1940,6 @@ speechRecognizer.stop();
                // eyes.name.my = -p*Math.cos(controlsr.gamma);
                eyes.name.mx=p*Math.sin(controlsr.alpha+Math.PI/2);eyes.name.my=p*Math.cos(controlsr.gamma);
                eyes.name.mz=p*Math.cos(controlsr.alpha+Math.PI/2);
-     
-            }
-
-            if (c.indexOf("parar") >-1 || c.indexOf("ok") > -1 || c.indexOf("alto") >-1 || c.indexOf("stop") >-1) {
-                eyes.name.my = 0;
-                eyes.name.mx = 0;
-                eyes.name.mx = 0;
-                eyes.name.rx = 0;
-                eyes.name.ry = 0;
-                eyes.name.rz = 0;
-                me.name.factor = .01;
-            }
-
-            if (c.indexOf("origen") > -1) {
-                eyes.name.my = 0;
-                eyes.name.mx = 0;
-                eyes.name.mx = 0;
-                eyes.name.rx = 0;
-                eyes.name.ry = 0;
-                eyes.name.rz = 0;
-                me.name.factor = .01;
-                eyes.position = eyes.name.pos;
-            } 
-  
-   
-            if (c.indexOf("lento") > -1 || c.indexOf("slow") > -1) {
-             
-                eyes.name.factor -= eyes.name.factor /2;
-                
-            }
-            if (c.indexOf("rápido") > -1 || c.indexOf("fast") > -1) {
-                eyes.name.factor += eyes.name.factor *2;
-            }
-     
-     pi.innerHTML = 'Result: ' + c +"<br><br>"+JSON.stringify(eyes.name);  
-        }
-    
-	    
-      function exComando2(c) {
-           bexcomando=true;
-            comando=c;
-            var p=1;
- 
-            if (c.indexOf("salir") > -1  || c.indexOf("exit") > -1) {
-         bsp = false;
-
-              SetVr();
-
-speechRecognizer.stop();
-      
-            }
-
-            if (c.indexOf("luz") > -1  || c.indexOf("light") > -1 ) {
-                if (blight) blight = false;
-                else blight = true
-            }
-            if (c.indexOf("arriba") > -1  || c.indexOf("up") > -1) {
-                eyes.name.my = p
-
-            }
-            if (c.indexOf("abajo") > -1  || c.indexOf("down") > -1 ) {
-                eyes.name.my = -p
-            }
-            if (c.indexOf("izquierda") > -1  || c.indexOf("left") > -1) {
-                eyes.name.mx = -p
-            }
-            if (c.indexOf("derecha") > -1 || c.indexOf("right") > -1) {
-                eyes.name.mx = p
-            }
-            if (c.indexOf("girar izquierda") > -1 || c.indexOf("spin left") > -1) {
-                eyes.name.ry = -p
-            }
-            if (c.indexOf("girar derecha") > -1 || c.indexOf("spin right") > -1) {
-                eyes.name.ry = p
-            }
-           if (c.indexOf("adelante") > -1  || c.indexOf("forward") > -1) {
-                eyes.name.mx = -p*Math.cos(controlsr.alpha);
-                eyes.name.my = -p*Math.cos(controlsr.gamma);
-                 
-            }
-            if (c.indexOf("atras") > -1 || c.indexOf("back") > -1) {
-                eyes.name.mz = p*Math.sin(controlsr.alpha)
-                eyes.name.my = -p*Math.cos(controlsr.gamma);
      
             }
 
@@ -2900,3 +2853,5 @@ function motionE(event){
 </body>
 
 </html>
+
+
