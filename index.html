@@ -359,6 +359,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>Save to Web</option>
             <option>Refresh app</option>
             <option>Load Local Obj</option>
+            <option>Recover Backgrounds</option>
+            <option>Recover Projects</option>
         <option></option>
             <option>Close</option>
         </select><br>
@@ -557,6 +559,17 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
 
     <script>//runSpeechRecognition();
+
+
+//recoverlocals("bkProjects");
+//recoverlocals("backgrounds");
+
+text = "HEllo World";
+//navigator.clipboard.writeText(text)
+
+
+
+
     var renderer2;
 
 container2 = document.createElement('div');
@@ -573,9 +586,9 @@ container2 = document.createElement('div');
         _ObText={texts:[]}
         cim.width=300;
         cim.height=200;
-        var linkpic="https://jsonblob.com/api/1025540657741316096";
-    var liproj="https://jsonblob.com/api/1080903273044787200";//"https://jsonblob.com/api/1002978081803354112";
-    var linkbkgs="https://jsonblob.com/api/1082346052228759552";
+    //    var linkpic="https://jsonblob.com/api/1025540657741316096";//
+    var liproj="https://jsonblob.com/api/1104064845992706048";//"https://jsonblob.com/api/1002978081803354112";http://jsonblob.com/1104064845992706048
+    var linkbkgs="https://jsonblob.com/api/1104085319581712384";//https://jsonblob.com/api/1082346052228759552
         var ObPro={}
         setupProy();
         setupProyw();
@@ -622,7 +635,7 @@ container2 = document.createElement('div');
 
 
          //      }
-         GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
+   /*      GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
             Esenas = ob.esenas; //alert(ob.esenas.length);
             for (var i = 0; i < Esenas.length; i++) {
 
@@ -632,7 +645,7 @@ container2 = document.createElement('div');
                 }
             }
 
-        })
+        })*/
          var oy = {
             x: 0,
             y: 0,
@@ -731,14 +744,16 @@ container2 = document.createElement('div');
 GetJ(linkbkgs, function(ob) {
  
             wbkgs=ob;
-  
+            localStorage.setItem("backgrounds",JSON.stringify(ob))
+       init();
       
-          init();
+      
             });
  
           
 
-        });
+        });/**/
+       
         obmove = {
                     name: "esena",
                     r: 900,
@@ -815,12 +830,12 @@ GetJ(linkbkgs, function(ob) {
         var axis=new THREE.Group();
         
         openProyw("AXIS",true);
-        GetJ(linkpic,function(ob){
+/*       GetJ(linkpic,function(ob){
             obPic=ob;
             setupPics(ob)
 
         
-        })
+        })*/
 
 
 
@@ -1980,7 +1995,7 @@ speechRecognizer.stop();
 
 
         function saveScene() {
-            var obs = scene.children;
+     /*       var obs = scene.children;
             var n = prompt("Type scene name...", sproyestos.value);
             if (n === null || n === "" || n === undefined) {
                 alert("Wrong Name, try again");
@@ -2025,6 +2040,7 @@ speechRecognizer.stop();
                     alert("Done...")
                 })
             })
+            */
         }
 
         function GetJ(url, callback) {
@@ -2599,7 +2615,7 @@ speechRecognizer.stop();
 
     }
     function savePic(name,data){
-        GetJ(linkpic,function(ob){
+   /*     GetJ(linkpic,function(ob){
             var op={};
             op.name=name;
             op.pic=data;
@@ -2607,7 +2623,7 @@ speechRecognizer.stop();
             obPic=ob;
           //  alert("----------------\n\n\n"+data)
         UpdateJ(linkpic,ob,function(ob){alert("Pic data has been saved");setupPics(ob)})
-   }) }
+   }) */}
    function setupPics(ob){
        spics.innerHTML="";
     for(var i=0;i<ob.arpics.length;i++){
@@ -2660,8 +2676,12 @@ loadLocal()
 if(e==="Refresh app"){
     window.location.reload()
 }
-
-
+if(e==="Recover Projects"){
+   recoverlocals("bkProjects")
+}
+if(e==="Recover Backgrounds"){
+   recoverlocals("backgrounds")
+}
 
     if(e==="Close"){
         Editor.style.display='none';
@@ -2678,7 +2698,7 @@ if(e==="Refresh app"){
        }
    }
    function delPic(v){
-    var ar=obPic.arpics;
+   /* var ar=obPic.arpics;
        for(var i=0;i<ar.length;i++){
            var o=ar[i];
            if(v===o.name){
@@ -2692,7 +2712,7 @@ if(e==="Refresh app"){
               }
               else return;
            }
-       }
+       }*/
    }
    function showPic(v){
     dca.style.display='block';
@@ -2807,7 +2827,7 @@ function selaccion(){
                    selbkg.innerHTML+="<option>"+n+"</option>";
                    setBackground(bkgs[bkgs.length-1],n)
                    if(confirm("Do you want to save it to web?")){
-                     
+                     localStorage.setItem("backgrounds",JSON.stringify(wbkgs))
                        UpdateJ(linkbkgs,wbkgs,function(){alert("Backgrounds saved in web")});
                    }
                }
@@ -2821,7 +2841,8 @@ function selaccion(){
     for(var i=0;i<c.length;i++){
         if(c[i].innerHTML===v){
             selbkg.remove(i);
-            setBackground(bkgs[0],c[0].innerHTML)
+            setBackground(bkgs[0],c[0].innerHTML);
+            localStorage.setItem("backgrounds",JSON.stringify(wbkgs))
         
             UpdateJ(linkbkgs,wbkgs,function(){alert(v+" Has been deleted")});
              return
@@ -2847,6 +2868,11 @@ function motionE(event){
     
 }
 
+
+function recoverlocals(n){
+    var oh=localStorage.getItem(n,"none");
+ mainEditor.value=oh;
+}
 
     </script>
 
