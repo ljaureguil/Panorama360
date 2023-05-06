@@ -212,6 +212,17 @@ z-index: 100;
         #cim{
             background: greenyellow;
         }
+	       .ccontainer3{
+            position: absolute;;
+            right: 5%;
+            bottom: 10%;
+            padding: 3px;
+            width: 10%;
+            height: 10%;
+            transform: scale(.75,.75);
+            display: none;
+        }
+	
     </style>
 </head>
 
@@ -572,12 +583,21 @@ text = "HEllo World";
 
     var renderer2;
 
+
 container2 = document.createElement('div');
             document.body.appendChild(container2);
             container2.style.pointerEvents="none";
+
+container3 = document.createElement('div');
+container3.setAttribute("class","ccontainer3")
+            document.body.appendChild(container3);
+         //   container3.style.pointerEvents="none";
+            
            container = document.createElement('div');
-           container.style.zIndex=1;
+           container.style.zIndex=2;
             document.body.appendChild(container);
+          //  cotainer3.style.display="none";
+  
   
    INTERSECTED={}
     var intrec;
