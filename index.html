@@ -610,14 +610,21 @@ container3.setAttribute("class","ccontainer3")
     //    var linkpic="https://jsonblob.com/api/1025540657741316096";//
   //  var liproj="https://jsonblob.com/api/1108795533526581248";//1104064845992706048    //"https://jsonblob.com/api/1002978081803354112";http://jsonblob.com/1104064845992706048
   //  var linkbkgs="https://jsonblob.com/api/1108807426966306816";//1104085319581712384    //https://jsonblob.com/api/1082346052228759552
-    
+  
    var liproj=localStorage.getItem("LinkProyect");//alert(liproj)
-    if(liproj===null){ alert("no link found for projects");liproj="https://jsonblob.com/api/1108795533526581248"; }
+    if(liproj===null){
+      
+    liproj="https://jsonblob.com/api/1108795533526581248";
+    if(confirm("no link found for projects, do you want to set it to Local?")) localStorage.setItem("LinkProyect",liproj);
+ }
   //  else alert(liproj)
  
   var linkbkgs=localStorage.getItem("LinkBackgrounds");
   //alert(linkbkgs)
-    if(linkbkgs===null){ alert("no link found for backgrounds");linkbkgs="https://jsonblob.com/api/1108807426966306816"; }
+    if(linkbkgs===null){
+   linkbkgs="https://jsonblob.com/api/1108807426966306816"; 
+        if(confirm("no link found for backgrounds, do you want to set it to Local?"))localStorage.setItem("LinkBackgrounds",linkbkgs);
+    }
    // else alert(linkbkgs)
     
     
