@@ -212,7 +212,7 @@ z-index: 100;
         #cim{
             background: greenyellow;
         }
-	       .ccontainer3{
+        .ccontainer3{
             position: absolute;;
             right: 5%;
             bottom: 10%;
@@ -222,7 +222,6 @@ z-index: 100;
             transform: scale(.75,.75);
             display: none;
         }
-	
     </style>
 </head>
 
@@ -372,6 +371,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>Load Local Obj</option>
             <option>Recover Backgrounds</option>
             <option>Recover Projects</option>
+            <option>Set Up new Link</option>
+
         <option></option>
             <option>Close</option>
         </select><br>
@@ -571,7 +572,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     <script>//runSpeechRecognition();
 
-
+//1108795533526581248
 //recoverlocals("bkProjects");
 //recoverlocals("backgrounds");
 
@@ -582,7 +583,6 @@ text = "HEllo World";
 
 
     var renderer2;
-
 
 container2 = document.createElement('div');
             document.body.appendChild(container2);
@@ -598,7 +598,8 @@ container3.setAttribute("class","ccontainer3")
             document.body.appendChild(container);
           //  cotainer3.style.display="none";
   
-  
+
+
    INTERSECTED={}
     var intrec;
         var obPic={};spics.innerHTML="";
@@ -607,9 +608,22 @@ container3.setAttribute("class","ccontainer3")
         cim.width=300;
         cim.height=200;
     //    var linkpic="https://jsonblob.com/api/1025540657741316096";//
-    var liproj="https://jsonblob.com/api/1104064845992706048";//"https://jsonblob.com/api/1002978081803354112";http://jsonblob.com/1104064845992706048
-    var linkbkgs="https://jsonblob.com/api/1104085319581712384";//https://jsonblob.com/api/1082346052228759552
-        var ObPro={}
+  //  var liproj="https://jsonblob.com/api/1108795533526581248";//1104064845992706048    //"https://jsonblob.com/api/1002978081803354112";http://jsonblob.com/1104064845992706048
+  //  var linkbkgs="https://jsonblob.com/api/1108807426966306816";//1104085319581712384    //https://jsonblob.com/api/1082346052228759552
+    
+   var liproj=localStorage.getItem("LinkProyect");//alert(liproj)
+    if(liproj===null){ alert("no link found for projects");liproj="https://jsonblob.com/api/1108795533526581248"; }
+  //  else alert(liproj)
+ 
+  var linkbkgs=localStorage.getItem("LinkBackgrounds");
+  //alert(linkbkgs)
+    if(linkbkgs===null){ alert("no link found for backgrounds");linkbkgs="https://jsonblob.com/api/1108807426966306816"; }
+   // else alert(linkbkgs)
+    
+    
+    
+    
+    var ObPro={}
         setupProy();
         setupProyw();
 
@@ -906,13 +920,6 @@ renderer2 = new THREE.CSS3DRenderer();
     renderer2.domElement.style.top = 0;
     container2.appendChild(renderer2.domElement);
 
- /*   renderer2 = new THREE.CSS3DRenderer();
- // renderer2.setSize(window.innerWidth, window.innerHeight);
-  renderer2.domElement.style.position = 'absolute';
-  renderer2.domElement.style.top = 0;
- // document.body.appendChild(renderer2.domElement);
-container2.appendChild(renderer2.domElement);
-*/
 
 
 
@@ -2702,7 +2709,9 @@ if(e==="Recover Projects"){
 if(e==="Recover Backgrounds"){
    recoverlocals("backgrounds")
 }
-
+if(e==="Set Up new Link"){
+   setUpnewlink()
+}
     if(e==="Close"){
         Editor.style.display='none';
 }
@@ -2888,11 +2897,41 @@ function motionE(event){
     
 }
 
-
 function recoverlocals(n){
     var oh=localStorage.getItem(n,"none");
- mainEditor.value=oh;
+    mainEditor.value=oh;
+
+ alert('Local Obj '+n+' copied to Clipboard');mainEditor.select();document.execCommand('copy');mainEditor.blur();
+
 }
+
+function setUpnewlink(){
+    var o=prompt("1.-for projects\n\n2.-for backgrounds","none")
+   
+   var l=prompt("Paste new link","none");
+     if(l==="none") return; 
+       var key=l.split(".com/")[1];
+       var link="https://jsonblob.com/api/"+key
+       if(!confirm("Original: "+link+"\n\nDoes it look ok?")) setUpnewlink();
+ 
+ if(o==="1"){
+    if(confirm("This will replace the original project link, do you want to continue?")){
+ liproj=link;
+ localStorage.setItem("LinkProyect",liproj);
+ alert("all done")
+ window.location.reload()
+    }
+ 
+    }
+    if(o==="2"){
+        if(confirm("This will replace the original backgrounds link, do you want to continue?")){
+            linkbkgs=link;
+ localStorage.setItem("LinkBackgrounds",linkbkgs);
+ alert("all done");
+ window.location.reload()
+    }
+    }
+    }
 
     </script>
 
