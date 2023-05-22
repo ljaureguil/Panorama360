@@ -582,7 +582,7 @@ text = "HEllo World";
 
 
 
-    var renderer2;
+    var renderer2,container2,container3;
 
 container2 = document.createElement('div');
             document.body.appendChild(container2);
@@ -591,6 +591,8 @@ container2 = document.createElement('div');
 container3 = document.createElement('div');
 container3.setAttribute("class","ccontainer3")
             document.body.appendChild(container3);
+            container3.style.dispose="none"
+
          //   container3.style.pointerEvents="none";
             
            container = document.createElement('div');
@@ -922,12 +924,14 @@ GetJ(linkbkgs, function(ob) {
             renderer.setScissorTest(false);
 
 ///////////////////////////
+
+if(container2.style.dispose="block"){
 renderer2 = new THREE.CSS3DRenderer();
     renderer2.domElement.style.position = 'absolute';
     renderer2.domElement.style.top = 0;
     container2.appendChild(renderer2.domElement);
 
-
+}
 
 
 ////////////////////////
@@ -1248,7 +1252,7 @@ else speechRecognizer.stop();
             camerar.updateProjectionMatrix();
             cameral.aspect = window.innerWidth / window.innerHeight;
             cameral.updateProjectionMatrix();
-       renderer2.setSize( window.innerWidth, window.innerHeight);      
+      if(container2.style.display="block") renderer2.setSize( window.innerWidth, window.innerHeight);      
             renderer.setSize(window.innerWidth, window.innerHeight);
         // 
         render();
@@ -1370,7 +1374,7 @@ else speechRecognizer.stop();
 
 
                 renderer.render(scene, camera);
-                renderer2.render(scene, camera);
+                if(container2.style.display="block")  renderer2.render(scene, camera);
 
             } else {
                 eyes.position.x += eyes.name.mx * eyes.name.factor;
@@ -2350,7 +2354,8 @@ speechRecognizer.stop();
     
         var c=mainEditor.value;
         try{
-
+                container2.innerHTML="";
+                container3.innerHTML="";
             eval(c);
 
             
@@ -2945,5 +2950,4 @@ function setUpnewlink(){
 </body>
 
 </html>
-
 
