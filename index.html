@@ -432,6 +432,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         <div style="border-style: solid;border-width: .1px;">
         Str<select id="structura" oninput="insert(this.value)"  class="cse" >
            <option>var str=new structural();</option>
+           <option>Add plateWithHoles Obj Set</option>
+           <option>str.plateWithHoles = function(plateObj)</option>
              <option>str.flat(w, l, tk, texture, color, center, buffer)</option>
             <option>str.plate(w, l, tk, texture, color, center, buffer)</option>
             <option>str.anglee(w, l, tk, texture, color, center, buffer)</option>
@@ -2369,6 +2371,76 @@ speechRecognizer.stop();
 
     }
     function insert(v){
+        
+        
+        if(v==='Add plateWithHoles Obj Set'){
+           v= `
+           ///////////////...Modify Object.../////////////////
+
+           var loader = new THREE.TextureLoader();
+           var texture = loader.load("https://st2.depositphotos.com/4977761/12456/i/950/depositphotos_124560270-stock-photo-seamless-light-wall-texture-or.jpg");
+           texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+           //controls size of img texture 
+           texture.repeat.set(0.02, 0.02);
+
+           var perim = [ //Modify to your size
+               [0, 0],
+               [0, 10],
+               [10, 10],
+               [10, 0]
+           ];
+           var hole1 = [ //Modify to your size
+               [5.5, 3],
+               [5.5, 7],
+               [9.5, 7],
+               [9.5, 3]
+           ];
+           var hole2 = [ //Modify to your size
+               [.5, 3],
+               [2.5, 7],
+               [5, 3]
+           ];
+           var holes = [];
+           holes.push(hole1);
+           holes.push(hole2);
+
+           var extrudeSettings = {
+               amount: 1,
+               bevelEnabled: true,
+               bevelSegments: 2,
+               steps: 2,
+               bevelSize: .25,
+               bevelThickness: .1
+           };
+
+           var matSettings = {
+               color: 0x00ffff,
+               transparent: true,
+               opacity: .752,
+               map: texture,
+               side: THREE.DoubleSide,
+               bumpMap: texture,
+               bumpScale: .05,
+               normalMap: texture,
+           };
+
+           plateObj = {
+               perim: perim,
+               holes: holes,
+               thick: .5,
+               settings: {}
+           };
+
+           extrudeSettings.amount = plateObj.thick;
+           plateObj.settings.extrudeSettings = extrudeSettings;
+           plateObj.settings.materialSettings = matSettings;
+
+           var plate = str.plateWithHoles(plateObj)
+
+           /////////////////////////////////////////////
+           `
+        
+        }
         var t=mainEditor.value;
         var i=mainEditor.selectionStart;
         var p1=t.slice(0,i);p2=t.slice(mainEditor.selectionEnd,mainEditor.value.length)
@@ -2950,9 +3022,20 @@ function setUpnewlink(){
     }
     }
 
+
+
+
+
+
+
+
+
+
+
+
+    
     </script>
 
 </body>
 
 </html>
-
