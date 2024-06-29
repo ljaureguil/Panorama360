@@ -434,6 +434,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
            <option>var str=new structural();</option>
            <option>Add plateWithHoles Obj Set</option>
            <option>str.plateWithHoles = function(plateObj)</option>
+           <option>str.circle(d,r,pos)</option>
+           <option>str.circle_ev()</option>
+           <option>Add circle codes</option>
              <option>str.flat(w, l, tk, texture, color, center, buffer)</option>
             <option>str.plate(w, l, tk, texture, color, center, buffer)</option>
             <option>str.anglee(w, l, tk, texture, color, center, buffer)</option>
@@ -2372,7 +2375,57 @@ speechRecognizer.stop();
     }
     function insert(v){
         
-        
+        if(v==="Add circle codes"){
+            v=`
+
+            //////////CIRCLE CODES//////
+            
+            function circle(d,s,pos){
+    this.d=d;
+    this.s=s;
+    this.pos=pos;
+    this.setPos=function(x,y){
+    for(var i=0;i<this.ar.length;i++){
+    this.ar[i][0]=this.ar0[i][0]+x;
+    this.ar[i][1]=this.ar0[i][1]+y;
+    }
+    }
+    
+    this.translate = function(x,y){
+    for(var i=0;i<this.ar.length;i++){
+    this.ar[i][0]+=x;
+    this.ar[i][1]+=y;
+    }
+    
+    }
+    
+    this.clone=function(){
+    var n=new circle(this.d,this.s,this.pos);
+    n.ar=JSON.parse(JSON.stringify(this.ar));
+    n.ar0=JSON.parse(JSON.stringify(this.ar0));;
+    return n;
+    
+    }
+    
+    
+    var r=d/2;
+    this.ar=[];
+    this.ar0=[];
+    se=Math.PI*2;var e=se/s
+    for(var i=0;i<se;i+=e){
+    var x=Math.cos(i)*r;
+    var y=Math.sin(i)*r;
+    this.ar.push([x,y]);
+    this.ar0.push([x,y]);
+    }
+    if(pos!=undefined) this.setPos(pos.x,pos.y)
+    
+    }
+
+            ////////////////////////////////
+            
+            `
+        }
         if(v==='Add plateWithHoles Obj Set'){
            v= `
            ///////////////...Modify Object.../////////////////
