@@ -392,41 +392,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
         LJL<select id="punt" oninput="insert(this.value)"  class="cse" >
 
             <option>var ljl=new LJL();</option>  
-            <option>ljl.tag({msg:'message',color:"white",background:"rgba(10,130,120,.4)",border:"white",font:"40px Areal Bold"})</option>
-             <option>ljl.this.tagTexture({msg:'message',color:"white",background:"rgba(10,130,120,.4)",border:"white",font:"40px Areal Bold"})</option>
-            <option>ljl.TextOnCanvas(Canvas, text, font, color, bkgcolor, marginTop, maxWidth, lineHeight, canvasops})</option>
-            <option>ljl.TextOnCanvasDoc(text, font, color, bkgcolor, marginTop, marginWidth, lineHeight, canvasops)</option>
-            <option>ljl.getMaterials()</option>
-   
-         
-            <option>ljl.lineSegments(points, width, color)</option>
-             <option>ljl.line(points, width, color)</option>
-         <option>ljl.dashedLine(points, width, color, size, gap)</option>
-            <option>ljl.arrayToV3( array3 )</option>
-           <option>ljl.arrayToV2( array2 )</option>
-             <option>ljl.toRadians( ang )</option>
-           <option>ljl.toDeg( ang )</option>
-           <option>ljl.chromeMaterial( cubeCam, color )</option>
-                <option>ljl.point( x, y, z)</option>
-              <option>ljl.downloadFile( filename , text )</option>
-           <option>,</option>
-           
-            <option>+</option>
-           <option>-</option>
-            <option>/</option>
-           <option>*</option>
-           <option>.</option>
-           <option>,</option>
-           <option>;</option>
-            <option>"</option>
-            <option>'</option>
-            <option>:</option>
-            <option>//</option>   
-            <option>{</option>
-            <option>}</option>
-            <option>[</option>
-            <option>]</option>
-    
+            <option></option>
+  
     
         </select><button onclick="insert(punt.value)" class="copcs">></button></div><br>
         <div style="border-style: solid;border-width: .1px;">
@@ -434,38 +401,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
            <option>var str=new structural();</option>
            <option>Add plateWithHoles Obj Set</option>
            <option>str.plateWithHoles = function(plateObj)</option>
-           <option>str.circle(d,r,pos)</option>
-           <option>str.circle_ev()</option>
-           <option>Add circle codes</option>
-             <option>str.flat(w, l, tk, texture, color, center, buffer)</option>
-            <option>str.plate(w, l, tk, texture, color, center, buffer)</option>
-            <option>str.anglee(w, l, tk, texture, color, center, buffer)</option>
-          <option>str.angle(l1, l2, lo, tk, texture, color, center, buffer)</option>
-            <option>str.plateedged(w, l, tk, radius, texture, color, center, cdf, buffer)<option>
-            <option>str.tube(D, l, tk, texture, color, center, cdf, buffer)</option>
-            <option>str.pipe(D, l, tk, texture, color, center, cdf, buffer)</option>   
-            <option>str.channel(w, l, h, tk, texture, color, center, buffer)</option>
-            <option>str.hbeam(w, l, h, tk, texture, color, center, buffer)</option>
-            <option>str.bar(D, l, texture, color, center, cdf, buffer)</option>
-            <option>str.squaretubing(w, h, l, tk, texture, color, center, buffer)</option>
-    <option>str.squaretubingedged(l, w, h, tk, rad, texture, color, center, cdf, buffer)</option>
-    <option>str.textLebel(msg, W, H, center, color, toCamera, font, frame)</option>
-    <option>str.gShape(ptsV2,1)</option>
-    
-           <option>str.gplate(w, l, tk, center, buffer)</option>
-            <option>str.gangle(w1, w2, l, tk, center, buffer)</option>
-           <option>str.gangle2(l1, l2, lo, tk, center, buffer)</option>
-           <option>str.gplateedged(w, l, tk, radius, center, cdf, buffer)</option>
-           <option>str.gtube(D, l, tk, center, cdf, buffer)</option>
-           <option>str.gpipe(D, l, tk, center, cdf, buffer)</option>
-            <option>str.gchannel(w, l, h, tk, center, buffer)</option>
-            <option>str.ghbeam = function(w, l, h, tk, center, buffer)</option>
-            <option>str.gbar(D, l, center, cdf, buffer)</option>
-            <option>str.gsquaretubing(w, h, l, tk, center, buffer)</option>   
-            <option>str.gsquaretubingedged(l, w, h, tk, rad, center, cdf, buffer)</option>
-           <option>str.gGusset(w,h,tk)</option>
            <option></option>
-            <option></option>
+             <option></option>
     
         </select><button onclick="insert(structura.value)" class="copcs">></button></div><br>
       
@@ -580,8 +517,18 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     </script>
 
 
+    
     <script>//runSpeechRecognition();
+     var _jl=new LJL();var _str = new structural();
 
+var od=_jl.getMethods(_jl,"ljl")
+for(var i=0;i<od.length;i++){
+    punt.innerHTML+="<option>"+od[i]+"</option>";
+}
+od=_jl.getMethods(_jl,"str")
+for(var i=0;i<od.length;i++){
+    structura.innerHTML+="<option>"+od[i]+"</option>";
+}
 //1108795533526581248
 //recoverlocals("bkProjects");
 //recoverlocals("backgrounds");
@@ -879,7 +826,7 @@ GetJ(linkbkgs, function(ob) {
         eyes.name = me,
         esena=null;
         /////
-        var _jl=new LJL();
+   
         var axis=new THREE.Group();
         
         openProyw("AXIS",true);
@@ -3075,13 +3022,22 @@ function setUpnewlink(){
     }
     }
 
+ 
+function getMethods(ob, varn){
+       var kys = [];
+ var json = JSON.stringify(ob, function(key, value) {
+    if (typeof value === 'function') {
+        var v = value.toString();
+        var funk = v.split("(")[0] + " "; //+key
+        var pa = varn+"." + key + v.substring(v.indexOf("("), v.indexOf(")") + 1);
+        kys.push(pa + "\n\n")
+        return value;
+    }
+    return value;
+}, 2);
 
-
-
-
-
-
-
+return kys;
+}
 
 
 
