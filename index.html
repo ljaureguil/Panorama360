@@ -498,7 +498,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     <script src="DeviceOrientationControls.js"></script>
     <script src="OBJLoader.js"></script>
 <script src="OBJExporter.js"></script>
-
+   <script src="MyLib.js"></script>
     <script src="textures.js"></script>
   <script src="Split Body.js"></script>
  <script src="https://unpkg.com/three@0.118.0/examples/js/renderers/CSS3DRenderer.js"></script>
@@ -744,8 +744,11 @@ container3.setAttribute("class","ccontainer3")
 GetJ(linkbkgs, function(ob) {
  
             wbkgs=ob;
+ 
             localStorage.setItem("backgrounds",JSON.stringify(ob))
        init();
+     //  setBackground(wbkgs[2],n);
+
       
       
             });
@@ -865,11 +868,7 @@ GetJ(linkbkgs, function(ob) {
 
             alight = new THREE.AmbientLight(0x888888);
             scene.add(alight)
-            
- //alert(bkgs)
-       
-
-//alert(remove.innerHTML)
+ 
             renderer = new THREE.WebGLRenderer({
                 antialias: true
             });
@@ -918,7 +917,8 @@ renderer2 = new THREE.CSS3DRenderer();
           //  openProyw("AXIS",false);
         //  alert(axis)
         setselbkgs(wbkgs);
-      
+        setBackground(wbkgs[2],3);
+       // alert(wbkgs[3])
         raycasterFrom=scene.children;
             animate();
 
@@ -2864,7 +2864,7 @@ else fr.readAsDataURL(v.files[0]);
 function setbkg(index, n) {
    
      if(n!=undefined){
-         var n,link;
+         var n=0,link=linkbkgs;
 
     }
   
@@ -2904,7 +2904,8 @@ for(var i=0;i<selbkg.children;i++){
 
 
     }  
-function setBackground(bkg,n){
+function setBackground(bkg,n){// alert(bkg); if(bkg.indexOf("cfi1https:")>-1) alert(bkg)
+   bkg="http"+bkg.split("http")[1]
      textureLoader.load(bkg,
              function(texture) {
  
@@ -2919,6 +2920,7 @@ scene.textura=texture;
 scene.urlbkg=bkg;
 scene.bkgname=n;
 selact.children[1].innerHTML="Remove "+n;
+
 
             })
 
@@ -2943,7 +2945,7 @@ function selaccion(){
                    wbkgs.push(nl);
                    bkgs.push(link)
                    selbkg.innerHTML+="<option>"+n+"</option>";
-                   setBackground(bkgs[bkgs.length-1],n)
+                   setBackground(bkgs[bkgs.length-1],n);
                    if(confirm("Do you want to save it to web?")){
                      localStorage.setItem("backgrounds",JSON.stringify(wbkgs))
                        UpdateJ(linkbkgs,wbkgs,function(){alert("Backgrounds saved in web")});
