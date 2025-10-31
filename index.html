@@ -367,6 +367,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>Save Loc Pic to Web</option>
             <option>Back up Local</option>
             <option>Save to Web</option>
+             <option>Save to Local</option>
             <option>Refresh app</option>
             <option>Load Local Obj</option>
             <option>Recover Backgrounds</option>
@@ -752,11 +753,13 @@ GetJ(linkbkgs, function(ob) {
       
       
             });
+
+            loadLocal()
  
-          
+            init();
 
         });/**/
-       
+         
         obmove = {
                     name: "esena",
                     r: 900,
@@ -844,11 +847,11 @@ GetJ(linkbkgs, function(ob) {
 
         function init() {
            
- 
+ //alert("ok aqui")
 
             camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
             camera.position.set(0, 0, 10);
-            esena = new THREE.Group();
+            esena = new THREE.Group();//alert("ok aqui")
             scene = new THREE.Scene();
         
             scene.add(esena)
@@ -2485,9 +2488,11 @@ speechRecognizer.stop();
    
     function loadLocal(){
         if(confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?"))
-        var ob=localStorage.getItem("bkProjects")
+        var ob=localStorage.getItem("bkProjects");
+    //var obj={}
         if(ob!=null) objLocal=JSON.parse(ob);
         mainEditor.value=ob;
+        setupProyw2(objLocal)
     }
     function saveEd(opc){
         var n=prompt("Type proyect name",proyecto);
@@ -2563,21 +2568,21 @@ speechRecognizer.stop();
      }
     }
     function openProy(n,callback){
-        var a=localStorage.getItem("editors");
-        if(a!=null){
+       // var a=localStorage.getItem("editors");
+     //   if(a!=null){
            
-            ob=JSON.parse(a);
-            for(var i=0;i<ob.proyectos.length;i++){
-                    var p1=ob.proyectos[i].split("//")[0].split("\n")[1];
-              //  if(ob.proyectos[i].indexOf("//"+n)>-1){
-                        if(p1===n){
-                    mainEditor.value=ob.proyectos[i]; proyecto=n;
-                    bdelpl.innerHTML="Del "+proyecto
+        //    ob=JSON.parse(a);
+            for(var i=0;i<objLocal.length;i++){
+                    var p1=objLocal[i]
+                if(p1.name===n){
+                   
+                    mainEditor.value=p1.content
+                  //  bdelpl.innerHTML="Del "+proyecto
                     return;
                 }
             
             }
-        }
+    //    }
 
     }
     function openProyw(n,ox,callback){
@@ -2601,6 +2606,8 @@ speechRecognizer.stop();
             }
         })
      }   
+//aqui
+
      function delproy(){
          if(proyecto!=""){
              
@@ -2677,6 +2684,25 @@ speechRecognizer.stop();
 
   
     }
+
+   function setupProyw2(ob){
+   //     GetJ(liproj,function(ob){
+            sproyw.innerHTML="";   
+            var s="";
+            for(var i=0;i<ob.length;i++){
+            var p=ob[i].name;
+            s+="<option>"+p+"</option>"
+            }
+            sproyw.innerHTML=s;
+            sproy.innerHTML=s
+        
+    //    })
+
+  
+    }
+
+
+    //aqui2
         
      function showAxis(){
         var sh=confirm("show Tags?");
@@ -2781,6 +2807,11 @@ if(e==="Clear Editor"){
 
 if(e==="Back up Local"){
   
+}
+
+if(e==="Save to Local"){
+    localStorage.setItem("bkProjects",JSON.stringify(objLocal))
+    alert("saved locally");
 }
 
 if(e==="Save to Web"){
@@ -2991,6 +3022,12 @@ function motionE(event){
 function recoverlocals(n){
     var oh=localStorage.getItem(n,"none");
     mainEditor.value=oh;
+
+    if(n==="bkProjects"){
+
+
+
+    }
 
  alert('Local Obj '+n+' copied to Clipboard');mainEditor.select();document.execCommand('copy');mainEditor.blur();
 
