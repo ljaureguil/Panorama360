@@ -354,8 +354,9 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 <div id="Editor">
     <textarea id="mainEditor"></textarea>
     <div id="ejed">
-        <select id="eje" oninput="ejecutar(this.value)">
+        <select id="eje" oninput="ejecutar(this.value);this.value='Process'">
             <option>Process</option>
+            <option>Evaluar editor</option>           
             <option>Add Catch and Try</option>
             <option>Create Object</option>
  
@@ -369,7 +370,8 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>Save to Web</option>
              <option>Save to Local</option>
             <option>Refresh app</option>
-            <option>Load Local Obj</option>
+            <option>Load Local Obj</option> 
+            <option>Load Local Obj Text</option>
             <option>Recover Backgrounds</option>
             <option>Recover Projects</option>
             <option>Set Up new Link</option>
@@ -917,11 +919,29 @@ renderer2 = new THREE.CSS3DRenderer();
      //    document.addEventListener("click", onPointerMove );//, false
    //  renderer.domElement.addEventListener("mousemove", mousemove);
             renderer.domElement.addEventListener('click', fraycast); // 
-          //  openProyw("AXIS",false);
-        //  alert(axis)
-        setselbkgs(wbkgs);
-        setBackground(wbkgs[2],3);
-       // alert(wbkgs[3])
+ //////////////////////////////////////////////
+    textureLoader.load("https://thumbs.dreamstime.com/b/k-resolution-hdri-equirectangular-panorama-which-will-help-you-create-degrees-above-clouds-sky-background-331318773.jpg",
+             function(texture) {
+ 
+var options = {
+					generateMipmaps: true,
+					minFilter: THREE.LinearMipmapLinearFilter,
+					magFilter: THREE.LinearFilter
+				};
+
+scene.background = new THREE.WebGLRenderTargetCube( 1024, 1024, options ).fromEquirectangularTexture( renderer, texture );
+scene.textura=texture;
+//scene.urlbkg=bkg;
+//scene.bkgname=n;
+//selact.children[1].innerHTML="Remove "+n;
+
+
+            })
+
+
+
+
+            /////////////////////////
         raycasterFrom=scene.children;
             animate();
 
@@ -2300,7 +2320,7 @@ speechRecognizer.stop();
 
         }
     function applayMainEditor(){
-  
+  container3.innerHTML="";
             while (esena.children.length > 0) {
                 removeObject3D(esena.children[esena.children.length-1],function(){;});
                 esena.remove(esena.children[esena.children.length-1])
@@ -2487,11 +2507,11 @@ speechRecognizer.stop();
      }
    
     function loadLocal(){
-        if(confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?"))
+    //    if(confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?"))
         var ob=localStorage.getItem("bkProjects");
     //var obj={}
         if(ob!=null) objLocal=JSON.parse(ob);
-        mainEditor.value=ob;
+    //    mainEditor.value=ob;
         setupProyw2(objLocal)
     }
     function saveEd(opc){
@@ -2775,9 +2795,18 @@ speechRecognizer.stop();
 
    }
    function ejecutar(e){
+   
     if(e==="Process"){
         applayMainEditor();Editor.style.display='none';
     }
+     if(e==="Evaluar editor"){ 
+    var c=mainEditor.value;
+        try{
+              eval(c);
+           
+        }
+        catch(e){alert(e)}
+    }  
   
 if(e==="Add Catch and Try"){
     addtrycatch()
@@ -2819,6 +2848,11 @@ if(e==="Save to Web"){
 }
 if(e==="Load Local Obj"){
 loadLocal()
+}
+if(e==="Load Local Obj Text"){
+      if(!confirm("local Projects will be loaded in editor, content on editor will be replaces\nDo you want to proceed?")) return;
+        var ob=localStorage.getItem("bkProjects");
+        mainEditor.value=ob;
 }
 if(e==="Refresh app"){
     window.location.reload()
@@ -2904,7 +2938,7 @@ function setbkg(index, n) {
     setBackground(bkg,n);
  }
  function setselbkgs(ob){
-  
+ /* 
  //   selbkg.innerHTML='<option>Add new</option><option id="remove">Remove '+ob[0].split('https')[0]+'</option>' ;
 for(var i=0;i<selbkg.children;i++){
     selbkg.remove(selbkg[i])
@@ -2932,7 +2966,7 @@ for(var i=0;i<selbkg.children;i++){
   
   //  selact.children[0].innerHTML="Remove "+selbkg.children[0].innerHTML;
 
-
+*/
 
     }  
 function setBackground(bkg,n){// alert(bkg); if(bkg.indexOf("cfi1https:")>-1) alert(bkg)
