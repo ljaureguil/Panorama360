@@ -2502,8 +2502,22 @@ speechRecognizer.stop();
               ".add( );//Add Objects to it\n}\n}\ncatch(error){\n\nalert(error)\n\n}";
          }
     }
-    function insertObj(name,callback){
-        openProyw(name,true,callback);
+    function insertObj(name,callback){;
+       // openProyw(name,true,callback);
+                for(var i=0;i<objLocal.length;i++){
+                    var p1=objLocal[i]
+                if(p1.name===name){ //alert(name)
+                  
+                 if(callback!=undefined){eval(p1.content);callback();}//
+                        else eval(p1.content)
+                                   
+                  //  bdelpl.innerHTML="Del "+proyecto
+                    return;
+                }
+            
+            }
+
+       
      }
    
     function loadLocal(){
@@ -2588,10 +2602,7 @@ speechRecognizer.stop();
      }
     }
     function openProy(n,callback){
-       // var a=localStorage.getItem("editors");
-     //   if(a!=null){
-           
-        //    ob=JSON.parse(a);
+     
             for(var i=0;i<objLocal.length;i++){
                     var p1=objLocal[i]
                 if(p1.name===n){
@@ -2602,7 +2613,7 @@ speechRecognizer.stop();
                 }
             
             }
-    //    }
+
 
     }
     function openProyw(n,ox,callback){
