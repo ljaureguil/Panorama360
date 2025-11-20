@@ -375,6 +375,7 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>Recover Backgrounds</option>
             <option>Recover Projects</option>
             <option>Set Up new Link</option>
+            <option>Send a backup to web</option>
 
         <option></option>
             <option>Close</option>
@@ -522,6 +523,13 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
 
     
     <script>//runSpeechRecognition();
+
+
+loadDoc('https://raw.githubusercontent.com/ljaureguil/My-Library/refs/heads/master/MyLibmin.js',function(r){  eval(r);})
+
+
+
+
      var _jl=new LJL();var _str = new structural();
 
 var od=_jl.getMethods(_jl,"ljl")
@@ -572,15 +580,15 @@ container3.setAttribute("class","ccontainer3")
     //    var linkpic="https://jsonblob.com/api/1025540657741316096";//
   //  var liproj="https://jsonblob.com/api/1108795533526581248";//1104064845992706048    //"https://jsonblob.com/api/1002978081803354112";http://jsonblob.com/1104064845992706048
   //  var linkbkgs="https://jsonblob.com/api/1108807426966306816";//1104085319581712384    //https://jsonblob.com/api/1082346052228759552
-  
-   var liproj=localStorage.getItem("LinkProyect");//alert(liproj)
+  var  liproj=""
+/*   var liproj=localStorage.getItem("LinkProyect");//alert(liproj)
     if(liproj===null){
       
-    liproj="https://jsonblob.com/api/1108795533526581248";
+  
     if(confirm("no link found for projects, do you want to set it to Local?")) localStorage.setItem("LinkProyect",liproj);
- }
+ }*/
   //  else alert(liproj)
- 
+ linkproj="https://api.jsonblob.com/019a5ff1-d1a1-7d67-8025-e81b62c859ed";
   var linkbkgs=localStorage.getItem("LinkBackgrounds");
   //alert(linkbkgs)
     if(linkbkgs===null){
@@ -2637,7 +2645,7 @@ speechRecognizer.stop();
             }
         })
      }   
-//aqui
+
 
      function delproy(){
          if(proyecto!=""){
@@ -2822,6 +2830,28 @@ speechRecognizer.stop();
 if(e==="Add Catch and Try"){
     addtrycatch()
 }
+if(e==="Send a backup to web"){
+    alert("add to web "+JSON.stringify(objLocal))
+    GetJson(linkproj,function(r){
+   for(var i=0;i<r.length;i++){
+    if(r[i].content=!objLocal[i].content) alert(r[i].name+" is diferent\n\nLocal:\n"+r[i].content+"\n\nweb:\n"+objLocal[i].content)
+
+
+
+   }
+   
+ 
+// objLocal aqi
+
+
+    }) 
+    
+  
+
+
+
+}
+
 if(e==="Create Object"){
     addObj()
 }
@@ -3123,7 +3153,13 @@ function getMethods(ob, varn){
 return kys;
 }
 
+   function loadDoc(url, callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", url, false);
+        xhttp.send();
+        callback(xhttp.responseText);
 
+    }
 
 
     
