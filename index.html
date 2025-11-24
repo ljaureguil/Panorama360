@@ -376,6 +376,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
             <option>Recover Projects</option>
             <option>Set Up new Link</option>
             <option>Send a backup to web</option>
+           <option>Dwload object from web(replacing local objects)</option>
+           <option>original order</option>
+           <option>alphabetic order</option>
+
+
+
 
         <option></option>
             <option>Close</option>
@@ -601,7 +607,7 @@ container3.setAttribute("class","ccontainer3")
     
     
     var ObPro={}
-        setupProy();
+       // setupProy();
         setupProyw();
 
         var cStream,
@@ -2693,18 +2699,27 @@ speechRecognizer.stop();
          }
      } 
     function setupProy(){
+     
         sproy.innerHTML="";
         var a=localStorage.getItem("editors");
         if(a!=null){
             sproy.innerHTML="";
-            var s="";
+            var s="",ars=[];
             ob=JSON.parse(a);
             for(var i=0;i<ob.proyectos.length;i++){
             var p=ob.proyectos[i];
             p=p.split("//")[1].split("\n")[0];
-
-            s+="<option>"+p+"</option>"
+var soo="<option>"+p+"</option>";
+           // s+=
+            ars.push(soo)
             }
+
+ars=ars.sort();
+for(var i=0;i<arso.length;i++){
+s+=ars[i];
+}
+alert(s)
+
             sproy.innerHTML=s;
    
     }
@@ -2725,15 +2740,28 @@ speechRecognizer.stop();
     }
 
    function setupProyw2(ob){
+   
    //     GetJ(liproj,function(ob){
             sproyw.innerHTML="";   
-            var s="";
+            var s="",ar=[],s0="";
             for(var i=0;i<ob.length;i++){
             var p=ob[i].name;
-            s+="<option>"+p+"</option>"
+            var po="<option>"+p+"</option>";
+            s0+=po;
+            ar.push(po)
+           
+            };
+            sproy.original=s0;
+                  ar.sort()
+            for(var i=0;i<ar.length;i++){
+               s+= ar[i];
             }
+            sproy.alfabetico=s;
+      
+           //   alert("aqui proyw2()\n\n"+s)
             sproyw.innerHTML=s;
-            sproy.innerHTML=s
+            sproy.innerHTML=s;
+            
         
     //    })
 
@@ -2834,21 +2862,25 @@ if(e==="Send a backup to web"){
     alert("add to web "+JSON.stringify(objLocal))
     GetJson(linkproj,function(r){
    for(var i=0;i<r.length;i++){
-    if(r[i].content=!objLocal[i].content) alert(r[i].name+" is diferent\n\nLocal:\n"+r[i].content+"\n\nweb:\n"+objLocal[i].content)
-
-
+    if(r.length!=objLocal.length) if(!confirm("Report: \n\nWeb object has "+r.length+"objects  and local has: "+objLocal.length+"objects\n\nSTILL YOU WANT TO CONTINUE SENDING LOCAL BOJECTS TO WEB??")) return;
+   if(validateObj(r[i],objLocal)){
+    if(confirm("Do you want to replace this object in the Web?\n"+r[i].name+" is diferent\n\nLocal:\n"+r[i].content+"\n\nweb:\n"+objLocal[i].content)){
+        alert("Reemplasarlo")
+    }
 
    }
    
+   }
  
-// objLocal aqi
-
-
+   
     }) 
-    
-  
+ }
 
+ if(e==="original order"){ sproy.innerHTML=sproy.original};
+ if(e==="alphabetic order"){sproy.innerHTML=sproy.alfabetico}
 
+if(e==="Dwload object from web(replacing local objects)"){
+alert("pending ...")
 
 }
 
@@ -2911,6 +2943,17 @@ if(e==="Set Up new Link"){
         Editor.style.display='none';
 }
    }
+
+  function validateObj(ob,arob){
+for(var i=0;i<arob.length;i++){
+    if(ob.name===arob[i].name && ob.content!==arob[i].content) return true
+ 
+}
+return false;
+
+   }
+
+
    function insertPic(v){
        var ar=obPic.arpics;
        for(var i=0;i<ar.length;i++){
