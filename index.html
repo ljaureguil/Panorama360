@@ -530,8 +530,12 @@ f <input type="range" id="rafa" value=1 min=0 step=.01 max=5 oninput="eyes.name.
     
     <script>//runSpeechRecognition();
 
-
-loadDoc('https://raw.githubusercontent.com/ljaureguil/My-Library/refs/heads/master/MyLibmin.js',function(r){  eval(r);})
+loadDoc('https://raw.githubusercontent.com/ljaureguil/My-Library/refs/heads/master/MyLibmin.js',function(r){
+var s = document.createElement("script");
+//s.type="module"
+s.innerHTML = r;
+document.head.appendChild(s);
+});
 
 
 
