@@ -536,7 +536,7 @@ var s = document.createElement("script");
 s.innerHTML = r;
 document.head.appendChild(s);
 });
-
+/**/
 
 
 
@@ -587,22 +587,26 @@ container3.setAttribute("class","ccontainer3")
         _ObText={texts:[]}
         cim.width=300;
         cim.height=200;
-    //    var linkpic="https://jsonblob.com/api/1025540657741316096";//
-  //  var liproj="https://jsonblob.com/api/1108795533526581248";//1104064845992706048    //"https://jsonblob.com/api/1002978081803354112";http://jsonblob.com/1104064845992706048
-  //  var linkbkgs="https://jsonblob.com/api/1108807426966306816";//1104085319581712384    //https://jsonblob.com/api/1082346052228759552
-  var  liproj=""
-/*   var liproj=localStorage.getItem("LinkProyect");//alert(liproj)
-    if(liproj===null){
+   var  linkproj="",arproj=[]
+/*   var linkproj=localStorage.getItem("LinkProyect");//alert(linkproj)
+    if(linkproj===null){
       
   
-    if(confirm("no link found for projects, do you want to set it to Local?")) localStorage.setItem("LinkProyect",liproj);
+    if(confirm("no link found for projects, do you want to set it to Local?")) localStorage.setItem("LinkProyect",linkproj);
  }*/
-  //  else alert(liproj)
+  //  else alert(linkproj)
  linkproj="https://api.jsonblob.com/019a5ff1-d1a1-7d67-8025-e81b62c859ed";
+ loadDoc(linkproj,function(r){//alert(r);
+arproj=JSON.parse(r);
+//alert(arproj.length)
+
+
+
+ });
   var linkbkgs=localStorage.getItem("LinkBackgrounds");
   //alert(linkbkgs)
     if(linkbkgs===null){
-   linkbkgs="https://jsonblob.com/api/1108807426966306816"; 
+   linkbkgs="https://api.jsonblob.com/019d34cb-59af-786e-9e8f-1b4a17da12ee"; 
         if(confirm("no link found for backgrounds, do you want to set it to Local?"))localStorage.setItem("LinkBackgrounds",linkbkgs);
     }
    // else alert(linkbkgs)
@@ -656,7 +660,7 @@ container3.setAttribute("class","ccontainer3")
 
 
          //      }
-   /*      GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
+   /*      GetJson("https://jsonblob.com/api/959920656255041536", function(ob) {
             Esenas = ob.esenas; //alert(ob.esenas.length);
             for (var i = 0; i < Esenas.length; i++) {
 
@@ -761,8 +765,8 @@ container3.setAttribute("class","ccontainer3")
         window.addEventListener('load', function() {
 
 //1082346052228759552
- 
-GetJ(linkbkgs, function(ob) {
+ /*
+GetJson(linkbkgs, function(ob) {
  
             wbkgs=ob;
  
@@ -772,7 +776,7 @@ GetJ(linkbkgs, function(ob) {
 
       
       
-            });
+            });*/
 
             loadLocal()
  
@@ -856,7 +860,7 @@ GetJ(linkbkgs, function(ob) {
         var axis=new THREE.Group();
         
         openProyw("AXIS",true);
-/*       GetJ(linkpic,function(ob){
+/*       GetJson(linkpic,function(ob){
             obPic=ob;
             setupPics(ob)
 
@@ -2056,7 +2060,7 @@ speechRecognizer.stop();
             }
             os.objects = ar;
 
-            GetJ("https://jsonblob.com/api/959920656255041536", function(ob) {
+            GetJson("https://jsonblob.com/api/959920656255041536", function(ob) {
                 //    alert(JSON.stringify(ob))
                 var c = false;
                 for (var i = 0; i < ob.esenas.length; i++) {
@@ -2071,7 +2075,7 @@ speechRecognizer.stop();
                 if (!c) ob.esenas.push(os);
 
 
-                UpdateJ("https://jsonblob.com/api/959920656255041536", ob, function(ob) {
+                UpdateJson("https://jsonblob.com/api/959920656255041536", ob, function(ob) {
 
                     alert("Done...")
                 })
@@ -2079,7 +2083,7 @@ speechRecognizer.stop();
             */
         }
 
-        function GetJ(url, callback) {
+        function GetJson(url, callback) {
 
             //var url  = "http://localhost:8080/api/v1/users";
             var xhr = new XMLHttpRequest()
@@ -2099,7 +2103,7 @@ speechRecognizer.stop();
         }
 
          // Update a user
-        function UpdateJ(url, ob, callback) {
+        function UpdateJson(url, ob, callback) {
 
             json = JSON.stringify(ob);
             var xhr = new XMLHttpRequest();
@@ -2578,14 +2582,14 @@ speechRecognizer.stop();
     else{
  
      
-        GetJ(liproj,function(ob){
+        GetJson(linkproj,function(ob){
 
             var e=false;
             for(var i=0;i<ob.length;i++){
                 if(ob[i].name===n){
                    if(confirm("Project "+n+" Exist, do you want to replace it?")){
                     ob[i].content=mainEditor.value;
-                    UpdateJ(liproj,ob,function(){//alert("Project "+n+"replaced in web")
+                    UpdateJson(linkproj,ob,function(){//alert("Project "+n+"replaced in web")
                 
                 
                 
@@ -2603,7 +2607,7 @@ speechRecognizer.stop();
             }
             if(!e){
         ob.push({name:n,content:mainEditor.value});
-        UpdateJ(liproj,ob,function(){//alert("Saved in web")
+        UpdateJson(linkproj,ob,function(){//alert("Saved in web")
     
         if(confirm("Project "+n+"Saved in web\n\nDo you want to back it up locally?")) localStorage.setItem("Projects",JSON.stringify(ob))
                       localStorage.setItem("bkProjects",JSON.stringify(ob))
@@ -2635,8 +2639,11 @@ speechRecognizer.stop();
 
     }
     function openProyw(n,ox,callback){
-  
-        GetJ(liproj,function(ob){
+  //alert("aqui antes "+linkproj)
+       GetJson(linkproj,function(ob){
+ // loadDoc(linkproj,function(r){
+   //  ob=JSON.parse(r);
+    //       alert("adentro")
            for(var i=0;i<ob.length;i++){
                var p1=ob[i].name;//ob.proyectos[i].split("//")[1].split("\n")[0];
             
@@ -2660,7 +2667,7 @@ speechRecognizer.stop();
      function delproy(){
          if(proyecto!=""){
              
-            GetJ(liproj,function(ob){
+            GetJson(linkproj,function(ob){
             for(var i=0;i<ob.length;i++){
             var p=ob[i];
            // p=p.split("//")[1].split("\n")[0];
@@ -2668,7 +2675,7 @@ speechRecognizer.stop();
                 
                     if(confirm("Are you sure to delete "+proyecto+" ?")){
                         ob.splice(i,1);
-                        UpdateJ(liproj,ob,function(){alert("project Deleted");
+                        UpdateJson(linkproj,ob,function(){alert("project Deleted");
                     setupProyw();
                 })
 
@@ -2729,7 +2736,7 @@ alert(s)
     }
     }
      function setupProyw(){
-        GetJ(liproj,function(ob){
+        GetJson(linkproj,function(ob){
             sproyw.innerHTML="";   
             var s="";
             for(var i=0;i<ob.length;i++){
@@ -2745,7 +2752,7 @@ alert(s)
 
    function setupProyw2(ob){
    
-   //     GetJ(liproj,function(ob){
+   //     GetJson(linkproj,function(ob){
             sproyw.innerHTML="";   
             var s="",ar=[],s0="";
             for(var i=0;i<ob.length;i++){
@@ -2786,7 +2793,7 @@ alert(s)
     }     
   //  sob2();
     function sob(){
-        GetJ(liproj,function(ob){
+        GetJson(linkproj,function(ob){
                 var objs=[];
             
             for(var i=0;i<ob.proyectos.length;i++){
@@ -2799,8 +2806,8 @@ alert(s)
            objs.push(o)
 
             }
-          //  UpdateJ("https://jsonblob.com/api/1020056623695282176",objs,function(){alert("chk transfered it in web")}) 
-              UpdateJ(liproj,objs,function(){alert("chk transfered it in web")})  
+          //  UpdateJson("https://jsonblob.com/api/1020056623695282176",objs,function(){alert("chk transfered it in web")}) 
+              UpdateJson(linkproj,objs,function(){alert("chk transfered it in web")})  
          })
  
   
@@ -2808,8 +2815,8 @@ alert(s)
 
     }
     function sob2(){
-   //     GetJ("https://jsonblob.com/api/1020056623695282176",function(ob){
-          GetJ(liproj,function(ob){        
+   //     GetJson("https://jsonblob.com/api/1020056623695282176",function(ob){
+          GetJson(linkproj,function(ob){        
             var s="";
             for(var i=0;i<ob.length;i++){
   
@@ -2828,14 +2835,14 @@ alert(s)
 
     }
     function savePic(name,data){
-   /*     GetJ(linkpic,function(ob){
+   /*     GetJson(linkpic,function(ob){
             var op={};
             op.name=name;
             op.pic=data;
             ob.arpics.push(op);
             obPic=ob;
           //  alert("----------------\n\n\n"+data)
-        UpdateJ(linkpic,ob,function(ob){alert("Pic data has been saved");setupPics(ob)})
+        UpdateJson(linkpic,ob,function(ob){alert("Pic data has been saved");setupPics(ob)})
    }) */}
    function setupPics(ob){
        spics.innerHTML="";
@@ -2976,7 +2983,7 @@ return false;
               // insert("obPic.arpics["+i+"].pic");
               if(confirm("Are you sure you want to delete "+v+"?")){
                 ar.splice(i,1);
-                        UpdateJ(linkpic,obPic,function(){alert(v+" Has been Deleted");
+                        UpdateJson(linkpic,obPic,function(){alert(v+" Has been Deleted");
                     setupPics(obPic);  
               }); 
 
@@ -3101,7 +3108,7 @@ function selaccion(){
                    setBackground(bkgs[bkgs.length-1],n);
                    if(confirm("Do you want to save it to web?")){
                      localStorage.setItem("backgrounds",JSON.stringify(wbkgs))
-                       UpdateJ(linkbkgs,wbkgs,function(){alert("Backgrounds saved in web")});
+                       UpdateJson(linkbkgs,wbkgs,function(){alert("Backgrounds saved in web")});
                    }
                }
            }
@@ -3117,7 +3124,7 @@ function selaccion(){
             setBackground(bkgs[0],c[0].innerHTML);
             localStorage.setItem("backgrounds",JSON.stringify(wbkgs))
         
-            UpdateJ(linkbkgs,wbkgs,function(){alert(v+" Has been deleted")});
+            UpdateJson(linkbkgs,wbkgs,function(){alert(v+" Has been deleted")});
              return
         }
     }
@@ -3166,8 +3173,8 @@ function setUpnewlink(){
  
  if(o==="1"){
     if(confirm("This will replace the original project link, do you want to continue?")){
- liproj=link;
- localStorage.setItem("LinkProyect",liproj);
+ linkproj=link;
+ localStorage.setItem("LinkProyect",linkproj);
  alert("all done")
  window.location.reload()
     }
